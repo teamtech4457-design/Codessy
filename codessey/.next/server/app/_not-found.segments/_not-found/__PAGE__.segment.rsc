@@ -1,0 +1,6 @@
+1:"$Sreact.fragment"
+2:I[92984,["/_next/static/chunks/805a2d916f7fbbdb.js"],""]
+3:I[37429,["/_next/static/chunks/d3b869b90361a8f8.js","/_next/static/chunks/46c938532bc296fb.js"],"OutletBoundary"]
+4:"$Sreact.suspense"
+0:{"buildId":"cJNz2Q2zfICspejVYX7RA","rsc":["$","$1","c",{"children":[["$","div",null,{"className":"min-h-screen bg-gradient-to-br from-blue-900 via-black to-amber-900 flex items-center justify-center","children":["$","div",null,{"className":"text-center max-w-md mx-auto section-padding","children":[["$","h1",null,{"className":"text-6xl font-serif text-gold-400 mb-4","children":"404"}],["$","h2",null,{"className":"text-2xl font-serif text-white mb-4","children":"Page Not Found"}],["$","p",null,{"className":"text-gray-300 mb-8","children":"The divine path you're seeking seems to have vanished into the cosmic dance."}],["$","$L2",null,{"href":"/","className":"bg-gold-500 hover:bg-gold-600 text-white font-semibold py-3 px-6 rounded-full transition-colors inline-block","children":"Return Home"}]]}]}],[["$","script","script-0",{"src":"/_next/static/chunks/805a2d916f7fbbdb.js","async":true}]],["$","$L3",null,{"children":["$","$4",null,{"name":"Next.MetadataOutlet","children":"$@5"}]}]]}],"loading":null,"isPartial":false}
+5:null
