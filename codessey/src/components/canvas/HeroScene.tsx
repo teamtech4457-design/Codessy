@@ -197,7 +197,7 @@ function DivineLight({ isReducedMotion }: { isReducedMotion: boolean }) {
       return
     }
 
-    // Phase 0-6s: Dark cell
+  
     if (loopElapsed < 6) {
       timeline.current.phase = 0
       if (coreRef.current) {
