@@ -1,0 +1,1 @@
+(globalThis.TURBOPACK||(globalThis.TURBOPACK=[])).push(["object"==typeof document?document.currentScript:void 0,86996,t=>{"use strict";function u({isReducedMotion:t}){return null}t.s(["default",()=>u])},99676,t=>{t.n(t.i(86996))}]);

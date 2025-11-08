@@ -1,0 +1,3 @@
+module.exports=[99368,a=>{"use strict";var b=a.i(79330);function c(){return(0,b.jsx)("div",{className:"min-h-screen bg-gradient-to-br from-blue-900 via-black to-amber-900 flex items-center justify-center",children:(0,b.jsxs)("div",{className:"text-center",children:[(0,b.jsx)("div",{className:"animate-spin rounded-full h-16 w-16 border-b-2 border-gold-400 mx-auto mb-4"}),(0,b.jsx)("h2",{className:"text-2xl font-serif text-gold-400",children:"Codessey"}),(0,b.jsx)("p",{className:"text-gray-300 mt-2",children:"Loading divine experiences..."})]})})}a.s(["default",()=>c])}];
+
+//# sourceMappingURL=Codessy_codessey_src_app_loading_tsx_d2c15895._.js.map

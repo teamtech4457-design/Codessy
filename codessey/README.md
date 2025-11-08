@@ -254,5 +254,5 @@ The application uses **React Three Fiber** as the React renderer for Three.js, p
 
 ---
 
-**Created by**: Manya Shukla
+**Created by**: MANYA SHUKLA
 **Inspired by**: Stories, powered by design & technology

@@ -182,11 +182,11 @@ function DivineLight({ isReducedMotion }: { isReducedMotion: boolean }) {
       // Reduced motion: stay in settled state
       if (coreRef.current) {
         coreRef.current.scale.setScalar(1)
-        coreRef.current.material.opacity = 0.8
+        ;(coreRef.current.material as THREE.Material).opacity = 0.8
       }
       if (auraRef.current) {
         auraRef.current.scale.setScalar(3)
-        auraRef.current.material.opacity = 0.3
+        ;(auraRef.current.material as THREE.Material).opacity = 0.3
       }
       if (pointLightRef.current) {
         pointLightRef.current.intensity = 2
@@ -202,11 +202,11 @@ function DivineLight({ isReducedMotion }: { isReducedMotion: boolean }) {
       timeline.current.phase = 0
       if (coreRef.current) {
         coreRef.current.scale.setScalar(0.01)
-        coreRef.current.material.opacity = 0
+        ;(coreRef.current.material as THREE.Material).opacity = 0
       }
       if (auraRef.current) {
         auraRef.current.scale.setScalar(0.01)
-        auraRef.current.material.opacity = 0
+        ;(auraRef.current.material as THREE.Material).opacity = 0
       }
       if (pointLightRef.current) {
         pointLightRef.current.intensity = 0
@@ -221,7 +221,7 @@ function DivineLight({ isReducedMotion }: { isReducedMotion: boolean }) {
       const progress = (loopElapsed - 6) / 2
       if (coreRef.current) {
         coreRef.current.scale.setScalar(0.01 + progress * 0.2)
-        coreRef.current.material.opacity = progress * 0.5
+        ;(coreRef.current.material as THREE.Material).opacity = progress * 0.5
       }
       if (pointLightRef.current) {
         pointLightRef.current.intensity = progress * 0.5
@@ -233,11 +233,11 @@ function DivineLight({ isReducedMotion }: { isReducedMotion: boolean }) {
       const progress = (loopElapsed - 8) / 4
       if (coreRef.current) {
         coreRef.current.scale.setScalar(0.21 + progress * 0.8)
-        coreRef.current.material.opacity = 0.5 + progress * 0.3
+        ;(coreRef.current.material as THREE.Material).opacity = 0.5 + progress * 0.3
       }
       if (auraRef.current) {
         auraRef.current.scale.setScalar(progress * 3)
-        auraRef.current.material.opacity = progress * 0.3
+        ;(auraRef.current.material as THREE.Material).opacity = progress * 0.3
       }
       if (pointLightRef.current) {
         pointLightRef.current.intensity = 0.5 + progress * 1.5
@@ -255,7 +255,7 @@ function DivineLight({ isReducedMotion }: { isReducedMotion: boolean }) {
       }
       if (auraRef.current) {
         auraRef.current.scale.setScalar(3 * pulse)
-        auraRef.current.material.opacity = 0.3 * pulse
+        ;(auraRef.current.material as THREE.Material).opacity = 0.3 * pulse
       }
       if (pointLightRef.current) {
         pointLightRef.current.intensity = 2 * pulse
@@ -419,18 +419,21 @@ function DustParticles({ isReducedMotion }: { isReducedMotion: boolean }) {
           count={count}
           array={particles.positions}
           itemSize={3}
+          args={[particles.positions, 3]}
         />
         <bufferAttribute
           attach="attributes-color"
           count={count}
           array={particles.colors}
           itemSize={3}
+          args={[particles.colors, 3]}
         />
         <bufferAttribute
           attach="attributes-size"
           count={count}
           array={particles.sizes}
           itemSize={1}
+          args={[particles.sizes, 1]}
         />
       </bufferGeometry>
       <pointsMaterial
