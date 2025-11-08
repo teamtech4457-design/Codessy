@@ -1,0 +1,23 @@
+{
+  "devFiles": [],
+  "ampDevFiles": [],
+  "polyfillFiles": [],
+  "lowPriorityFiles": [],
+  "rootMainFiles": [],
+  "pages": {
+    "/_app": [
+      "static/chunks/0a20e_next_dist_compiled_96141c2b._.js",
+      "static/chunks/0a20e_next_dist_shared_lib_5d43297b._.js",
+      "static/chunks/0a20e_next_dist_client_5a685543._.js",
+      "static/chunks/0a20e_next_dist_88970ee4._.js",
+      "static/chunks/0a20e_next_app_da6cde9d.js",
+      "static/chunks/[next]_entry_page-loader_ts_194b79fa._.js",
+      "static/chunks/0a20e_react-dom_c9860101._.js",
+      "static/chunks/0a20e_9494f4e7._.js",
+      "static/chunks/[root-of-the-server]__43068548._.js",
+      "static/chunks/codessey_pages__app_2da965e7._.js",
+      "static/chunks/turbopack-codessey_pages__app_ad88b434._.js"
+    ]
+  },
+  "ampFirstPages": []
+}

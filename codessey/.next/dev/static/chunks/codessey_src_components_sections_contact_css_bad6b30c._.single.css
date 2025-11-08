@@ -1,0 +1,177 @@
+/* [project]/codessey/src/components/sections/contact.css [app-client] (css) */
+.contact-section {
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 5rem 0;
+  display: flex;
+  position: relative;
+}
+
+.contact-container {
+  width: 100%;
+  max-width: 72rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.contact-header {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.contact-title {
+  color: #fff;
+  margin-bottom: 1rem;
+  font-family: serif;
+  font-size: 2.25rem;
+  font-weight: 700;
+  line-height: 2.5rem;
+}
+
+@media (min-width: 768px) {
+  .contact-title {
+    font-size: 3rem;
+    line-height: 1;
+  }
+}
+
+.contact-subtitle {
+  color: #d1d5db;
+  max-width: 42rem;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+}
+
+.contact-grid {
+  grid-template-columns: 1fr;
+  gap: 3rem;
+  display: grid;
+}
+
+@media (min-width: 1024px) {
+  .contact-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+  }
+}
+
+.contact-info {
+  flex-direction: column;
+  gap: 2rem;
+  display: flex;
+}
+
+.contact-info-title {
+  color: #b48f56;
+  margin-bottom: 1.5rem;
+  font-family: serif;
+  font-size: 1.5rem;
+  font-weight: 600;
+  line-height: 2rem;
+}
+
+.contact-info-description {
+  color: #d1d5db;
+  margin-bottom: 2rem;
+}
+
+.contact-details {
+  flex-direction: column;
+  gap: 1.5rem;
+  display: flex;
+}
+
+.contact-detail-item {
+  align-items: center;
+  gap: 1rem;
+  display: flex;
+}
+
+.contact-icon-container {
+  background-color: #b48f5633;
+  border-radius: 9999px;
+  padding: .75rem;
+}
+
+.contact-icon {
+  color: #b48f56;
+}
+
+.contact-detail-label {
+  color: #9ca3af;
+  font-size: .875rem;
+  line-height: 1.25rem;
+}
+
+.contact-detail-value {
+  color: #fff;
+}
+
+.contact-form {
+  flex-direction: column;
+  gap: 1.5rem;
+  display: flex;
+}
+
+.form-field {
+  flex-direction: column;
+  display: flex;
+}
+
+.form-label {
+  color: #d1d5db;
+  margin-bottom: .5rem;
+  font-size: .875rem;
+  font-weight: 500;
+  line-height: 1.25rem;
+  display: block;
+}
+
+.form-input, .form-textarea {
+  color: #fff;
+  background-color: #ffffff0d;
+  border: 1px solid #ffffff1a;
+  border-radius: .5rem;
+  width: 100%;
+  padding: .75rem 1rem;
+  transition: border-color .2s, box-shadow .2s;
+}
+
+.form-input::placeholder, .form-textarea::placeholder {
+  color: #9ca3af;
+}
+
+.form-input:focus, .form-textarea:focus {
+  border-color: #b48f56;
+  outline: none;
+  box-shadow: 0 0 0 1px #b48f56;
+}
+
+.form-textarea {
+  resize: none;
+}
+
+.submit-button {
+  color: #fff;
+  background: linear-gradient(to right, #b48f56, #a16207);
+  border-radius: .5rem;
+  justify-content: center;
+  align-items: center;
+  gap: .5rem;
+  width: 100%;
+  padding: 1rem 2rem;
+  font-weight: 600;
+  transition: all .3s;
+  display: flex;
+  transform: scale(1);
+}
+
+.submit-button:hover {
+  background: linear-gradient(to right, #a16207, #78350f);
+  transform: scale(1.05);
+}
+
+/*# sourceMappingURL=codessey_src_components_sections_contact_css_bad6b30c._.single.css.map*/

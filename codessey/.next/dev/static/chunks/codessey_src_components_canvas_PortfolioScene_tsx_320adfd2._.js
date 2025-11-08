@@ -1,0 +1,26 @@
+(globalThis.TURBOPACK || (globalThis.TURBOPACK = [])).push([typeof document === "object" ? document.currentScript : undefined,
+"[project]/codessey/src/components/canvas/PortfolioScene.tsx [app-client] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "default",
+    ()=>PortfolioScene
+]);
+'use client';
+function PortfolioScene({ isReducedMotion }) {
+    return null;
+}
+_c = PortfolioScene;
+var _c;
+__turbopack_context__.k.register(_c, "PortfolioScene");
+if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelpers !== null) {
+    __turbopack_context__.k.registerExports(__turbopack_context__.m, globalThis.$RefreshHelpers$);
+}
+}),
+"[project]/codessey/src/components/canvas/PortfolioScene.tsx [app-client] (ecmascript, next/dynamic entry)", ((__turbopack_context__) => {
+
+__turbopack_context__.n(__turbopack_context__.i("[project]/codessey/src/components/canvas/PortfolioScene.tsx [app-client] (ecmascript)"));
+}),
+]);
+
+//# sourceMappingURL=codessey_src_components_canvas_PortfolioScene_tsx_320adfd2._.js.map

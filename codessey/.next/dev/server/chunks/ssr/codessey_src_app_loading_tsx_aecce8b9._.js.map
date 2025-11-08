@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 4, "column": 0}, "map": {"version":3,"sources":["file:///Users/manyashukla/codessey/src/app/loading.tsx"],"sourcesContent":["export default function Loading() {\n  return (\n    <div className=\"min-h-screen bg-gradient-to-br from-blue-900 via-black to-amber-900 flex items-center justify-center\">\n      <div className=\"text-center\">\n        <div className=\"animate-spin rounded-full h-16 w-16 border-b-2 border-gold-400 mx-auto mb-4\"></div>\n        <h2 className=\"text-2xl font-serif text-gold-400\">Codessey</h2>\n        <p className=\"text-gray-300 mt-2\">Loading divine experiences...</p>\n      </div>\n    </div>\n  )\n}"],"names":[],"mappings":";;;;;;AAAe,SAAS;IACtB,qBACE,0PAAC;QAAI,WAAU;kBACb,cAAA,0PAAC;YAAI,WAAU;;8BACb,0PAAC;oBAAI,WAAU;;;;;;8BACf,0PAAC;oBAAG,WAAU;8BAAoC;;;;;;8BAClD,0PAAC;oBAAE,WAAU;8BAAqB;;;;;;;;;;;;;;;;;AAI1C","debugId":null}}]
+}
