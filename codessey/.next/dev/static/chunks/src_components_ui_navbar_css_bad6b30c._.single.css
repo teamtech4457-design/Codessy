@@ -1,0 +1,164 @@
+/* [project]/src/components/ui/navbar.css [app-client] (css) */
+.navbar {
+  z-index: 50;
+  width: 100%;
+  transition: all .3s;
+  position: fixed;
+  top: 0;
+}
+
+.navbar-transparent {
+  background-color: #0000;
+}
+
+.navbar-scrolled {
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  background-color: #000c;
+  border-bottom: 1px solid #b48f5633;
+}
+
+.navbar-container {
+  max-width: 80rem;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 1rem;
+}
+
+@media (min-width: 640px) {
+  .navbar-container {
+    padding: 0 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .navbar-container {
+    padding: 0 2rem;
+  }
+}
+
+.navbar-content {
+  justify-content: space-between;
+  align-items: center;
+  height: 4rem;
+  display: flex;
+}
+
+.navbar-logo {
+  flex-shrink: 0;
+}
+
+.navbar-logo-text {
+  color: #b48f56;
+  font-family: serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 2rem;
+}
+
+.navbar-desktop {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .navbar-desktop {
+    display: block;
+  }
+}
+
+.navbar-desktop-items {
+  align-items: baseline;
+  gap: 2rem;
+  margin-left: 2.5rem;
+  display: flex;
+}
+
+.navbar-desktop-item {
+  border-radius: .375rem;
+  padding: .5rem .75rem;
+  font-size: .875rem;
+  font-weight: 500;
+  line-height: 1.25rem;
+  transition: all .2s;
+}
+
+.navbar-desktop-item-active {
+  color: #b48f56;
+  border-bottom: 2px solid #b48f56;
+}
+
+.navbar-desktop-item-inactive {
+  color: #fff;
+}
+
+.navbar-desktop-item-inactive:hover {
+  color: #fcd34d;
+  transform: scale(1.05);
+}
+
+.navbar-mobile-button {
+  display: block;
+}
+
+@media (min-width: 768px) {
+  .navbar-mobile-button {
+    display: none;
+  }
+}
+
+.navbar-mobile-toggle {
+  color: #fff;
+  padding: .5rem;
+}
+
+.navbar-mobile-toggle:hover {
+  color: #fcd34d;
+}
+
+.navbar-mobile {
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  background-color: #000000e6;
+  border-top: 1px solid #b48f5633;
+  display: block;
+}
+
+@media (min-width: 768px) {
+  .navbar-mobile {
+    display: none;
+  }
+}
+
+.navbar-mobile-items {
+  flex-direction: column;
+  gap: .25rem;
+  padding: .5rem .5rem .75rem;
+  display: flex;
+}
+
+.navbar-mobile-item {
+  text-align: left;
+  border-radius: .375rem;
+  width: 100%;
+  padding: .5rem .75rem;
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.5rem;
+  display: block;
+}
+
+.navbar-mobile-item-active {
+  color: #b48f56;
+  background-color: #b48f561a;
+}
+
+.navbar-mobile-item-inactive {
+  color: #fff;
+}
+
+.navbar-mobile-item-inactive:hover {
+  color: #fcd34d;
+  background-color: #ffffff0d;
+}
+
+/*# sourceMappingURL=src_components_ui_navbar_css_bad6b30c._.single.css.map*/

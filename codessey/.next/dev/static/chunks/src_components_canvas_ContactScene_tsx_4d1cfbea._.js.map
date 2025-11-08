@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 4, "column": 0}, "map": {"version":3,"sources":["file:///C:/Users/SONALI/Codessy/Codessy/codessey/src/components/canvas/ContactScene.tsx"],"sourcesContent":["'use client'\r\n\r\ninterface ContactSceneProps {\r\n  isReducedMotion: boolean\r\n}\r\n\r\nexport default function ContactScene({ isReducedMotion }: ContactSceneProps) {\r\n  return null\r\n}\r\n"],"names":[],"mappings":";;;;AAAA;AAMe,SAAS,aAAa,EAAE,eAAe,EAAqB;IACzE,OAAO;AACT;KAFwB","debugId":null}}]
+}
