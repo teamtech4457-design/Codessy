@@ -2,5 +2,5 @@
   "version": 3,
   "sources": [],
   "sections": [
-    {"offset": {"line": 4, "column": 0}, "map": {"version":3,"sources":["file:///C:/Users/SONALI/Codessy/Codessy/codessey/src/components/canvas/AboutScene.tsx"],"sourcesContent":["'use client'\r\n\r\ninterface AboutSceneProps {\r\n  isReducedMotion: boolean\r\n}\r\n\r\nexport default function AboutScene({ isReducedMotion }: AboutSceneProps) {\r\n  return null\r\n}\r\n"],"names":[],"mappings":";;;;AAAA;AAMe,SAAS,WAAW,EAAE,eAAe,EAAmB;IACrE,OAAO;AACT;KAFwB","debugId":null}}]
+    {"offset": {"line": 4, "column": 0}, "map": {"version":3,"sources":["file:///C:/Users/Ishika/Desktop/compaignwalaPro/Codessy/codessey/src/components/canvas/AboutScene.tsx"],"sourcesContent":["'use client'\r\n\r\ninterface AboutSceneProps {\r\n  isReducedMotion: boolean\r\n}\r\n\r\nexport default function AboutScene({ isReducedMotion }: AboutSceneProps) {\r\n  return null\r\n}\r\n"],"names":[],"mappings":";;;;AAAA;AAMe,SAAS,WAAW,EAAE,eAAe,EAAmB;IACrE,OAAO;AACT;KAFwB","debugId":null}}]
 }
