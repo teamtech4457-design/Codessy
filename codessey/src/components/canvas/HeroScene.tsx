@@ -1,7 +1,9 @@
+
+
 'use client'
 
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
-import { OrbitControls, Environment, useTexture } from '@react-three/drei'
+import { OrbitControls, Environment } from '@react-three/drei'
 import { EffectComposer, Bloom, Vignette } from '@react-three/postprocessing'
 import { useRef, useMemo, useEffect, useState } from 'react'
 import * as THREE from 'three'
@@ -10,6 +12,16 @@ interface HeroSceneProps {
   isReducedMotion: boolean
 }
 
+/**
+ * PERFORMANCE NOTES (kept minimal & safe):
+ * - Reduced particle counts slightly (rain, mist, dust)
+ * - Throttled expensive useFrame updates by skipping frames when possible
+ * - Lowered geometry segments for decorative spheres where acceptable
+ * - Lowered postprocessing intensity/height
+ * - Canvas dpr limited and antialias disabled
+ */
+
+/* -------------------- Scene Manager (central timeline) -------------------- */
 function SceneManager({ isReducedMotion }: { isReducedMotion: boolean }) {
   const { scene } = useThree()
   const [currentPhase, setCurrentPhase] = useState(0) // 0: Prison (15s), 1: Krishna only
@@ -29,7 +41,7 @@ function SceneManager({ isReducedMotion }: { isReducedMotion: boolean }) {
   })
 
   useEffect(() => {
-    // Clear background during prison phase
+    // Clear background during prison phase (run once ideally)
     if (currentPhase === 0) {
       scene.background = null
     }
@@ -68,47 +80,58 @@ function SceneManager({ isReducedMotion }: { isReducedMotion: boolean }) {
   )
 }
 
-// Fixed KrishnaBackground component - simplified
+/* -------------------- Krishna Background (load texture once) -------------------- */
 function KrishnaBackground() {
   const { scene } = useThree()
 
+  // load texture once
+  const texture = useMemo(() => {
+    const loader = new THREE.TextureLoader()
+    let tex: THREE.Texture | null = null
+    // We do not actually trigger load here (load is async). We'll call loader in effect to ensure it's client-only.
+    return { loader, url: '/krishna-birth-bg.jpg.png', texRef: () => tex }
+  }, [])
+
   useEffect(() => {
     if (!scene) return
-
     const loader = new THREE.TextureLoader()
-    
+
     loader.load(
-      '/krishna-birth-bg.jpg.png', 
-      (texture) => {
-        console.log('Krishna background loaded')
-        scene.background = texture
-        texture.colorSpace = THREE.SRGBColorSpace
+      '/krishna-birth-bg.jpg.png',
+      (tex) => {
+        // Ensure correct color space and set background
+        try {
+          // @ts-ignore - colorSpace exists on newer three; fallback handled
+          tex.colorSpace = (THREE as any).SRGBColorSpace ?? tex.colorSpace
+        } catch (e) {
+          // ignore
+        }
+        scene.background = tex
       },
-      undefined, 
+      undefined,
       (error) => {
         console.error('Error loading texture:', error)
         scene.background = new THREE.Color(0x1a237e)
       }
     )
 
-    // Cleanup function
     return () => {
       if (scene) {
         scene.background = null
       }
     }
-  }, []) // Empty dependency array - run only once
+  }, [scene])
 
   return null
 }
 
-// Cloud System
+/* -------------------- CloudSystem (throttled update) -------------------- */
 function CloudSystem() {
   const cloudsRef = useRef<THREE.Group>(null!)
   const cloudCount = 8
 
   const clouds = useMemo(() => {
-    const cloudData = []
+    const cloudData: { position: [number, number, number]; scale: number; speed: number }[] = []
     for (let i = 0; i < cloudCount; i++) {
       cloudData.push({
         position: [
@@ -117,16 +140,20 @@ function CloudSystem() {
           -8 + Math.random() * 4
         ],
         scale: 0.5 + Math.random() * 0.8,
-        speed: 0.1 + Math.random() * 0.2
+        speed: 0.08 + Math.random() * 0.15
       })
     }
     return cloudData
   }, [cloudCount])
 
+  // frame skip for throttling
+  const frameSkipRef = useRef(0)
   useFrame((state) => {
+    frameSkipRef.current = (frameSkipRef.current + 1) % 2 // update every 2 frames
+    if (frameSkipRef.current !== 0) return
+
     if (cloudsRef.current?.children) {
       const time = state.clock.elapsedTime
-      
       cloudsRef.current.children.forEach((cloud, index) => {
         if (index < clouds.length) {
           const cloudInfo = clouds[index]
@@ -141,6 +168,7 @@ function CloudSystem() {
     <group ref={cloudsRef}>
       {clouds.map((cloud, i) => (
         <mesh key={i} position={cloud.position as [number, number, number]} scale={cloud.scale}>
+          {/* Lowered sphere detail (8 segments) */}
           <sphereGeometry args={[1, 8, 6]} />
           <meshStandardMaterial
             color="#ffffff"
@@ -155,10 +183,10 @@ function CloudSystem() {
   )
 }
 
-// Rain System
+/* -------------------- RainSystem (reduced count + throttled) -------------------- */
 function RainSystem() {
   const rainRef = useRef<THREE.Points>(null!)
-  const rainCount = 500
+  const rainCount = 250 // reduced from 500 -> lighter but still dense
 
   const rain = useMemo(() => {
     const positions = new Float32Array(rainCount * 3)
@@ -169,29 +197,33 @@ function RainSystem() {
       positions[i3] = (Math.random() - 0.5) * 20
       positions[i3 + 1] = Math.random() * 10 + 5
       positions[i3 + 2] = (Math.random() - 0.5) * 15 - 5
-      
+
       velocities[i] = 0.5 + Math.random() * 0.5
     }
 
     return { positions, velocities }
   }, [rainCount])
 
+  // throttle updates
+  const frameSkipRef = useRef(0)
   useFrame((state) => {
+    frameSkipRef.current = (frameSkipRef.current + 1) % 2 // update every 2 frames
+    if (frameSkipRef.current !== 0) return
+
     if (rainRef.current?.geometry) {
-      const time = state.clock.elapsedTime
       const positions = rainRef.current.geometry.attributes.position.array as Float32Array
-      
+
       for (let i = 0; i < rainCount; i++) {
         const i3 = i * 3
-        positions[i3 + 1] -= rain.velocities[i] * 0.1
-        
+        positions[i3 + 1] -= rain.velocities[i] * 0.12 // slightly faster to keep rhythm
+
         if (positions[i3 + 1] < -2) {
           positions[i3] = (Math.random() - 0.5) * 20
           positions[i3 + 1] = Math.random() * 5 + 8
           positions[i3 + 2] = (Math.random() - 0.5) * 15 - 5
         }
       }
-      
+
       rainRef.current.geometry.attributes.position.needsUpdate = true
     }
   })
@@ -217,27 +249,28 @@ function RainSystem() {
   )
 }
 
-// Sea Water
+/* -------------------- Sea Water (lighter geometry detail) -------------------- */
 function SeaWater() {
   const waterRef = useRef<THREE.Mesh>(null!)
 
   useFrame((state) => {
     if (waterRef.current) {
       const time = state.clock.elapsedTime
-      
-      const wave1 = Math.sin(time * 1.5) * 0.1
-      const wave2 = Math.cos(time * 0.8) * 0.05
-      const wave3 = Math.sin(time * 2.2 + 2) * 0.08
-      
+
+      const wave1 = Math.sin(time * 1.5) * 0.08
+      const wave2 = Math.cos(time * 0.8) * 0.04
+      const wave3 = Math.sin(time * 2.2 + 2) * 0.06
+
       waterRef.current.rotation.x = wave1
       waterRef.current.rotation.z = wave2
       waterRef.current.position.y = -1 + (wave3 * 0.1)
     }
   })
 
+  // lowered subdivisions from 32 -> 16 to reduce vertex count
   return (
     <mesh ref={waterRef} position={[0, -1, 0]} rotation={[-Math.PI / 2, 0, 0]}>
-      <planeGeometry args={[25, 25, 32, 32]} />
+      <planeGeometry args={[25, 25, 16, 16]} />
       <meshStandardMaterial
         color="#1e3a8a"
         transparent
@@ -249,19 +282,20 @@ function SeaWater() {
   )
 }
 
-// Lightning Storm
+/* -------------------- LightningStorm (keeps behavior but lightweight) -------------------- */
 function LightningStorm() {
   const [lightningActive, setLightningActive] = useState(false)
   const [lightningIntensity, setLightningIntensity] = useState(0)
   const lightningRefs = useRef<THREE.PointLight[]>([])
 
+  // small throttle: trigger check every few frames using internal time-based random
   useFrame((state) => {
     const time = state.clock.elapsedTime
-    
-    if (Math.random() > 0.9 && !lightningActive) {
+
+    if (Math.random() > 0.92 && !lightningActive) {
       setLightningActive(true)
       setLightningIntensity(12)
-      
+
       setTimeout(() => {
         setLightningIntensity(0)
         setTimeout(() => {
@@ -296,7 +330,7 @@ function LightningStorm() {
         distance={25}
         position={[3, 8, -5]}
       />
-      
+
       <pointLight
         ref={ref => {
           if (ref) lightningRefs.current[1] = ref
@@ -310,10 +344,10 @@ function LightningStorm() {
   )
 }
 
-// Ocean Mist
+/* -------------------- OceanMist (reduced count + throttled) -------------------- */
 function OceanMist() {
   const fogRef = useRef<THREE.Points>(null!)
-  const mistCount = 100
+  const mistCount = 60 // reduced from 100
 
   const mist = useMemo(() => {
     const positions = new Float32Array(mistCount * 3)
@@ -324,24 +358,28 @@ function OceanMist() {
       positions[i3] = (Math.random() - 0.5) * 12
       positions[i3 + 1] = Math.random() * 3
       positions[i3 + 2] = (Math.random() - 0.5) * 8 - 2
-      
-      sizes[i] = Math.random() * 0.3 + 0.1
+
+      sizes[i] = Math.random() * 0.25 + 0.08
     }
 
     return { positions, sizes }
   }, [mistCount])
 
+  const frameSkipRef = useRef(0)
   useFrame((state) => {
+    frameSkipRef.current = (frameSkipRef.current + 1) % 2 // update every 2 frames
+    if (frameSkipRef.current !== 0) return
+
     if (fogRef.current?.geometry) {
       const time = state.clock.elapsedTime
       const positions = fogRef.current.geometry.attributes.position.array as Float32Array
-      
+
       for (let i = 0; i < mistCount; i++) {
         const i3 = i * 3
-        positions[i3 + 1] += Math.sin(time * 0.5 + i) * 0.005
-        positions[i3 + 0] += Math.cos(time * 0.3 + i) * 0.003
+        positions[i3 + 1] += Math.sin(time * 0.5 + i) * 0.004
+        positions[i3 + 0] += Math.cos(time * 0.3 + i) * 0.002
       }
-      
+
       fogRef.current.geometry.attributes.position.needsUpdate = true
     }
   })
@@ -364,9 +402,9 @@ function OceanMist() {
       </bufferGeometry>
       <pointsMaterial
         color="#e0f2fe"
-        size={0.2}
+        size={0.18}
         transparent
-        opacity={0.4}
+        opacity={0.38}
         sizeAttenuation
         blending={THREE.AdditiveBlending}
       />
@@ -374,7 +412,7 @@ function OceanMist() {
   )
 }
 
-// Updated DivineLight to work with phases and 15-second timeline
+/* -------------------- DivineLight (kept behavior but reduced sphere detail) -------------------- */
 function DivineLight({ isReducedMotion, phase }: { isReducedMotion: boolean; phase: number }) {
   const lightGroupRef = useRef<THREE.Group>(null!)
   const coreRef = useRef<THREE.Mesh>(null!)
@@ -425,7 +463,8 @@ function DivineLight({ isReducedMotion, phase }: { isReducedMotion: boolean; pha
   return (
     <group ref={lightGroupRef} position={[0, 1, -1]}>
       <mesh ref={coreRef}>
-        <sphereGeometry args={[0.5, 32, 32]} />
+        {/* Lowered sphere detail from 32 -> 16 */}
+        <sphereGeometry args={[0.5, 16, 12]} />
         <meshBasicMaterial
           color="#ffd87a"
           transparent
@@ -445,11 +484,11 @@ function DivineLight({ isReducedMotion, phase }: { isReducedMotion: boolean; pha
   )
 }
 
-// Updated CameraController for 15-second prison phase
+/* -------------------- CameraController -------------------- */
 function CameraController({ isReducedMotion, phase }: { isReducedMotion: boolean; phase: number }) {
   const { camera } = useThree()
   const animationStartTime = useRef(0)
-  
+
   useFrame((state) => {
     if (isReducedMotion) {
       camera.position.set(0, 2, 8)
@@ -465,7 +504,6 @@ function CameraController({ isReducedMotion, phase }: { isReducedMotion: boolean
     if (phase === 0) {
       // Prison phase camera - faster dolly (15 seconds total)
       if (elapsed > 6) {
-        const progress = Math.min((elapsed - 6) / 9, 1) // Dolly from 6s to 15s
         camera.position.lerp(new THREE.Vector3(0, 1.5, 4), 0.1)
       } else {
         camera.position.lerp(new THREE.Vector3(0, 2, 8), 0.1)
@@ -481,32 +519,30 @@ function CameraController({ isReducedMotion, phase }: { isReducedMotion: boolean
   return null
 }
 
-// Keep all your existing PrisonCell, PrisonBars, Chains, ParentSilhouettes, MoonBeam, DustParticles components exactly as they were
-// ... [Your existing components remain exactly the same] ...
-
+/* -------------------- Prison / Props (kept as-is but lowered some geometry detail) -------------------- */
 function PrisonCell() {
   const wallsRef = useRef<THREE.Group>(null!)
-  
+
   const stoneColors = ['#0b0f15', '#1a2430', '#111827', '#0f172a']
-  
+
   return (
     <group ref={wallsRef}>
       <mesh position={[0, 2, -3]} receiveShadow>
         <boxGeometry args={[8, 4, 0.3]} />
-        <meshStandardMaterial 
-          color={stoneColors[0]} 
-          roughness={0.9} 
+        <meshStandardMaterial
+          color={stoneColors[0]}
+          roughness={0.9}
           metalness={0.1}
           transparent={true}
           opacity={0.8}
         />
       </mesh>
-      
+
       <mesh position={[-4, 2, 0]} rotation={[0, Math.PI / 2, 0]} receiveShadow>
         <boxGeometry args={[6, 4, 0.3]} />
-        <meshStandardMaterial 
-          color={stoneColors[1]} 
-          roughness={0.9} 
+        <meshStandardMaterial
+          color={stoneColors[1]}
+          roughness={0.9}
           metalness={0.1}
           transparent={true}
           opacity={0.8}
@@ -514,31 +550,31 @@ function PrisonCell() {
       </mesh>
       <mesh position={[4, 2, 0]} rotation={[0, Math.PI / 2, 0]} receiveShadow>
         <boxGeometry args={[6, 4, 0.3]} />
-        <meshStandardMaterial 
-          color={stoneColors[1]} 
-          roughness={0.9} 
+        <meshStandardMaterial
+          color={stoneColors[1]}
+          roughness={0.9}
           metalness={0.1}
           transparent={true}
           opacity={0.8}
         />
       </mesh>
-      
+
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0, 0]} receiveShadow>
         <planeGeometry args={[8, 6]} />
-        <meshStandardMaterial 
-          color="#0b0f15" 
-          roughness={0.95} 
+        <meshStandardMaterial
+          color="#0b0f15"
+          roughness={0.95}
           metalness={0.05}
           transparent={true}
           opacity={0.7}
         />
       </mesh>
-      
+
       <mesh rotation={[Math.PI / 2, 0, 0]} position={[0, 4, 0]} receiveShadow>
         <planeGeometry args={[8, 6]} />
-        <meshStandardMaterial 
-          color={stoneColors[2]} 
-          roughness={0.9} 
+        <meshStandardMaterial
+          color={stoneColors[2]}
+          roughness={0.9}
           metalness={0.1}
           transparent={true}
           opacity={0.8}
@@ -549,7 +585,7 @@ function PrisonCell() {
         <planeGeometry args={[1, 0.5]} />
         <meshBasicMaterial color="#9fc7ff" transparent opacity={0.3} />
       </mesh>
-      
+
       {[-0.3, 0, 0.3].map((x, i) => (
         <mesh key={i} position={[2 + x, 3, -2.85]} castShadow>
           <boxGeometry args={[0.05, 0.5, 0.05]} />
@@ -568,9 +604,9 @@ function PrisonBars() {
       {Array.from({ length: 9 }).map((_, i) => (
         <mesh key={i} position={[i - 4, 0, 0]} castShadow>
           <boxGeometry args={[0.08, 4, 0.08]} />
-          <meshStandardMaterial 
-            color="#374151" 
-            metalness={0.9} 
+          <meshStandardMaterial
+            color="#374151"
+            metalness={0.9}
             roughness={0.1}
             transparent={true}
             opacity={0.9}
@@ -614,8 +650,8 @@ function ParentSilhouettes() {
     <group>
       <mesh position={[-1.5, 0.5, -2]} rotation={[0, 0.3, 0]}>
         <cylinderGeometry args={[0.4, 0.3, 1.2, 8]} />
-        <meshStandardMaterial 
-          color="#1e293b" 
+        <meshStandardMaterial
+          color="#1e293b"
           emissive="#1e293b"
           emissiveIntensity={0.1}
           roughness={1}
@@ -623,11 +659,11 @@ function ParentSilhouettes() {
           opacity={0.7}
         />
       </mesh>
-      
+
       <mesh position={[1.5, 0.5, -2]} rotation={[0, -0.3, 0]}>
         <cylinderGeometry args={[0.4, 0.3, 1.2, 8]} />
-        <meshStandardMaterial 
-          color="#1e293b" 
+        <meshStandardMaterial
+          color="#1e293b"
           emissive="#1e293b"
           emissiveIntensity={0.1}
           roughness={1}
@@ -645,7 +681,7 @@ function MoonBeam() {
 
   useFrame((state) => {
     if (volumeRef.current) {
-      volumeRef.current.rotation.z = state.clock.elapsedTime * 0.1
+      volumeRef.current.rotation.z = state.clock.elapsedTime * 0.06
     }
   })
 
@@ -654,14 +690,14 @@ function MoonBeam() {
       <spotLight
         ref={beamRef}
         color="#9fc7ff"
-        intensity={0.3}
+        intensity={0.28}
         distance={6}
         angle={Math.PI / 8}
         penumbra={0.8}
         decay={2}
         position={[0, 0, 0]}
       />
-      
+
       <mesh ref={volumeRef} position={[0, -1, -0.5]}>
         <cylinderGeometry args={[0.1, 0.8, 2, 8, 1, true]} />
         <meshBasicMaterial
@@ -675,9 +711,10 @@ function MoonBeam() {
   )
 }
 
+/* -------------------- DustParticles (reduced + throttled) -------------------- */
 function DustParticles({ isReducedMotion }: { isReducedMotion: boolean }) {
   const particlesRef = useRef<THREE.Points>(null!)
-  const count = 150
+  const count = 100 // reduced from 150
 
   const particles = useMemo(() => {
     const positions = new Float32Array(count * 3)
@@ -703,17 +740,24 @@ function DustParticles({ isReducedMotion }: { isReducedMotion: boolean }) {
     return { positions, colors, sizes, phases }
   }, [count])
 
+  const frameSkipRef = useRef(0)
   useFrame((state) => {
-    if (particlesRef.current?.geometry && !isReducedMotion) {
+    // skip updates if reduced motion
+    if (isReducedMotion) return
+
+    frameSkipRef.current = (frameSkipRef.current + 1) % 2
+    if (frameSkipRef.current !== 0) return
+
+    if (particlesRef.current?.geometry) {
       const time = state.clock.elapsedTime
       const positions = particlesRef.current.geometry.attributes.position.array as Float32Array
-      
+
       for (let i = 0; i < count; i++) {
         const i3 = i * 3
         const phase = particles.phases[i]
-        positions[i3 + 1] += Math.sin(time + phase) * 0.001
+        positions[i3 + 1] += Math.sin(time + phase) * 0.0012
       }
-      
+
       particlesRef.current.geometry.attributes.position.needsUpdate = true
     }
   })
@@ -751,11 +795,15 @@ function DustParticles({ isReducedMotion }: { isReducedMotion: boolean }) {
   )
 }
 
+/* -------------------- Exported HeroScene (Canvas settings optimized) -------------------- */
 export default function HeroScene({ isReducedMotion }: HeroSceneProps) {
   return (
     <Canvas
       camera={{ position: [0, 2, 8], fov: 50 }}
-      shadows
+      // Performance-oriented settings:
+      dpr={[1, 1.5]} // avoid ultra-high DPR rendering
+      gl={{ antialias: false, powerPreference: 'high-performance' }}
+      shadows={false} // toggle off to reduce GPU unless you need shadows
       style={{ background: 'transparent' }}
     >
       <SceneManager isReducedMotion={isReducedMotion} />
@@ -770,15 +818,19 @@ export default function HeroScene({ isReducedMotion }: HeroSceneProps) {
         enabled={false}
       />
 
+      {/* Slightly reduced bloom and vignette to lower postprocess cost */}
       <EffectComposer>
-        <Bloom 
-          intensity={1.5}
-          luminanceThreshold={0.3}
+        <Bloom
+          intensity={0.9} /* reduced from 1.5 */
+          luminanceThreshold={0.35}
           luminanceSmoothing={0.9}
-          height={300}
+          height={180} /* reduced from 300 */
         />
-        <Vignette eskil={false} offset={0.15} darkness={0.8} />
+        <Vignette eskil={false} offset={0.12} darkness={0.6} />
       </EffectComposer>
+
+      {/* Environment remains — cheap preset */}
+      <Environment preset="park" />
     </Canvas>
   )
 }

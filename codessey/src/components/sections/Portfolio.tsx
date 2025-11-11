@@ -1,8 +1,13 @@
+
+
 'use client'
 
 import { useEffect, useRef } from 'react'
 import { useInView } from 'framer-motion'
+import dynamic from 'next/dynamic'
 import './Portfolio.css'
+
+const PortfolioScene = dynamic(() => import('@/components/canvas/PortfolioScene'), { ssr: false })
 
 interface PortfolioProps {
   onVisible: () => void
@@ -63,6 +68,12 @@ export default function Portfolio({ onVisible }: PortfolioProps) {
       ref={ref}
       className="portfolio-section"
     >
+      {/* Background Canvas Container */}
+      <div className="portfolio-canvas-container">
+        <PortfolioScene isReducedMotion={false} />
+      </div>
+      
+      {/* Portfolio Content */}
       <div className="portfolio-container">
         <div className="portfolio-header">
           <h2 className="portfolio-title">

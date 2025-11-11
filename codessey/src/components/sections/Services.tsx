@@ -1,8 +1,13 @@
+
+
 'use client'
 
 import { useEffect, useRef } from 'react'
 import { useInView } from 'framer-motion'
+import dynamic from 'next/dynamic'
 import './Services.css'
+
+const MeadowScene = dynamic(() => import('@/components/canvas/MeadowScene'), { ssr: false })
 
 interface ServicesProps {
   onVisible: () => void
@@ -63,6 +68,12 @@ export default function Services({ onVisible }: ServicesProps) {
       ref={ref}
       className="services-section"
     >
+      {/* Background Canvas Container */}
+      <div className="services-canvas-container">
+        <MeadowScene isReducedMotion={false} />
+      </div>
+      
+      {/* Services Content */}
       <div className="services-container">
         <div className="services-header">
           <h2 className="services-title">

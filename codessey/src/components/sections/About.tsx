@@ -2,7 +2,10 @@
 
 import { useEffect, useRef } from 'react'
 import { useInView } from 'framer-motion'
+import dynamic from 'next/dynamic'
 import './about.css'
+
+const AboutScene = dynamic(() => import('@/components/canvas/AboutScene'), { ssr: false })
 
 interface AboutProps {
   onVisible: () => void
@@ -28,6 +31,12 @@ export default function About({ onVisible }: AboutProps) {
       ref={ref}
       className="about-section"
     >
+      {/* Background Canvas Container */}
+      <div className="about-canvas-container">
+        <AboutScene isReducedMotion={false} />
+      </div>
+      
+      {/* About Content */}
       <div className="about-container">
         <h2 className="about-title">
           Our Story

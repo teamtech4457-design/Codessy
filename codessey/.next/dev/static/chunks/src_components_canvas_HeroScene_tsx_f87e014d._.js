@@ -11,9 +11,10 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$react$2d$t
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$react$2d$three$2f$fiber$2f$dist$2f$events$2d$f8cd670d$2e$esm$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__D__as__useFrame$3e$__ = __turbopack_context__.i("[project]/node_modules/@react-three/fiber/dist/events-f8cd670d.esm.js [app-client] (ecmascript) <export D as useFrame>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$react$2d$three$2f$fiber$2f$dist$2f$events$2d$f8cd670d$2e$esm$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__C__as__useThree$3e$__ = __turbopack_context__.i("[project]/node_modules/@react-three/fiber/dist/events-f8cd670d.esm.js [app-client] (ecmascript) <export C as useThree>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$react$2d$three$2f$drei$2f$core$2f$OrbitControls$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/@react-three/drei/core/OrbitControls.js [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$react$2d$three$2f$drei$2f$core$2f$Environment$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/@react-three/drei/core/Environment.js [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$react$2d$three$2f$postprocessing$2f$dist$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/@react-three/postprocessing/dist/index.js [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/compiled/react/index.js [app-client] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$three$2f$build$2f$three$2e$core$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/three/build/three.core.js [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$three$2f$build$2f$three$2e$module$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/three/build/three.module.js [app-client] (ecmascript)");
 ;
 var _s = __turbopack_context__.k.signature(), _s1 = __turbopack_context__.k.signature(), _s2 = __turbopack_context__.k.signature(), _s3 = __turbopack_context__.k.signature(), _s4 = __turbopack_context__.k.signature(), _s5 = __turbopack_context__.k.signature(), _s6 = __turbopack_context__.k.signature(), _s7 = __turbopack_context__.k.signature(), _s8 = __turbopack_context__.k.signature(), _s9 = __turbopack_context__.k.signature(), _s10 = __turbopack_context__.k.signature(), _s11 = __turbopack_context__.k.signature(), _s12 = __turbopack_context__.k.signature();
 'use client';
@@ -22,7 +23,14 @@ var _s = __turbopack_context__.k.signature(), _s1 = __turbopack_context__.k.sign
 ;
 ;
 ;
-function SceneManager({ isReducedMotion }) {
+/**
+ * PERFORMANCE NOTES (kept minimal & safe):
+ * - Reduced particle counts slightly (rain, mist, dust)
+ * - Throttled expensive useFrame updates by skipping frames when possible
+ * - Lowered geometry segments for decorative spheres where acceptable
+ * - Lowered postprocessing intensity/height
+ * - Canvas dpr limited and antialias disabled
+ */ /* -------------------- Scene Manager (central timeline) -------------------- */ function SceneManager({ isReducedMotion }) {
     _s();
     const { scene } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$react$2d$three$2f$fiber$2f$dist$2f$events$2d$f8cd670d$2e$esm$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__C__as__useThree$3e$__["useThree"])();
     const [currentPhase, setCurrentPhase] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(0) // 0: Prison (15s), 1: Krishna only
@@ -42,7 +50,7 @@ function SceneManager({ isReducedMotion }) {
     }["SceneManager.useFrame"]);
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
         "SceneManager.useEffect": ()=>{
-            // Clear background during prison phase
+            // Clear background during prison phase (run once ideally)
             if (currentPhase === 0) {
                 scene.background = null;
             }
@@ -57,22 +65,22 @@ function SceneManager({ isReducedMotion }) {
                 children: [
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(PrisonCell, {}, void 0, false, {
                         fileName: "[project]/src/components/canvas/HeroScene.tsx",
-                        lineNumber: 43,
+                        lineNumber: 55,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(PrisonBars, {}, void 0, false, {
                         fileName: "[project]/src/components/canvas/HeroScene.tsx",
-                        lineNumber: 44,
+                        lineNumber: 56,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(Chains, {}, void 0, false, {
                         fileName: "[project]/src/components/canvas/HeroScene.tsx",
-                        lineNumber: 45,
+                        lineNumber: 57,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(ParentSilhouettes, {}, void 0, false, {
                         fileName: "[project]/src/components/canvas/HeroScene.tsx",
-                        lineNumber: 46,
+                        lineNumber: 58,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(DivineLight, {
@@ -80,19 +88,19 @@ function SceneManager({ isReducedMotion }) {
                         phase: currentPhase
                     }, void 0, false, {
                         fileName: "[project]/src/components/canvas/HeroScene.tsx",
-                        lineNumber: 47,
+                        lineNumber: 59,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(MoonBeam, {}, void 0, false, {
                         fileName: "[project]/src/components/canvas/HeroScene.tsx",
-                        lineNumber: 48,
+                        lineNumber: 60,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(DustParticles, {
                         isReducedMotion: isReducedMotion
                     }, void 0, false, {
                         fileName: "[project]/src/components/canvas/HeroScene.tsx",
-                        lineNumber: 49,
+                        lineNumber: 61,
                         columnNumber: 11
                     }, this)
                 ]
@@ -101,32 +109,32 @@ function SceneManager({ isReducedMotion }) {
                 children: [
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(KrishnaBackground, {}, void 0, false, {
                         fileName: "[project]/src/components/canvas/HeroScene.tsx",
-                        lineNumber: 56,
+                        lineNumber: 68,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(CloudSystem, {}, void 0, false, {
                         fileName: "[project]/src/components/canvas/HeroScene.tsx",
-                        lineNumber: 57,
+                        lineNumber: 69,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(RainSystem, {}, void 0, false, {
                         fileName: "[project]/src/components/canvas/HeroScene.tsx",
-                        lineNumber: 58,
+                        lineNumber: 70,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(SeaWater, {}, void 0, false, {
                         fileName: "[project]/src/components/canvas/HeroScene.tsx",
-                        lineNumber: 59,
+                        lineNumber: 71,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(LightningStorm, {}, void 0, false, {
                         fileName: "[project]/src/components/canvas/HeroScene.tsx",
-                        lineNumber: 60,
+                        lineNumber: 72,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(OceanMist, {}, void 0, false, {
                         fileName: "[project]/src/components/canvas/HeroScene.tsx",
-                        lineNumber: 61,
+                        lineNumber: 73,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(DivineLight, {
@@ -134,7 +142,7 @@ function SceneManager({ isReducedMotion }) {
                         phase: currentPhase
                     }, void 0, false, {
                         fileName: "[project]/src/components/canvas/HeroScene.tsx",
-                        lineNumber: 62,
+                        lineNumber: 74,
                         columnNumber: 11
                     }, this)
                 ]
@@ -144,7 +152,7 @@ function SceneManager({ isReducedMotion }) {
                 phase: currentPhase
             }, void 0, false, {
                 fileName: "[project]/src/components/canvas/HeroScene.tsx",
-                lineNumber: 66,
+                lineNumber: 78,
                 columnNumber: 7
             }, this)
         ]
@@ -157,27 +165,45 @@ _s(SceneManager, "VdeIuRHeXO+Tsawj/C7tx4Rq6Vs=", false, function() {
     ];
 });
 _c = SceneManager;
-// Fixed KrishnaBackground component - simplified
-function KrishnaBackground() {
+/* -------------------- Krishna Background (load texture once) -------------------- */ function KrishnaBackground() {
     _s1();
     const { scene } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$react$2d$three$2f$fiber$2f$dist$2f$events$2d$f8cd670d$2e$esm$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__C__as__useThree$3e$__["useThree"])();
+    // load texture once
+    const texture = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useMemo"])({
+        "KrishnaBackground.useMemo[texture]": ()=>{
+            const loader = new __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$three$2f$build$2f$three$2e$module$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__.TextureLoader();
+            let tex = null;
+            // We do not actually trigger load here (load is async). We'll call loader in effect to ensure it's client-only.
+            return {
+                loader,
+                url: '/krishna-birth-bg.jpg.png',
+                texRef: ({
+                    "KrishnaBackground.useMemo[texture]": ()=>tex
+                })["KrishnaBackground.useMemo[texture]"]
+            };
+        }
+    }["KrishnaBackground.useMemo[texture]"], []);
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
         "KrishnaBackground.useEffect": ()=>{
             if (!scene) return;
-            const loader = new __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$three$2f$build$2f$three$2e$core$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TextureLoader"]();
+            const loader = new __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$three$2f$build$2f$three$2e$module$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__.TextureLoader();
             loader.load('/krishna-birth-bg.jpg.png', {
-                "KrishnaBackground.useEffect": (texture)=>{
-                    console.log('Krishna background loaded');
-                    scene.background = texture;
-                    texture.colorSpace = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$three$2f$build$2f$three$2e$core$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SRGBColorSpace"];
+                "KrishnaBackground.useEffect": (tex)=>{
+                    // Ensure correct color space and set background
+                    try {
+                        // @ts-ignore - colorSpace exists on newer three; fallback handled
+                        tex.colorSpace = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$three$2f$build$2f$three$2e$module$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__.SRGBColorSpace ?? tex.colorSpace;
+                    } catch (e) {
+                    // ignore
+                    }
+                    scene.background = tex;
                 }
             }["KrishnaBackground.useEffect"], undefined, {
                 "KrishnaBackground.useEffect": (error)=>{
                     console.error('Error loading texture:', error);
-                    scene.background = new __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$three$2f$build$2f$three$2e$core$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Color"](0x1a237e);
+                    scene.background = new __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$three$2f$build$2f$three$2e$module$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__.Color(0x1a237e);
                 }
             }["KrishnaBackground.useEffect"]);
-            // Cleanup function
             return ({
                 "KrishnaBackground.useEffect": ()=>{
                     if (scene) {
@@ -186,17 +212,18 @@ function KrishnaBackground() {
                 }
             })["KrishnaBackground.useEffect"];
         }
-    }["KrishnaBackground.useEffect"], []); // Empty dependency array - run only once
+    }["KrishnaBackground.useEffect"], [
+        scene
+    ]);
     return null;
 }
-_s1(KrishnaBackground, "UhCC8wDD2cMyItT8qLKLhYRbhzM=", false, function() {
+_s1(KrishnaBackground, "rTkvQZTCc87ThdJ58E/RR3bEyhs=", false, function() {
     return [
         __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$react$2d$three$2f$fiber$2f$dist$2f$events$2d$f8cd670d$2e$esm$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__C__as__useThree$3e$__["useThree"]
     ];
 });
 _c1 = KrishnaBackground;
-// Cloud System
-function CloudSystem() {
+/* -------------------- CloudSystem (throttled update) -------------------- */ function CloudSystem() {
     _s2();
     const cloudsRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(null);
     const cloudCount = 8;
@@ -211,7 +238,7 @@ function CloudSystem() {
                         -8 + Math.random() * 4
                     ],
                     scale: 0.5 + Math.random() * 0.8,
-                    speed: 0.1 + Math.random() * 0.2
+                    speed: 0.08 + Math.random() * 0.15
                 });
             }
             return cloudData;
@@ -219,8 +246,12 @@ function CloudSystem() {
     }["CloudSystem.useMemo[clouds]"], [
         cloudCount
     ]);
+    // frame skip for throttling
+    const frameSkipRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(0);
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$react$2d$three$2f$fiber$2f$dist$2f$events$2d$f8cd670d$2e$esm$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__D__as__useFrame$3e$__["useFrame"])({
         "CloudSystem.useFrame": (state)=>{
+            frameSkipRef.current = (frameSkipRef.current + 1) % 2; // update every 2 frames
+            if (frameSkipRef.current !== 0) return;
             if (cloudsRef.current?.children) {
                 const time = state.clock.elapsedTime;
                 cloudsRef.current.children.forEach({
@@ -249,7 +280,7 @@ function CloudSystem() {
                         ]
                     }, void 0, false, {
                         fileName: "[project]/src/components/canvas/HeroScene.tsx",
-                        lineNumber: 144,
+                        lineNumber: 172,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("meshStandardMaterial", {
@@ -260,32 +291,32 @@ function CloudSystem() {
                         metalness: 0.1
                     }, void 0, false, {
                         fileName: "[project]/src/components/canvas/HeroScene.tsx",
-                        lineNumber: 145,
+                        lineNumber: 173,
                         columnNumber: 11
                     }, this)
                 ]
             }, i, true, {
                 fileName: "[project]/src/components/canvas/HeroScene.tsx",
-                lineNumber: 143,
+                lineNumber: 170,
                 columnNumber: 9
             }, this))
     }, void 0, false, {
         fileName: "[project]/src/components/canvas/HeroScene.tsx",
-        lineNumber: 141,
+        lineNumber: 168,
         columnNumber: 5
     }, this);
 }
-_s2(CloudSystem, "kL2PRGQjNUeWUAE0jjbEyZSD+PE=", false, function() {
+_s2(CloudSystem, "zmrjesVcJArTEvwFPg7p+lgW/AE=", false, function() {
     return [
         __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$react$2d$three$2f$fiber$2f$dist$2f$events$2d$f8cd670d$2e$esm$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__D__as__useFrame$3e$__["useFrame"]
     ];
 });
 _c2 = CloudSystem;
-// Rain System
-function RainSystem() {
+/* -------------------- RainSystem (reduced count + throttled) -------------------- */ function RainSystem() {
     _s3();
     const rainRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(null);
-    const rainCount = 500;
+    const rainCount = 250 // reduced from 500 -> lighter but still dense
+    ;
     const rain = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useMemo"])({
         "RainSystem.useMemo[rain]": ()=>{
             const positions = new Float32Array(rainCount * 3);
@@ -305,14 +336,17 @@ function RainSystem() {
     }["RainSystem.useMemo[rain]"], [
         rainCount
     ]);
+    // throttle updates
+    const frameSkipRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(0);
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$react$2d$three$2f$fiber$2f$dist$2f$events$2d$f8cd670d$2e$esm$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__D__as__useFrame$3e$__["useFrame"])({
         "RainSystem.useFrame": (state)=>{
+            frameSkipRef.current = (frameSkipRef.current + 1) % 2; // update every 2 frames
+            if (frameSkipRef.current !== 0) return;
             if (rainRef.current?.geometry) {
-                const time = state.clock.elapsedTime;
                 const positions = rainRef.current.geometry.attributes.position.array;
                 for(let i = 0; i < rainCount; i++){
                     const i3 = i * 3;
-                    positions[i3 + 1] -= rain.velocities[i] * 0.1;
+                    positions[i3 + 1] -= rain.velocities[i] * 0.12; // slightly faster to keep rhythm
                     if (positions[i3 + 1] < -2) {
                         positions[i3] = (Math.random() - 0.5) * 20;
                         positions[i3 + 1] = Math.random() * 5 + 8;
@@ -334,12 +368,12 @@ function RainSystem() {
                     itemSize: 3
                 }, void 0, false, {
                     fileName: "[project]/src/components/canvas/HeroScene.tsx",
-                    lineNumber: 202,
+                    lineNumber: 234,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/src/components/canvas/HeroScene.tsx",
-                lineNumber: 201,
+                lineNumber: 233,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("pointsMaterial", {
@@ -350,39 +384,39 @@ function RainSystem() {
                 sizeAttenuation: true
             }, void 0, false, {
                 fileName: "[project]/src/components/canvas/HeroScene.tsx",
-                lineNumber: 209,
+                lineNumber: 241,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/canvas/HeroScene.tsx",
-        lineNumber: 200,
+        lineNumber: 232,
         columnNumber: 5
     }, this);
 }
-_s3(RainSystem, "Qmw6fX58XX4CUO1/CrOkw9wilog=", false, function() {
+_s3(RainSystem, "0XgxqaZwlZ0jcWpUUxT1i5uewdA=", false, function() {
     return [
         __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$react$2d$three$2f$fiber$2f$dist$2f$events$2d$f8cd670d$2e$esm$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__D__as__useFrame$3e$__["useFrame"]
     ];
 });
 _c3 = RainSystem;
-// Sea Water
-function SeaWater() {
+/* -------------------- Sea Water (lighter geometry detail) -------------------- */ function SeaWater() {
     _s4();
     const waterRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(null);
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$react$2d$three$2f$fiber$2f$dist$2f$events$2d$f8cd670d$2e$esm$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__D__as__useFrame$3e$__["useFrame"])({
         "SeaWater.useFrame": (state)=>{
             if (waterRef.current) {
                 const time = state.clock.elapsedTime;
-                const wave1 = Math.sin(time * 1.5) * 0.1;
-                const wave2 = Math.cos(time * 0.8) * 0.05;
-                const wave3 = Math.sin(time * 2.2 + 2) * 0.08;
+                const wave1 = Math.sin(time * 1.5) * 0.08;
+                const wave2 = Math.cos(time * 0.8) * 0.04;
+                const wave3 = Math.sin(time * 2.2 + 2) * 0.06;
                 waterRef.current.rotation.x = wave1;
                 waterRef.current.rotation.z = wave2;
                 waterRef.current.position.y = -1 + wave3 * 0.1;
             }
         }
     }["SeaWater.useFrame"]);
+    // lowered subdivisions from 32 -> 16 to reduce vertex count
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("mesh", {
         ref: waterRef,
         position: [
@@ -400,12 +434,12 @@ function SeaWater() {
                 args: [
                     25,
                     25,
-                    32,
-                    32
+                    16,
+                    16
                 ]
             }, void 0, false, {
                 fileName: "[project]/src/components/canvas/HeroScene.tsx",
-                lineNumber: 240,
+                lineNumber: 273,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("meshStandardMaterial", {
@@ -416,13 +450,13 @@ function SeaWater() {
                 metalness: 0.8
             }, void 0, false, {
                 fileName: "[project]/src/components/canvas/HeroScene.tsx",
-                lineNumber: 241,
+                lineNumber: 274,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/canvas/HeroScene.tsx",
-        lineNumber: 239,
+        lineNumber: 272,
         columnNumber: 5
     }, this);
 }
@@ -432,16 +466,16 @@ _s4(SeaWater, "gk7H3b1Z+0pThM8KOrriM4ByL2U=", false, function() {
     ];
 });
 _c4 = SeaWater;
-// Lightning Storm
-function LightningStorm() {
+/* -------------------- LightningStorm (keeps behavior but lightweight) -------------------- */ function LightningStorm() {
     _s5();
     const [lightningActive, setLightningActive] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
     const [lightningIntensity, setLightningIntensity] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(0);
     const lightningRefs = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])([]);
+    // small throttle: trigger check every few frames using internal time-based random
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$react$2d$three$2f$fiber$2f$dist$2f$events$2d$f8cd670d$2e$esm$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__D__as__useFrame$3e$__["useFrame"])({
         "LightningStorm.useFrame": (state)=>{
             const time = state.clock.elapsedTime;
-            if (Math.random() > 0.9 && !lightningActive) {
+            if (Math.random() > 0.92 && !lightningActive) {
                 setLightningActive(true);
                 setLightningIntensity(12);
                 setTimeout({
@@ -464,7 +498,7 @@ function LightningStorm() {
             lightningRefs.current.forEach({
                 "LightningStorm.useFrame": (light)=>{
                     if (light) {
-                        light.intensity = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$three$2f$build$2f$three$2e$core$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["MathUtils"].lerp(light.intensity, lightningIntensity, 0.2);
+                        light.intensity = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$three$2f$build$2f$three$2e$module$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__.MathUtils.lerp(light.intensity, lightningIntensity, 0.2);
                     }
                 }
             }["LightningStorm.useFrame"]);
@@ -486,7 +520,7 @@ function LightningStorm() {
                 ]
             }, void 0, false, {
                 fileName: "[project]/src/components/canvas/HeroScene.tsx",
-                lineNumber: 290,
+                lineNumber: 324,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("pointLight", {
@@ -503,13 +537,13 @@ function LightningStorm() {
                 ]
             }, void 0, false, {
                 fileName: "[project]/src/components/canvas/HeroScene.tsx",
-                lineNumber: 300,
+                lineNumber: 334,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/canvas/HeroScene.tsx",
-        lineNumber: 289,
+        lineNumber: 323,
         columnNumber: 5
     }, this);
 }
@@ -519,11 +553,11 @@ _s5(LightningStorm, "Cwsm5WrtRPUOooHZJKYQRcnW0gw=", false, function() {
     ];
 });
 _c5 = LightningStorm;
-// Ocean Mist
-function OceanMist() {
+/* -------------------- OceanMist (reduced count + throttled) -------------------- */ function OceanMist() {
     _s6();
     const fogRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(null);
-    const mistCount = 100;
+    const mistCount = 60 // reduced from 100
+    ;
     const mist = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useMemo"])({
         "OceanMist.useMemo[mist]": ()=>{
             const positions = new Float32Array(mistCount * 3);
@@ -533,7 +567,7 @@ function OceanMist() {
                 positions[i3] = (Math.random() - 0.5) * 12;
                 positions[i3 + 1] = Math.random() * 3;
                 positions[i3 + 2] = (Math.random() - 0.5) * 8 - 2;
-                sizes[i] = Math.random() * 0.3 + 0.1;
+                sizes[i] = Math.random() * 0.25 + 0.08;
             }
             return {
                 positions,
@@ -543,15 +577,18 @@ function OceanMist() {
     }["OceanMist.useMemo[mist]"], [
         mistCount
     ]);
+    const frameSkipRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(0);
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$react$2d$three$2f$fiber$2f$dist$2f$events$2d$f8cd670d$2e$esm$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__D__as__useFrame$3e$__["useFrame"])({
         "OceanMist.useFrame": (state)=>{
+            frameSkipRef.current = (frameSkipRef.current + 1) % 2; // update every 2 frames
+            if (frameSkipRef.current !== 0) return;
             if (fogRef.current?.geometry) {
                 const time = state.clock.elapsedTime;
                 const positions = fogRef.current.geometry.attributes.position.array;
                 for(let i = 0; i < mistCount; i++){
                     const i3 = i * 3;
-                    positions[i3 + 1] += Math.sin(time * 0.5 + i) * 0.005;
-                    positions[i3 + 0] += Math.cos(time * 0.3 + i) * 0.003;
+                    positions[i3 + 1] += Math.sin(time * 0.5 + i) * 0.004;
+                    positions[i3 + 0] += Math.cos(time * 0.3 + i) * 0.002;
                 }
                 fogRef.current.geometry.attributes.position.needsUpdate = true;
             }
@@ -569,7 +606,7 @@ function OceanMist() {
                         itemSize: 3
                     }, void 0, false, {
                         fileName: "[project]/src/components/canvas/HeroScene.tsx",
-                        lineNumber: 352,
+                        lineNumber: 390,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("bufferAttribute", {
@@ -579,42 +616,41 @@ function OceanMist() {
                         itemSize: 1
                     }, void 0, false, {
                         fileName: "[project]/src/components/canvas/HeroScene.tsx",
-                        lineNumber: 358,
+                        lineNumber: 396,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/canvas/HeroScene.tsx",
-                lineNumber: 351,
+                lineNumber: 389,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("pointsMaterial", {
                 color: "#e0f2fe",
-                size: 0.2,
+                size: 0.18,
                 transparent: true,
-                opacity: 0.4,
+                opacity: 0.38,
                 sizeAttenuation: true,
-                blending: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$three$2f$build$2f$three$2e$core$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["AdditiveBlending"]
+                blending: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$three$2f$build$2f$three$2e$module$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__.AdditiveBlending
             }, void 0, false, {
                 fileName: "[project]/src/components/canvas/HeroScene.tsx",
-                lineNumber: 365,
+                lineNumber: 403,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/canvas/HeroScene.tsx",
-        lineNumber: 350,
+        lineNumber: 388,
         columnNumber: 5
     }, this);
 }
-_s6(OceanMist, "BMVt1TFuKLQkC4lrRL/QtSSA9ME=", false, function() {
+_s6(OceanMist, "kAhrizrEHGsjzC6mN94NpEsdHEY=", false, function() {
     return [
         __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$react$2d$three$2f$fiber$2f$dist$2f$events$2d$f8cd670d$2e$esm$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__D__as__useFrame$3e$__["useFrame"]
     ];
 });
 _c6 = OceanMist;
-// Updated DivineLight to work with phases and 15-second timeline
-function DivineLight({ isReducedMotion, phase }) {
+/* -------------------- DivineLight (kept behavior but reduced sphere detail) -------------------- */ function DivineLight({ isReducedMotion, phase }) {
     _s7();
     const lightGroupRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(null);
     const coreRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(null);
@@ -673,12 +709,12 @@ function DivineLight({ isReducedMotion, phase }) {
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("sphereGeometry", {
                         args: [
                             0.5,
-                            32,
-                            32
+                            16,
+                            12
                         ]
                     }, void 0, false, {
                         fileName: "[project]/src/components/canvas/HeroScene.tsx",
-                        lineNumber: 428,
+                        lineNumber: 467,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("meshBasicMaterial", {
@@ -688,13 +724,13 @@ function DivineLight({ isReducedMotion, phase }) {
                         toneMapped: false
                     }, void 0, false, {
                         fileName: "[project]/src/components/canvas/HeroScene.tsx",
-                        lineNumber: 429,
+                        lineNumber: 468,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/canvas/HeroScene.tsx",
-                lineNumber: 427,
+                lineNumber: 465,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("pointLight", {
@@ -705,13 +741,13 @@ function DivineLight({ isReducedMotion, phase }) {
                 decay: 2
             }, void 0, false, {
                 fileName: "[project]/src/components/canvas/HeroScene.tsx",
-                lineNumber: 437,
+                lineNumber: 476,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/canvas/HeroScene.tsx",
-        lineNumber: 426,
+        lineNumber: 464,
         columnNumber: 5
     }, this);
 }
@@ -721,8 +757,7 @@ _s7(DivineLight, "xF8KSHoks9GU6zP89lCi2228ITM=", false, function() {
     ];
 });
 _c7 = DivineLight;
-// Updated CameraController for 15-second prison phase
-function CameraController({ isReducedMotion, phase }) {
+/* -------------------- CameraController -------------------- */ function CameraController({ isReducedMotion, phase }) {
     _s8();
     const { camera } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$react$2d$three$2f$fiber$2f$dist$2f$events$2d$f8cd670d$2e$esm$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__C__as__useThree$3e$__["useThree"])();
     const animationStartTime = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(0);
@@ -739,16 +774,14 @@ function CameraController({ isReducedMotion, phase }) {
             if (phase === 0) {
                 // Prison phase camera - faster dolly (15 seconds total)
                 if (elapsed > 6) {
-                    const progress = Math.min((elapsed - 6) / 9, 1) // Dolly from 6s to 15s
-                    ;
-                    camera.position.lerp(new __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$three$2f$build$2f$three$2e$core$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Vector3"](0, 1.5, 4), 0.1);
+                    camera.position.lerp(new __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$three$2f$build$2f$three$2e$module$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__.Vector3(0, 1.5, 4), 0.1);
                 } else {
-                    camera.position.lerp(new __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$three$2f$build$2f$three$2e$core$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Vector3"](0, 2, 8), 0.1);
+                    camera.position.lerp(new __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$three$2f$build$2f$three$2e$module$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__.Vector3(0, 2, 8), 0.1);
                 }
                 camera.lookAt(0, 1, -1);
             } else {
                 // Krishna phase camera - show the full scene with sky
-                camera.position.lerp(new __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$three$2f$build$2f$three$2e$core$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Vector3"](0, 5, 15), 0.05);
+                camera.position.lerp(new __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$three$2f$build$2f$three$2e$module$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__.Vector3(0, 5, 15), 0.05);
                 camera.lookAt(0, 2, 0);
             }
         }
@@ -762,9 +795,7 @@ _s8(CameraController, "u903Kbn0iScjdWA/tuYFtkkG1YY=", false, function() {
     ];
 });
 _c8 = CameraController;
-// Keep all your existing PrisonCell, PrisonBars, Chains, ParentSilhouettes, MoonBeam, DustParticles components exactly as they were
-// ... [Your existing components remain exactly the same] ...
-function PrisonCell() {
+/* -------------------- Prison / Props (kept as-is but lowered some geometry detail) -------------------- */ function PrisonCell() {
     _s9();
     const wallsRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(null);
     const stoneColors = [
@@ -792,7 +823,7 @@ function PrisonCell() {
                         ]
                     }, void 0, false, {
                         fileName: "[project]/src/components/canvas/HeroScene.tsx",
-                        lineNumber: 495,
+                        lineNumber: 531,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("meshStandardMaterial", {
@@ -803,13 +834,13 @@ function PrisonCell() {
                         opacity: 0.8
                     }, void 0, false, {
                         fileName: "[project]/src/components/canvas/HeroScene.tsx",
-                        lineNumber: 496,
+                        lineNumber: 532,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/canvas/HeroScene.tsx",
-                lineNumber: 494,
+                lineNumber: 530,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("mesh", {
@@ -833,7 +864,7 @@ function PrisonCell() {
                         ]
                     }, void 0, false, {
                         fileName: "[project]/src/components/canvas/HeroScene.tsx",
-                        lineNumber: 506,
+                        lineNumber: 542,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("meshStandardMaterial", {
@@ -844,13 +875,13 @@ function PrisonCell() {
                         opacity: 0.8
                     }, void 0, false, {
                         fileName: "[project]/src/components/canvas/HeroScene.tsx",
-                        lineNumber: 507,
+                        lineNumber: 543,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/canvas/HeroScene.tsx",
-                lineNumber: 505,
+                lineNumber: 541,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("mesh", {
@@ -874,7 +905,7 @@ function PrisonCell() {
                         ]
                     }, void 0, false, {
                         fileName: "[project]/src/components/canvas/HeroScene.tsx",
-                        lineNumber: 516,
+                        lineNumber: 552,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("meshStandardMaterial", {
@@ -885,13 +916,13 @@ function PrisonCell() {
                         opacity: 0.8
                     }, void 0, false, {
                         fileName: "[project]/src/components/canvas/HeroScene.tsx",
-                        lineNumber: 517,
+                        lineNumber: 553,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/canvas/HeroScene.tsx",
-                lineNumber: 515,
+                lineNumber: 551,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("mesh", {
@@ -914,7 +945,7 @@ function PrisonCell() {
                         ]
                     }, void 0, false, {
                         fileName: "[project]/src/components/canvas/HeroScene.tsx",
-                        lineNumber: 527,
+                        lineNumber: 563,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("meshStandardMaterial", {
@@ -925,13 +956,13 @@ function PrisonCell() {
                         opacity: 0.7
                     }, void 0, false, {
                         fileName: "[project]/src/components/canvas/HeroScene.tsx",
-                        lineNumber: 528,
+                        lineNumber: 564,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/canvas/HeroScene.tsx",
-                lineNumber: 526,
+                lineNumber: 562,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("mesh", {
@@ -954,7 +985,7 @@ function PrisonCell() {
                         ]
                     }, void 0, false, {
                         fileName: "[project]/src/components/canvas/HeroScene.tsx",
-                        lineNumber: 538,
+                        lineNumber: 574,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("meshStandardMaterial", {
@@ -965,13 +996,13 @@ function PrisonCell() {
                         opacity: 0.8
                     }, void 0, false, {
                         fileName: "[project]/src/components/canvas/HeroScene.tsx",
-                        lineNumber: 539,
+                        lineNumber: 575,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/canvas/HeroScene.tsx",
-                lineNumber: 537,
+                lineNumber: 573,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("mesh", {
@@ -993,7 +1024,7 @@ function PrisonCell() {
                         ]
                     }, void 0, false, {
                         fileName: "[project]/src/components/canvas/HeroScene.tsx",
-                        lineNumber: 549,
+                        lineNumber: 585,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("meshBasicMaterial", {
@@ -1002,13 +1033,13 @@ function PrisonCell() {
                         opacity: 0.3
                     }, void 0, false, {
                         fileName: "[project]/src/components/canvas/HeroScene.tsx",
-                        lineNumber: 550,
+                        lineNumber: 586,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/canvas/HeroScene.tsx",
-                lineNumber: 548,
+                lineNumber: 584,
                 columnNumber: 7
             }, this),
             [
@@ -1031,7 +1062,7 @@ function PrisonCell() {
                             ]
                         }, void 0, false, {
                             fileName: "[project]/src/components/canvas/HeroScene.tsx",
-                            lineNumber: 555,
+                            lineNumber: 591,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("meshStandardMaterial", {
@@ -1040,19 +1071,19 @@ function PrisonCell() {
                             roughness: 0.2
                         }, void 0, false, {
                             fileName: "[project]/src/components/canvas/HeroScene.tsx",
-                            lineNumber: 556,
+                            lineNumber: 592,
                             columnNumber: 11
                         }, this)
                     ]
                 }, i, true, {
                     fileName: "[project]/src/components/canvas/HeroScene.tsx",
-                    lineNumber: 554,
+                    lineNumber: 590,
                     columnNumber: 9
                 }, this))
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/canvas/HeroScene.tsx",
-        lineNumber: 493,
+        lineNumber: 529,
         columnNumber: 5
     }, this);
 }
@@ -1087,7 +1118,7 @@ function PrisonBars() {
                             ]
                         }, void 0, false, {
                             fileName: "[project]/src/components/canvas/HeroScene.tsx",
-                            lineNumber: 570,
+                            lineNumber: 606,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("meshStandardMaterial", {
@@ -1098,13 +1129,13 @@ function PrisonBars() {
                             opacity: 0.9
                         }, void 0, false, {
                             fileName: "[project]/src/components/canvas/HeroScene.tsx",
-                            lineNumber: 571,
+                            lineNumber: 607,
                             columnNumber: 11
                         }, this)
                     ]
                 }, i, true, {
                     fileName: "[project]/src/components/canvas/HeroScene.tsx",
-                    lineNumber: 569,
+                    lineNumber: 605,
                     columnNumber: 9
                 }, this)),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("mesh", {
@@ -1123,7 +1154,7 @@ function PrisonBars() {
                         ]
                     }, void 0, false, {
                         fileName: "[project]/src/components/canvas/HeroScene.tsx",
-                        lineNumber: 582,
+                        lineNumber: 618,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("meshStandardMaterial", {
@@ -1132,13 +1163,13 @@ function PrisonBars() {
                         roughness: 0.1
                     }, void 0, false, {
                         fileName: "[project]/src/components/canvas/HeroScene.tsx",
-                        lineNumber: 583,
+                        lineNumber: 619,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/canvas/HeroScene.tsx",
-                lineNumber: 581,
+                lineNumber: 617,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("mesh", {
@@ -1157,7 +1188,7 @@ function PrisonBars() {
                         ]
                     }, void 0, false, {
                         fileName: "[project]/src/components/canvas/HeroScene.tsx",
-                        lineNumber: 586,
+                        lineNumber: 622,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("meshStandardMaterial", {
@@ -1166,19 +1197,19 @@ function PrisonBars() {
                         roughness: 0.1
                     }, void 0, false, {
                         fileName: "[project]/src/components/canvas/HeroScene.tsx",
-                        lineNumber: 587,
+                        lineNumber: 623,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/canvas/HeroScene.tsx",
-                lineNumber: 585,
+                lineNumber: 621,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/canvas/HeroScene.tsx",
-        lineNumber: 567,
+        lineNumber: 603,
         columnNumber: 5
     }, this);
 }
@@ -1207,7 +1238,7 @@ function Chains() {
                                 ]
                             }, void 0, false, {
                                 fileName: "[project]/src/components/canvas/HeroScene.tsx",
-                                lineNumber: 599,
+                                lineNumber: 635,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("meshStandardMaterial", {
@@ -1216,13 +1247,13 @@ function Chains() {
                                 roughness: 0.1
                             }, void 0, false, {
                                 fileName: "[project]/src/components/canvas/HeroScene.tsx",
-                                lineNumber: 600,
+                                lineNumber: 636,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/canvas/HeroScene.tsx",
-                        lineNumber: 598,
+                        lineNumber: 634,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("mesh", {
@@ -1241,7 +1272,7 @@ function Chains() {
                                 ]
                             }, void 0, false, {
                                 fileName: "[project]/src/components/canvas/HeroScene.tsx",
-                                lineNumber: 603,
+                                lineNumber: 639,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("meshStandardMaterial", {
@@ -1250,24 +1281,24 @@ function Chains() {
                                 roughness: 0.2
                             }, void 0, false, {
                                 fileName: "[project]/src/components/canvas/HeroScene.tsx",
-                                lineNumber: 604,
+                                lineNumber: 640,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/canvas/HeroScene.tsx",
-                        lineNumber: 602,
+                        lineNumber: 638,
                         columnNumber: 11
                     }, this)
                 ]
             }, i, true, {
                 fileName: "[project]/src/components/canvas/HeroScene.tsx",
-                lineNumber: 597,
+                lineNumber: 633,
                 columnNumber: 9
             }, this))
     }, void 0, false, {
         fileName: "[project]/src/components/canvas/HeroScene.tsx",
-        lineNumber: 595,
+        lineNumber: 631,
         columnNumber: 5
     }, this);
 }
@@ -1296,7 +1327,7 @@ function ParentSilhouettes() {
                         ]
                     }, void 0, false, {
                         fileName: "[project]/src/components/canvas/HeroScene.tsx",
-                        lineNumber: 616,
+                        lineNumber: 652,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("meshStandardMaterial", {
@@ -1308,13 +1339,13 @@ function ParentSilhouettes() {
                         opacity: 0.7
                     }, void 0, false, {
                         fileName: "[project]/src/components/canvas/HeroScene.tsx",
-                        lineNumber: 617,
+                        lineNumber: 653,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/canvas/HeroScene.tsx",
-                lineNumber: 615,
+                lineNumber: 651,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("mesh", {
@@ -1338,7 +1369,7 @@ function ParentSilhouettes() {
                         ]
                     }, void 0, false, {
                         fileName: "[project]/src/components/canvas/HeroScene.tsx",
-                        lineNumber: 628,
+                        lineNumber: 664,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("meshStandardMaterial", {
@@ -1350,19 +1381,19 @@ function ParentSilhouettes() {
                         opacity: 0.7
                     }, void 0, false, {
                         fileName: "[project]/src/components/canvas/HeroScene.tsx",
-                        lineNumber: 629,
+                        lineNumber: 665,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/canvas/HeroScene.tsx",
-                lineNumber: 627,
+                lineNumber: 663,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/canvas/HeroScene.tsx",
-        lineNumber: 614,
+        lineNumber: 650,
         columnNumber: 5
     }, this);
 }
@@ -1374,7 +1405,7 @@ function MoonBeam() {
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$react$2d$three$2f$fiber$2f$dist$2f$events$2d$f8cd670d$2e$esm$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__D__as__useFrame$3e$__["useFrame"])({
         "MoonBeam.useFrame": (state)=>{
             if (volumeRef.current) {
-                volumeRef.current.rotation.z = state.clock.elapsedTime * 0.1;
+                volumeRef.current.rotation.z = state.clock.elapsedTime * 0.06;
             }
         }
     }["MoonBeam.useFrame"]);
@@ -1388,7 +1419,7 @@ function MoonBeam() {
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("spotLight", {
                 ref: beamRef,
                 color: "#9fc7ff",
-                intensity: 0.3,
+                intensity: 0.28,
                 distance: 6,
                 angle: Math.PI / 8,
                 penumbra: 0.8,
@@ -1400,7 +1431,7 @@ function MoonBeam() {
                 ]
             }, void 0, false, {
                 fileName: "[project]/src/components/canvas/HeroScene.tsx",
-                lineNumber: 654,
+                lineNumber: 690,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("mesh", {
@@ -1422,29 +1453,29 @@ function MoonBeam() {
                         ]
                     }, void 0, false, {
                         fileName: "[project]/src/components/canvas/HeroScene.tsx",
-                        lineNumber: 666,
+                        lineNumber: 702,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("meshBasicMaterial", {
                         color: "#9fc7ff",
                         transparent: true,
                         opacity: 0.1,
-                        side: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$three$2f$build$2f$three$2e$core$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["BackSide"]
+                        side: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$three$2f$build$2f$three$2e$module$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__.BackSide
                     }, void 0, false, {
                         fileName: "[project]/src/components/canvas/HeroScene.tsx",
-                        lineNumber: 667,
+                        lineNumber: 703,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/canvas/HeroScene.tsx",
-                lineNumber: 665,
+                lineNumber: 701,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/canvas/HeroScene.tsx",
-        lineNumber: 653,
+        lineNumber: 689,
         columnNumber: 5
     }, this);
 }
@@ -1454,10 +1485,11 @@ _s11(MoonBeam, "Dd/3IGyrDu95T6dV1a+dsZ06wPA=", false, function() {
     ];
 });
 _c13 = MoonBeam;
-function DustParticles({ isReducedMotion }) {
+/* -------------------- DustParticles (reduced + throttled) -------------------- */ function DustParticles({ isReducedMotion }) {
     _s12();
     const particlesRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(null);
-    const count = 150;
+    const count = 100 // reduced from 150
+    ;
     const particles = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useMemo"])({
         "DustParticles.useMemo[particles]": ()=>{
             const positions = new Float32Array(count * 3);
@@ -1486,15 +1518,20 @@ function DustParticles({ isReducedMotion }) {
     }["DustParticles.useMemo[particles]"], [
         count
     ]);
+    const frameSkipRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(0);
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$react$2d$three$2f$fiber$2f$dist$2f$events$2d$f8cd670d$2e$esm$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__D__as__useFrame$3e$__["useFrame"])({
         "DustParticles.useFrame": (state)=>{
-            if (particlesRef.current?.geometry && !isReducedMotion) {
+            // skip updates if reduced motion
+            if (isReducedMotion) return;
+            frameSkipRef.current = (frameSkipRef.current + 1) % 2;
+            if (frameSkipRef.current !== 0) return;
+            if (particlesRef.current?.geometry) {
                 const time = state.clock.elapsedTime;
                 const positions = particlesRef.current.geometry.attributes.position.array;
                 for(let i = 0; i < count; i++){
                     const i3 = i * 3;
                     const phase = particles.phases[i];
-                    positions[i3 + 1] += Math.sin(time + phase) * 0.001;
+                    positions[i3 + 1] += Math.sin(time + phase) * 0.0012;
                 }
                 particlesRef.current.geometry.attributes.position.needsUpdate = true;
             }
@@ -1512,7 +1549,7 @@ function DustParticles({ isReducedMotion }) {
                         itemSize: 3
                     }, void 0, false, {
                         fileName: "[project]/src/components/canvas/HeroScene.tsx",
-                        lineNumber: 724,
+                        lineNumber: 768,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("bufferAttribute", {
@@ -1522,7 +1559,7 @@ function DustParticles({ isReducedMotion }) {
                         itemSize: 3
                     }, void 0, false, {
                         fileName: "[project]/src/components/canvas/HeroScene.tsx",
-                        lineNumber: 730,
+                        lineNumber: 774,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("bufferAttribute", {
@@ -1532,13 +1569,13 @@ function DustParticles({ isReducedMotion }) {
                         itemSize: 1
                     }, void 0, false, {
                         fileName: "[project]/src/components/canvas/HeroScene.tsx",
-                        lineNumber: 736,
+                        lineNumber: 780,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/canvas/HeroScene.tsx",
-                lineNumber: 723,
+                lineNumber: 767,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("pointsMaterial", {
@@ -1549,17 +1586,17 @@ function DustParticles({ isReducedMotion }) {
                 sizeAttenuation: true
             }, void 0, false, {
                 fileName: "[project]/src/components/canvas/HeroScene.tsx",
-                lineNumber: 743,
+                lineNumber: 787,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/canvas/HeroScene.tsx",
-        lineNumber: 722,
+        lineNumber: 766,
         columnNumber: 5
     }, this);
 }
-_s12(DustParticles, "6U3X4nuEaYm1tAaVFlZXvVGwQm4=", false, function() {
+_s12(DustParticles, "cb/BHQONO8zcjNHCCLlXs/DBM1s=", false, function() {
     return [
         __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$react$2d$three$2f$fiber$2f$dist$2f$events$2d$f8cd670d$2e$esm$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__D__as__useFrame$3e$__["useFrame"]
     ];
@@ -1575,7 +1612,16 @@ function HeroScene({ isReducedMotion }) {
             ],
             fov: 50
         },
-        shadows: true,
+        // Performance-oriented settings:
+        dpr: [
+            1,
+            1.5
+        ],
+        gl: {
+            antialias: false,
+            powerPreference: 'high-performance'
+        },
+        shadows: false,
         style: {
             background: 'transparent'
         },
@@ -1584,7 +1630,7 @@ function HeroScene({ isReducedMotion }) {
                 isReducedMotion: isReducedMotion
             }, void 0, false, {
                 fileName: "[project]/src/components/canvas/HeroScene.tsx",
-                lineNumber: 761,
+                lineNumber: 809,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$react$2d$three$2f$drei$2f$core$2f$OrbitControls$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["OrbitControls"], {
@@ -1597,40 +1643,47 @@ function HeroScene({ isReducedMotion }) {
                 enabled: false
             }, void 0, false, {
                 fileName: "[project]/src/components/canvas/HeroScene.tsx",
-                lineNumber: 763,
+                lineNumber: 811,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$react$2d$three$2f$postprocessing$2f$dist$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["EffectComposer"], {
                 children: [
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$react$2d$three$2f$postprocessing$2f$dist$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Bloom"], {
-                        intensity: 1.5,
-                        luminanceThreshold: 0.3,
+                        intensity: 0.9,
+                        luminanceThreshold: 0.35,
                         luminanceSmoothing: 0.9,
-                        height: 300
+                        height: 180
                     }, void 0, false, {
                         fileName: "[project]/src/components/canvas/HeroScene.tsx",
-                        lineNumber: 774,
+                        lineNumber: 823,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$react$2d$three$2f$postprocessing$2f$dist$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Vignette"], {
                         eskil: false,
-                        offset: 0.15,
-                        darkness: 0.8
+                        offset: 0.12,
+                        darkness: 0.6
                     }, void 0, false, {
                         fileName: "[project]/src/components/canvas/HeroScene.tsx",
-                        lineNumber: 780,
+                        lineNumber: 829,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/canvas/HeroScene.tsx",
-                lineNumber: 773,
+                lineNumber: 822,
+                columnNumber: 7
+            }, this),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$react$2d$three$2f$drei$2f$core$2f$Environment$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Environment"], {
+                preset: "park"
+            }, void 0, false, {
+                fileName: "[project]/src/components/canvas/HeroScene.tsx",
+                lineNumber: 833,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/canvas/HeroScene.tsx",
-        lineNumber: 756,
+        lineNumber: 801,
         columnNumber: 5
     }, this);
 }
