@@ -55,9 +55,7 @@ export default function Footer() {
           <div className="footer-bottom">
             {/* Copyright */}
             <div className="footer-copyright">
-              <span>© {currentYear} Codessey. Made with</span>
-              <Heart size={16} className="footer-heart" />
-              <span>& creativity by MANYA SHUKLA.</span>
+             
             </div>
 
             {/* Footer Links */}

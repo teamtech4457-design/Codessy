@@ -2,7 +2,6 @@
 "[project]/src/components/canvas/MeadowScene.tsx [app-client] (ecmascript)", ((__turbopack_context__) => {
 "use strict";
 
-// components/canvas/MeadowScene.tsx
 __turbopack_context__.s([
     "default",
     ()=>MeadowScene
@@ -11,370 +10,881 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$react$2d$three$2f$fiber$2f$dist$2f$react$2d$three$2d$fiber$2e$esm$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__ = __turbopack_context__.i("[project]/node_modules/@react-three/fiber/dist/react-three-fiber.esm.js [app-client] (ecmascript) <locals>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$react$2d$three$2f$fiber$2f$dist$2f$events$2d$f8cd670d$2e$esm$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__D__as__useFrame$3e$__ = __turbopack_context__.i("[project]/node_modules/@react-three/fiber/dist/events-f8cd670d.esm.js [app-client] (ecmascript) <export D as useFrame>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$react$2d$three$2f$fiber$2f$dist$2f$events$2d$f8cd670d$2e$esm$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__C__as__useThree$3e$__ = __turbopack_context__.i("[project]/node_modules/@react-three/fiber/dist/events-f8cd670d.esm.js [app-client] (ecmascript) <export C as useThree>");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$react$2d$three$2f$drei$2f$core$2f$OrbitControls$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/@react-three/drei/core/OrbitControls.js [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$react$2d$three$2f$drei$2f$core$2f$Environment$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/@react-three/drei/core/Environment.js [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$react$2d$three$2f$drei$2f$core$2f$Sparkles$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/@react-three/drei/core/Sparkles.js [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$react$2d$three$2f$postprocessing$2f$dist$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/@react-three/postprocessing/dist/index.js [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/compiled/react/index.js [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$three$2f$build$2f$three$2e$core$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/three/build/three.core.js [app-client] (ecmascript)");
 ;
-var _s = __turbopack_context__.k.signature(), _s1 = __turbopack_context__.k.signature(), _s2 = __turbopack_context__.k.signature(), _s3 = __turbopack_context__.k.signature(), _s4 = __turbopack_context__.k.signature(), _s5 = __turbopack_context__.k.signature(), _s6 = __turbopack_context__.k.signature(), _s7 = __turbopack_context__.k.signature(), _s8 = __turbopack_context__.k.signature(), _s9 = __turbopack_context__.k.signature(), _s10 = __turbopack_context__.k.signature(), _s11 = __turbopack_context__.k.signature();
+var _s = __turbopack_context__.k.signature(), _s1 = __turbopack_context__.k.signature(), _s2 = __turbopack_context__.k.signature(), _s3 = __turbopack_context__.k.signature(), _s4 = __turbopack_context__.k.signature(), _s5 = __turbopack_context__.k.signature(), _s6 = __turbopack_context__.k.signature(), _s7 = __turbopack_context__.k.signature(), _s8 = __turbopack_context__.k.signature(), _s9 = __turbopack_context__.k.signature(), _s10 = __turbopack_context__.k.signature(), _s11 = __turbopack_context__.k.signature(), _s12 = __turbopack_context__.k.signature(), _s13 = __turbopack_context__.k.signature(), _s14 = __turbopack_context__.k.signature(), _s15 = __turbopack_context__.k.signature(), _s16 = __turbopack_context__.k.signature(), _s17 = __turbopack_context__.k.signature(), _s18 = __turbopack_context__.k.signature(), _s19 = __turbopack_context__.k.signature(), _s20 = __turbopack_context__.k.signature(), _s21 = __turbopack_context__.k.signature(), _s22 = __turbopack_context__.k.signature();
 'use client';
 ;
 ;
 ;
 ;
 ;
-function SceneManager({ isReducedMotion }) {
+/* -------------------- GLOBAL PERFORMANCE TUNING -------------------- */ // How many render frames to skip between heavy update runs.
+// Increase this to reduce CPU/GPU usage further (animations remain similar but less smooth).
+const FRAME_SKIP = 2;
+/* -------------------- 3D Glowing Sparkles Component -------------------- */ const ThreeDGlowingSparkles = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["memo"])(_s(({ phase })=>{
     _s();
-    const { scene } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$react$2d$three$2f$fiber$2f$dist$2f$events$2d$f8cd670d$2e$esm$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__C__as__useThree$3e$__["useThree"])();
-    const [currentPhase, setCurrentPhase] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(0) // 0: Transition (10s), 1: Static background
-    ;
-    const animationStartTime = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(0);
+    const groupRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(null);
+    const frameRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(0);
+    // Create multiple sparkle objects with different properties
+    const sparkles = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useMemo"])({
+        "ThreeDGlowingSparkles.useMemo[sparkles]": ()=>{
+            return Array.from({
+                length: 25
+            }).map({
+                "ThreeDGlowingSparkles.useMemo[sparkles]": (_, i)=>({
+                        id: i,
+                        position: [
+                            (Math.random() - 0.5) * 20,
+                            (Math.random() - 0.5) * 15,
+                            (Math.random() - 0.5) * 15 - 5
+                        ],
+                        scale: 0.3 + Math.random() * 0.5,
+                        speed: 0.3 + Math.random() * 0.5,
+                        rotationSpeed: 0.2 + Math.random() * 0.4,
+                        orbitRadius: 2 + Math.random() * 3,
+                        color: [
+                            '#ffd700',
+                            '#ffed4a',
+                            '#fff5cc',
+                            '#ffe4b5',
+                            '#ffa500'
+                        ][Math.floor(Math.random() * 5)],
+                        shape: [
+                            'star',
+                            'diamond',
+                            'octahedron'
+                        ][Math.floor(Math.random() * 3)]
+                    })
+            }["ThreeDGlowingSparkles.useMemo[sparkles]"]);
+        }
+    }["ThreeDGlowingSparkles.useMemo[sparkles]"], []);
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$react$2d$three$2f$fiber$2f$dist$2f$events$2d$f8cd670d$2e$esm$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__D__as__useFrame$3e$__["useFrame"])({
-        "SceneManager.useFrame": (state)=>{
-            if (animationStartTime.current === 0) {
-                animationStartTime.current = state.clock.elapsedTime;
-            }
-            const elapsed = state.clock.elapsedTime - animationStartTime.current;
-            // After 10 seconds, switch to static background
-            if (elapsed > 10 && currentPhase === 0) {
-                setCurrentPhase(1);
-            }
+        "ThreeDGlowingSparkles.useFrame": ({ clock })=>{
+            // Throttle heavy per-child updates to every FRAME_SKIP frames
+            frameRef.current = (frameRef.current + 1) % FRAME_SKIP;
+            if (frameRef.current !== 0) return;
+            if (!groupRef.current) return;
+            const time = clock.elapsedTime;
+            groupRef.current.children.forEach({
+                "ThreeDGlowingSparkles.useFrame": (child, i)=>{
+                    const sparkle = sparkles[i];
+                    if (!sparkle) return;
+                    // Circular orbital movement
+                    const angle = time * sparkle.speed + i;
+                    child.position.x = sparkle.position[0] + Math.cos(angle) * sparkle.orbitRadius;
+                    child.position.y = sparkle.position[1] + Math.sin(time * sparkle.speed * 0.5 + i) * 2;
+                    child.position.z = sparkle.position[2] + Math.sin(angle) * sparkle.orbitRadius;
+                    // Rotation for sparkle effect
+                    child.rotation.x = time * sparkle.rotationSpeed;
+                    child.rotation.y = time * sparkle.rotationSpeed * 1.5;
+                    child.rotation.z = time * sparkle.rotationSpeed * 0.7;
+                    // Pulsing scale effect
+                    const pulse = Math.sin(time * 2 + i) * 0.2 + 1;
+                    child.scale.setScalar(sparkle.scale * pulse);
+                }
+            }["ThreeDGlowingSparkles.useFrame"]);
         }
-    }["SceneManager.useFrame"]);
-    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
-        "SceneManager.useEffect": ()=>{
-            // Set background to Krishna image after transition
-            if (currentPhase === 1) {
-                const loader = new __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$three$2f$build$2f$three$2e$core$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TextureLoader"]();
-                loader.load('/krishna-playing.jpg.png', {
-                    "SceneManager.useEffect": (texture)=>{
-                        scene.background = texture;
-                        texture.colorSpace = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$three$2f$build$2f$three$2e$core$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SRGBColorSpace"];
-                    }
-                }["SceneManager.useEffect"], undefined, {
-                    "SceneManager.useEffect": (error)=>{
-                        console.error('Error loading texture:', error);
-                        scene.background = new __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$three$2f$build$2f$three$2e$core$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Color"](0x1a237e);
-                    }
-                }["SceneManager.useEffect"]);
-            } else {
-                scene.background = null;
-            }
-        }
-    }["SceneManager.useEffect"], [
-        currentPhase,
-        scene
-    ]);
-    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Fragment"], {
-        children: [
-            currentPhase === 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Fragment"], {
+    }["ThreeDGlowingSparkles.useFrame"]);
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("group", {
+        ref: groupRef,
+        children: sparkles.map((sparkle, i)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("mesh", {
+                position: sparkle.position,
                 children: [
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(TransitionEnvironment, {}, void 0, false, {
-                        fileName: "[project]/src/components/canvas/MeadowScene.tsx",
-                        lineNumber: 58,
-                        columnNumber: 11
-                    }, this),
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(ButterDrops, {
-                        isAnimating: true
+                    sparkle.shape === 'star' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("octahedronGeometry", {
+                        args: [
+                            0.4,
+                            0
+                        ]
                     }, void 0, false, {
                         fileName: "[project]/src/components/canvas/MeadowScene.tsx",
-                        lineNumber: 59,
-                        columnNumber: 11
-                    }, this),
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(MusicDrops, {
-                        isAnimating: true
+                        lineNumber: 72,
+                        columnNumber: 40
+                    }, ("TURBOPACK compile-time value", void 0)),
+                    sparkle.shape === 'diamond' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("tetrahedronGeometry", {
+                        args: [
+                            0.4,
+                            0
+                        ]
                     }, void 0, false, {
                         fileName: "[project]/src/components/canvas/MeadowScene.tsx",
-                        lineNumber: 60,
-                        columnNumber: 11
-                    }, this),
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(GopiDrops, {
-                        isAnimating: true
+                        lineNumber: 73,
+                        columnNumber: 43
+                    }, ("TURBOPACK compile-time value", void 0)),
+                    sparkle.shape === 'octahedron' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("octahedronGeometry", {
+                        args: [
+                            0.3,
+                            1
+                        ]
                     }, void 0, false, {
                         fileName: "[project]/src/components/canvas/MeadowScene.tsx",
-                        lineNumber: 61,
-                        columnNumber: 11
-                    }, this),
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(DivineDrops, {
-                        isAnimating: true
+                        lineNumber: 74,
+                        columnNumber: 46
+                    }, ("TURBOPACK compile-time value", void 0)),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("meshStandardMaterial", {
+                        color: sparkle.color,
+                        emissive: sparkle.color,
+                        emissiveIntensity: 2,
+                        metalness: 0.8,
+                        roughness: 0.2,
+                        transparent: true,
+                        opacity: 0.9
                     }, void 0, false, {
                         fileName: "[project]/src/components/canvas/MeadowScene.tsx",
-                        lineNumber: 62,
+                        lineNumber: 75,
                         columnNumber: 11
-                    }, this),
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(FallingButterDrops, {
-                        isAnimating: true
-                    }, void 0, false, {
-                        fileName: "[project]/src/components/canvas/MeadowScene.tsx",
-                        lineNumber: 63,
-                        columnNumber: 11
-                    }, this),
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(SprinkleDrops, {
-                        isAnimating: true
-                    }, void 0, false, {
-                        fileName: "[project]/src/components/canvas/MeadowScene.tsx",
-                        lineNumber: 64,
-                        columnNumber: 11
-                    }, this),
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(TransitionSparkles, {
-                        isReducedMotion: isReducedMotion
-                    }, void 0, false, {
-                        fileName: "[project]/src/components/canvas/MeadowScene.tsx",
-                        lineNumber: 65,
-                        columnNumber: 11
-                    }, this)
+                    }, ("TURBOPACK compile-time value", void 0))
                 ]
-            }, void 0, true),
-            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(ButterDrops, {
-                isAnimating: currentPhase === 0
-            }, void 0, false, {
-                fileName: "[project]/src/components/canvas/MeadowScene.tsx",
-                lineNumber: 70,
-                columnNumber: 7
-            }, this),
-            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(MusicDrops, {
-                isAnimating: currentPhase === 0
-            }, void 0, false, {
+            }, i, true, {
                 fileName: "[project]/src/components/canvas/MeadowScene.tsx",
                 lineNumber: 71,
-                columnNumber: 7
-            }, this),
-            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(CameraController, {
-                isReducedMotion: isReducedMotion,
-                phase: currentPhase
-            }, void 0, false, {
-                fileName: "[project]/src/components/canvas/MeadowScene.tsx",
-                lineNumber: 73,
-                columnNumber: 7
-            }, this)
-        ]
-    }, void 0, true);
-}
-_s(SceneManager, "VdeIuRHeXO+Tsawj/C7tx4Rq6Vs=", false, function() {
+                columnNumber: 9
+            }, ("TURBOPACK compile-time value", void 0)))
+    }, void 0, false, {
+        fileName: "[project]/src/components/canvas/MeadowScene.tsx",
+        lineNumber: 69,
+        columnNumber: 5
+    }, ("TURBOPACK compile-time value", void 0));
+}, "qZWwduIud8b3bEOTTk70fuxpGuA=", false, function() {
     return [
-        __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$react$2d$three$2f$fiber$2f$dist$2f$events$2d$f8cd670d$2e$esm$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__C__as__useThree$3e$__["useThree"],
         __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$react$2d$three$2f$fiber$2f$dist$2f$events$2d$f8cd670d$2e$esm$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__D__as__useFrame$3e$__["useFrame"]
     ];
-});
-_c = SceneManager;
-// NEW: Sprinkle Drops Component - Only shows during 10-second transition
-function SprinkleDrops({ isAnimating }) {
+}));
+_c = ThreeDGlowingSparkles;
+/* -------------------- Background Image Component -------------------- */ function BackgroundImage() {
     _s1();
-    const sprinklesRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(null);
-    const sprinkleCount = 50;
-    const { positions, colors, sizes, velocities } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useMemo"])({
-        "SprinkleDrops.useMemo": ()=>{
-            const positions = new Float32Array(sprinkleCount * 3);
-            const colors = new Float32Array(sprinkleCount * 3);
-            const sizes = new Float32Array(sprinkleCount);
-            const velocities = new Float32Array(sprinkleCount * 3);
-            for(let i = 0; i < sprinkleCount; i++){
-                const i3 = i * 3;
-                // Start positions - spread around the scene
-                positions[i3] = (Math.random() - 0.5) * 25;
-                positions[i3 + 1] = Math.random() * 15 + 5; // Start above the scene
-                positions[i3 + 2] = (Math.random() - 0.5) * 20;
-                // Random velocities - falling with some horizontal movement
-                velocities[i3] = (Math.random() - 0.5) * 0.02; // X velocity
-                velocities[i3 + 1] = -0.05 - Math.random() * 0.03; // Y velocity (falling)
-                velocities[i3 + 2] = (Math.random() - 0.5) * 0.02; // Z velocity
-                // Color variations - golden, white, and light blue sprinkles
-                const colorType = Math.random();
-                if (colorType < 0.6) {
-                    // Golden sprinkles (60%)
-                    colors[i3] = 1.0;
-                    colors[i3 + 1] = 0.9;
-                    colors[i3 + 2] = 0.3;
-                } else if (colorType < 0.8) {
-                    // White sprinkles (20%)
-                    colors[i3] = 1.0;
-                    colors[i3 + 1] = 1.0;
-                    colors[i3 + 2] = 1.0;
-                } else {
-                    // Light blue sprinkles (20%)
-                    colors[i3] = 0.6;
-                    colors[i3 + 1] = 0.8;
-                    colors[i3 + 2] = 1.0;
+    const { scene } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$react$2d$three$2f$fiber$2f$dist$2f$events$2d$f8cd670d$2e$esm$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__C__as__useThree$3e$__["useThree"])();
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
+        "BackgroundImage.useEffect": ()=>{
+            const loader = new __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$three$2f$build$2f$three$2e$core$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TextureLoader"]();
+            loader.load('/krishna-playing.jpg.png', {
+                "BackgroundImage.useEffect": (texture)=>{
+                    texture.colorSpace = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$three$2f$build$2f$three$2e$core$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SRGBColorSpace"];
+                    // Only set background if we're still in the background phase
+                    scene.background = texture;
                 }
-                // Random sizes
-                sizes[i] = Math.random() * 0.04 + 0.02;
-            }
-            return {
-                positions,
-                colors,
-                sizes,
-                velocities
-            };
+            }["BackgroundImage.useEffect"], undefined, {
+                "BackgroundImage.useEffect": ()=>{
+                    // Fallback to black instead of blue during transitions
+                    scene.background = new __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$three$2f$build$2f$three$2e$core$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Color"](0x000000);
+                }
+            }["BackgroundImage.useEffect"]);
+            // Cleanup function to clear background when component unmounts
+            return ({
+                "BackgroundImage.useEffect": ()=>{
+                    scene.background = null;
+                }
+            })["BackgroundImage.useEffect"];
         }
-    }["SprinkleDrops.useMemo"], [
-        sprinkleCount
+    }["BackgroundImage.useEffect"], [
+        scene
     ]);
+    return null;
+}
+_s1(BackgroundImage, "UhCC8wDD2cMyItT8qLKLhYRbhzM=", false, function() {
+    return [
+        __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$react$2d$three$2f$fiber$2f$dist$2f$events$2d$f8cd670d$2e$esm$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__C__as__useThree$3e$__["useThree"]
+    ];
+});
+_c1 = BackgroundImage;
+/* -------------------- Golden Boom Transition -------------------- */ function GoldenBoomTransition({ onComplete }) {
+    _s2();
+    const lightRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(null);
+    const sphereRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(null);
+    const [intensity, setIntensity] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(0);
+    const startTime = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(null);
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$react$2d$three$2f$fiber$2f$dist$2f$events$2d$f8cd670d$2e$esm$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__D__as__useFrame$3e$__["useFrame"])({
-        "SprinkleDrops.useFrame": (state)=>{
-            if (sprinklesRef.current?.geometry && isAnimating) {
-                const time = state.clock.elapsedTime;
-                const positions = sprinklesRef.current.geometry.attributes.position.array;
-                for(let i = 0; i < sprinkleCount; i++){
-                    const i3 = i * 3;
-                    // Apply velocity
-                    positions[i3] += velocities[i3];
-                    positions[i3 + 1] += velocities[i3 + 1];
-                    positions[i3 + 2] += velocities[i3 + 2];
-                    // Add subtle swaying motion
-                    positions[i3] += Math.sin(time * 3 + i) * 0.002;
-                    positions[i3 + 2] += Math.cos(time * 2 + i) * 0.002;
-                    // Add slight rotation effect
-                    const rotation = time * 0.5 + i;
-                    const radius = 0.1;
-                    positions[i3] += Math.sin(rotation) * radius * 0.01;
-                    positions[i3 + 2] += Math.cos(rotation) * radius * 0.01;
-                    // Reset sprinkles that fall below the scene
-                    if (positions[i3 + 1] < -5) {
-                        positions[i3] = (Math.random() - 0.5) * 25;
-                        positions[i3 + 1] = Math.random() * 10 + 15; // Reset to top
-                        positions[i3 + 2] = (Math.random() - 0.5) * 20;
-                        // Reset velocity with some variation
-                        velocities[i3] = (Math.random() - 0.5) * 0.02;
-                        velocities[i3 + 1] = -0.05 - Math.random() * 0.03;
-                        velocities[i3 + 2] = (Math.random() - 0.5) * 0.02;
-                    }
-                    // Flickering effect - random opacity changes
-                    const material = sprinklesRef.current.material;
-                    if (Math.random() > 0.95) {
-                        material.opacity = 0.3 + Math.random() * 0.5;
-                    }
-                }
-                sprinklesRef.current.geometry.attributes.position.needsUpdate = true;
+        "GoldenBoomTransition.useFrame": ({ clock })=>{
+            if (startTime.current === null) startTime.current = clock.elapsedTime;
+            const elapsed = clock.elapsedTime - startTime.current;
+            // Boom animation: quick expansion then fade
+            if (elapsed < 0.5) {
+                // Expand quickly
+                const progress = elapsed / 0.5;
+                setIntensity(progress);
+            } else if (elapsed < 1.5) {
+                // Hold and fade
+                const progress = (elapsed - 0.5) / 1.0;
+                setIntensity(1 - progress);
+            } else {
+                // Complete
+                onComplete();
+            }
+            // Update light and sphere
+            if (lightRef.current) {
+                lightRef.current.intensity = intensity * 15;
+            }
+            if (sphereRef.current) {
+                sphereRef.current.scale.setScalar(intensity * 10);
+                const mat = sphereRef.current.material;
+                if (mat) mat.opacity = (1 - intensity) * 0.8;
             }
         }
-    }["SprinkleDrops.useFrame"]);
-    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("points", {
-        ref: sprinklesRef,
+    }["GoldenBoomTransition.useFrame"]);
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("group", {
         children: [
-            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("bufferGeometry", {
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("pointLight", {
+                ref: lightRef,
+                color: "#ffd700",
+                intensity: 0,
+                distance: 50
+            }, void 0, false, {
+                fileName: "[project]/src/components/canvas/MeadowScene.tsx",
+                lineNumber: 157,
+                columnNumber: 7
+            }, this),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("mesh", {
+                ref: sphereRef,
                 children: [
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("bufferAttribute", {
-                        attach: "attributes-position",
-                        count: sprinkleCount,
-                        array: positions,
-                        itemSize: 3
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("sphereGeometry", {
+                        args: [
+                            1,
+                            16,
+                            16
+                        ]
                     }, void 0, false, {
                         fileName: "[project]/src/components/canvas/MeadowScene.tsx",
-                        lineNumber: 177,
+                        lineNumber: 159,
                         columnNumber: 9
                     }, this),
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("bufferAttribute", {
-                        attach: "attributes-color",
-                        count: sprinkleCount,
-                        array: colors,
-                        itemSize: 3
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("meshBasicMaterial", {
+                        color: "#ffd700",
+                        transparent: true,
+                        opacity: 0.8,
+                        side: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$three$2f$build$2f$three$2e$core$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["BackSide"]
                     }, void 0, false, {
                         fileName: "[project]/src/components/canvas/MeadowScene.tsx",
-                        lineNumber: 183,
-                        columnNumber: 9
-                    }, this),
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("bufferAttribute", {
-                        attach: "attributes-size",
-                        count: sprinkleCount,
-                        array: sizes,
-                        itemSize: 1
-                    }, void 0, false, {
-                        fileName: "[project]/src/components/canvas/MeadowScene.tsx",
-                        lineNumber: 189,
+                        lineNumber: 160,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/canvas/MeadowScene.tsx",
-                lineNumber: 176,
+                lineNumber: 158,
                 columnNumber: 7
             }, this),
-            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("pointsMaterial", {
-                size: 0.06,
-                vertexColors: true,
-                transparent: true,
-                opacity: 0.8,
-                sizeAttenuation: true,
-                blending: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$three$2f$build$2f$three$2e$core$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["AdditiveBlending"]
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$react$2d$three$2f$drei$2f$core$2f$Sparkles$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Sparkles"], {
+                count: 150,
+                scale: 25,
+                size: 3,
+                speed: 0.2,
+                color: "#ffd700",
+                opacity: intensity
             }, void 0, false, {
                 fileName: "[project]/src/components/canvas/MeadowScene.tsx",
-                lineNumber: 196,
+                lineNumber: 162,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/canvas/MeadowScene.tsx",
-        lineNumber: 175,
+        lineNumber: 156,
         columnNumber: 5
     }, this);
 }
-_s1(SprinkleDrops, "fWjmGLVsLE5PXb3EnjKj6r5S4W0=", false, function() {
+_s2(GoldenBoomTransition, "bqQE3fZmCGi+GMaEmPzI7+HmWAo=", false, function() {
     return [
         __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$react$2d$three$2f$fiber$2f$dist$2f$events$2d$f8cd670d$2e$esm$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__D__as__useFrame$3e$__["useFrame"]
     ];
 });
-_c1 = SprinkleDrops;
-// Enhanced Transition Environment with animated elements
-function TransitionEnvironment() {
-    _s2();
-    const environmentRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(null);
-    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$react$2d$three$2f$fiber$2f$dist$2f$events$2d$f8cd670d$2e$esm$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__D__as__useFrame$3e$__["useFrame"])({
-        "TransitionEnvironment.useFrame": (state)=>{
-            if (environmentRef.current) {
-                const time = state.clock.elapsedTime;
-                // Gentle overall movement
-                environmentRef.current.rotation.y = Math.sin(time * 0.1) * 0.1;
-            }
-        }
-    }["TransitionEnvironment.useFrame"]);
-    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("group", {
-        ref: environmentRef,
-        children: [
-            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(AnimatedGround, {}, void 0, false, {
-                fileName: "[project]/src/components/canvas/MeadowScene.tsx",
-                lineNumber: 223,
-                columnNumber: 7
-            }, this),
-            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(FloatingTemples, {}, void 0, false, {
-                fileName: "[project]/src/components/canvas/MeadowScene.tsx",
-                lineNumber: 226,
-                columnNumber: 7
-            }, this),
-            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(DivineLights, {}, void 0, false, {
-                fileName: "[project]/src/components/canvas/MeadowScene.tsx",
-                lineNumber: 229,
-                columnNumber: 7
-            }, this)
-        ]
-    }, void 0, true, {
-        fileName: "[project]/src/components/canvas/MeadowScene.tsx",
-        lineNumber: 221,
-        columnNumber: 5
-    }, this);
-}
-_s2(TransitionEnvironment, "8iDrtWGoogruFDMDtz5bFqHoniY=", false, function() {
-    return [
-        __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$react$2d$three$2f$fiber$2f$dist$2f$events$2d$f8cd670d$2e$esm$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__D__as__useFrame$3e$__["useFrame"]
-    ];
-});
-_c2 = TransitionEnvironment;
-function AnimatedGround() {
+_c2 = GoldenBoomTransition;
+/* -------------------- Scene Manager with 15-second Loop -------------------- */ const SceneManager = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["memo"])(_s3(({ isReducedMotion })=>{
     _s3();
-    const groundRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(null);
+    const { scene } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$react$2d$three$2f$fiber$2f$dist$2f$events$2d$f8cd670d$2e$esm$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__C__as__useThree$3e$__["useThree"])();
+    const [currentPhase, setCurrentPhase] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(0);
+    const [showBoom, setShowBoom] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
+    const [showBackground, setShowBackground] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
+    const [loopCount, setLoopCount] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(0);
+    const [isTransitioning, setIsTransitioning] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
+    const startTime = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(0);
+    const sceneDuration = 12 // Scene duration
+    ;
+    const boomDuration = 2 // Boom transition duration
+    ;
+    const backgroundDuration = 15 // 15 seconds for background display
+    ;
+    const loopInterval = sceneDuration + boomDuration + backgroundDuration // Total loop time
+    ;
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$react$2d$three$2f$fiber$2f$dist$2f$events$2d$f8cd670d$2e$esm$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__D__as__useFrame$3e$__["useFrame"])({
-        "AnimatedGround.useFrame": (state)=>{
-            if (groundRef.current) {
-                const time = state.clock.elapsedTime;
-                // Subtle pulsing effect
-                const material = groundRef.current.material;
-                material.emissiveIntensity = 0.1 + Math.sin(time * 2) * 0.05;
+        "SceneManager.useFrame": (state)=>{
+            if (!startTime.current) startTime.current = state.clock.elapsedTime;
+            const elapsed = state.clock.elapsedTime - startTime.current;
+            const currentLoopTime = elapsed % loopInterval;
+            // Calculate which phase we're in during the current loop
+            if (currentLoopTime < sceneDuration) {
+                // Scene phase
+                if (currentPhase !== 0) {
+                    setCurrentPhase(0);
+                    // Clear background when starting new scenes
+                    scene.background = null;
+                    setIsTransitioning(true);
+                }
+                setShowBackground(false);
+                setShowBoom(false);
+            } else if (currentLoopTime < sceneDuration + boomDuration) {
+                // Boom transition phase
+                if (!showBoom) {
+                    setShowBoom(true);
+                    setShowBackground(false);
+                    setCurrentPhase(1);
+                    // Clear background during boom transition
+                    scene.background = null;
+                    setIsTransitioning(true);
+                }
+            } else {
+                // Background phase (15 seconds)
+                if (showBoom) {
+                    setShowBoom(false);
+                }
+                if (!showBackground) {
+                    setShowBackground(true);
+                    setIsTransitioning(false);
+                }
+            }
+            // Track loop count (for internal logic only, not displayed)
+            const newLoopCount = Math.floor(elapsed / loopInterval);
+            if (newLoopCount !== loopCount) {
+                setLoopCount(newLoopCount);
+                // When loop restarts, ensure background is cleared
+                scene.background = null;
+                setIsTransitioning(true);
             }
         }
-    }["AnimatedGround.useFrame"]);
+    }["SceneManager.useFrame"]);
+    const handleBoomComplete = ()=>{
+        setShowBoom(false);
+        setShowBackground(true);
+        setIsTransitioning(false);
+    };
+    // Clear background when component unmounts or when transitioning
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
+        "SceneManager.useEffect": ()=>{
+            return ({
+                "SceneManager.useEffect": ()=>{
+                    scene.background = null;
+                }
+            })["SceneManager.useEffect"];
+        }
+    }["SceneManager.useEffect"], [
+        scene
+    ]);
+    // Set black background during transitions
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
+        "SceneManager.useEffect": ()=>{
+            if (isTransitioning && !showBackground) {
+                scene.background = new __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$three$2f$build$2f$three$2e$core$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Color"](0x000000);
+            }
+        }
+    }["SceneManager.useEffect"], [
+        isTransitioning,
+        showBackground,
+        scene
+    ]);
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Fragment"], {
+        children: [
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(ThreeDGlowingSparkles, {
+                phase: currentPhase
+            }, void 0, false, {
+                fileName: "[project]/src/components/canvas/MeadowScene.tsx",
+                lineNumber: 252,
+                columnNumber: 7
+            }, ("TURBOPACK compile-time value", void 0)),
+            showBoom && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(GoldenBoomTransition, {
+                onComplete: handleBoomComplete
+            }, void 0, false, {
+                fileName: "[project]/src/components/canvas/MeadowScene.tsx",
+                lineNumber: 255,
+                columnNumber: 20
+            }, ("TURBOPACK compile-time value", void 0)),
+            showBackground && !isTransitioning && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(BackgroundImage, {}, void 0, false, {
+                fileName: "[project]/src/components/canvas/MeadowScene.tsx",
+                lineNumber: 259,
+                columnNumber: 9
+            }, ("TURBOPACK compile-time value", void 0)),
+            !showBoom && !showBackground && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(TransitionScene, {
+                isReducedMotion: isReducedMotion
+            }, void 0, false, {
+                fileName: "[project]/src/components/canvas/MeadowScene.tsx",
+                lineNumber: 264,
+                columnNumber: 9
+            }, ("TURBOPACK compile-time value", void 0)),
+            showBackground && !isTransitioning && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(EnhancedBackgroundSparkles, {}, void 0, false, {
+                fileName: "[project]/src/components/canvas/MeadowScene.tsx",
+                lineNumber: 269,
+                columnNumber: 9
+            }, ("TURBOPACK compile-time value", void 0)),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(CameraController, {
+                phase: currentPhase,
+                isReducedMotion: isReducedMotion,
+                showBoom: showBoom,
+                showBackground: showBackground && !isTransitioning
+            }, void 0, false, {
+                fileName: "[project]/src/components/canvas/MeadowScene.tsx",
+                lineNumber: 272,
+                columnNumber: 7
+            }, ("TURBOPACK compile-time value", void 0))
+        ]
+    }, void 0, true);
+}, "3dFt+lQYPLDWm7fzyDUkkxqvEKU=", false, function() {
+    return [
+        __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$react$2d$three$2f$fiber$2f$dist$2f$events$2d$f8cd670d$2e$esm$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__C__as__useThree$3e$__["useThree"],
+        __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$react$2d$three$2f$fiber$2f$dist$2f$events$2d$f8cd670d$2e$esm$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__D__as__useFrame$3e$__["useFrame"]
+    ];
+}));
+_c3 = SceneManager;
+/* -------------------- Enhanced Background Sparkles -------------------- */ const EnhancedBackgroundSparkles = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["memo"])(_s4(()=>{
+    _s4();
+    const sparklesRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(null);
+    const frameRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(0);
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$react$2d$three$2f$fiber$2f$dist$2f$events$2d$f8cd670d$2e$esm$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__D__as__useFrame$3e$__["useFrame"])({
+        "EnhancedBackgroundSparkles.useFrame": ({ clock })=>{
+            frameRef.current = (frameRef.current + 1) % FRAME_SKIP;
+            if (frameRef.current !== 0) return;
+            if (sparklesRef.current) {
+                const time = clock.elapsedTime;
+                sparklesRef.current.position.y = Math.sin(time * 0.1) * 0.5;
+                sparklesRef.current.rotation.y = time * 0.05;
+            }
+        }
+    }["EnhancedBackgroundSparkles.useFrame"]);
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Fragment"], {
+        children: [
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$react$2d$three$2f$drei$2f$core$2f$Sparkles$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Sparkles"], {
+                ref: sparklesRef,
+                count: 80,
+                scale: [
+                    30,
+                    20,
+                    30
+                ],
+                size: 3,
+                speed: 0.6,
+                color: "#ffd700",
+                opacity: 1,
+                position: [
+                    0,
+                    0,
+                    0
+                ]
+            }, void 0, false, {
+                fileName: "[project]/src/components/canvas/MeadowScene.tsx",
+                lineNumber: 300,
+                columnNumber: 7
+            }, ("TURBOPACK compile-time value", void 0)),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$react$2d$three$2f$drei$2f$core$2f$Sparkles$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Sparkles"], {
+                count: 40,
+                scale: [
+                    25,
+                    15,
+                    25
+                ],
+                size: 1.5,
+                speed: 0.3,
+                color: "#ffffff",
+                opacity: 0.7,
+                position: [
+                    0,
+                    5,
+                    0
+                ]
+            }, void 0, false, {
+                fileName: "[project]/src/components/canvas/MeadowScene.tsx",
+                lineNumber: 310,
+                columnNumber: 7
+            }, ("TURBOPACK compile-time value", void 0))
+        ]
+    }, void 0, true);
+}, "3dyodwp3fw+lWLhhS9S8uJJwvkk=", false, function() {
+    return [
+        __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$react$2d$three$2f$fiber$2f$dist$2f$events$2d$f8cd670d$2e$esm$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__D__as__useFrame$3e$__["useFrame"]
+    ];
+}));
+_c4 = EnhancedBackgroundSparkles;
+/* -------------------- Enhanced Moving Sparkles Component -------------------- */ const MovingSparkles = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["memo"])(_s5(({ phase, count, scale, size, speed, color, opacity, position, movementType = "circular", speedMultiplier = 1 })=>{
+    _s5();
+    const sparklesRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(null);
+    const frameRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(0);
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$react$2d$three$2f$fiber$2f$dist$2f$events$2d$f8cd670d$2e$esm$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__D__as__useFrame$3e$__["useFrame"])({
+        "MovingSparkles.useFrame": ({ clock })=>{
+            frameRef.current = (frameRef.current + 1) % FRAME_SKIP;
+            if (frameRef.current !== 0) return;
+            if (!sparklesRef.current) return;
+            const time = clock.elapsedTime * speedMultiplier;
+            switch(movementType){
+                case "circular":
+                    sparklesRef.current.position.x = Math.sin(time * 0.4) * 4;
+                    sparklesRef.current.position.z = Math.cos(time * 0.4) * 4;
+                    sparklesRef.current.rotation.y = time * 0.2;
+                    break;
+                case "vertical":
+                    sparklesRef.current.position.y = Math.sin(time * 0.25) * 3;
+                    sparklesRef.current.rotation.x = time * 0.15;
+                    break;
+                case "diagonal":
+                    sparklesRef.current.position.x = Math.sin(time * 0.3) * 3;
+                    sparklesRef.current.position.y = Math.cos(time * 0.3) * 2;
+                    sparklesRef.current.position.z = Math.sin(time * 0.25) * 3;
+                    break;
+                case "wave":
+                    sparklesRef.current.position.x = Math.sin(time * 0.5) * 3;
+                    sparklesRef.current.position.y = Math.sin(time * 0.4) * 2;
+                    sparklesRef.current.rotation.z = time * 0.18;
+                    break;
+                case "spiral":
+                    sparklesRef.current.position.x = Math.sin(time * 0.6) * 2;
+                    sparklesRef.current.position.y = time % 4 - 2;
+                    sparklesRef.current.position.z = Math.cos(time * 0.6) * 2;
+                    sparklesRef.current.rotation.y = time * 0.3;
+                    break;
+                default:
+                    sparklesRef.current.position.y = Math.sin(time * 0.2) * 2;
+                    break;
+            }
+        }
+    }["MovingSparkles.useFrame"]);
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$react$2d$three$2f$drei$2f$core$2f$Sparkles$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Sparkles"], {
+        ref: sparklesRef,
+        count: count,
+        scale: scale,
+        size: size,
+        speed: speed,
+        color: color,
+        opacity: opacity,
+        position: position
+    }, void 0, false, {
+        fileName: "[project]/src/components/canvas/MeadowScene.tsx",
+        lineNumber: 385,
+        columnNumber: 5
+    }, ("TURBOPACK compile-time value", void 0));
+}, "3dyodwp3fw+lWLhhS9S8uJJwvkk=", false, function() {
+    return [
+        __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$react$2d$three$2f$fiber$2f$dist$2f$events$2d$f8cd670d$2e$esm$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__D__as__useFrame$3e$__["useFrame"]
+    ];
+}));
+_c5 = MovingSparkles;
+/* -------------------- Enhanced Transition Sparkles -------------------- */ const TransitionSparkles = ({ isReducedMotion })=>{
+    _s6();
+    const transitionSparklesRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(null);
+    const giantTransitionSparklesRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(null);
+    const frameRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(0);
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$react$2d$three$2f$fiber$2f$dist$2f$events$2d$f8cd670d$2e$esm$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__D__as__useFrame$3e$__["useFrame"])({
+        "TransitionSparkles.useFrame": ({ clock })=>{
+            frameRef.current = (frameRef.current + 1) % FRAME_SKIP;
+            if (frameRef.current !== 0) return;
+            const time = clock.elapsedTime;
+            if (transitionSparklesRef.current) {
+                transitionSparklesRef.current.position.y = Math.sin(time * 0.4) * 1.5;
+                transitionSparklesRef.current.rotation.y = time * 0.25;
+            }
+            if (giantTransitionSparklesRef.current) {
+                giantTransitionSparklesRef.current.position.x = Math.cos(time * 0.2) * 3;
+                giantTransitionSparklesRef.current.position.z = Math.sin(time * 0.2) * 3;
+            }
+        }
+    }["TransitionSparkles.useFrame"]);
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Fragment"], {
+        children: [
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$react$2d$three$2f$drei$2f$core$2f$Sparkles$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Sparkles"], {
+                ref: transitionSparklesRef,
+                count: isReducedMotion ? 25 : 50,
+                scale: 15,
+                size: 2.0,
+                speed: 0.4,
+                color: "#fef3c7"
+            }, void 0, false, {
+                fileName: "[project]/src/components/canvas/MeadowScene.tsx",
+                lineNumber: 423,
+                columnNumber: 7
+            }, ("TURBOPACK compile-time value", void 0)),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$react$2d$three$2f$drei$2f$core$2f$Sparkles$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Sparkles"], {
+                ref: giantTransitionSparklesRef,
+                count: isReducedMotion ? 8 : 15,
+                scale: 20,
+                size: 8,
+                speed: 0.3,
+                color: "#ffd700",
+                opacity: 0.9,
+                position: [
+                    0,
+                    4,
+                    0
+                ]
+            }, void 0, false, {
+                fileName: "[project]/src/components/canvas/MeadowScene.tsx",
+                lineNumber: 432,
+                columnNumber: 7
+            }, ("TURBOPACK compile-time value", void 0)),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(MovingSparkles, {
+                phase: 1,
+                count: isReducedMotion ? 20 : 35,
+                scale: 12,
+                size: 1.5,
+                speed: 0.6,
+                color: "#ffd700",
+                opacity: 0.6,
+                position: [
+                    0,
+                    2,
+                    0
+                ],
+                movementType: "circular",
+                speedMultiplier: 1.5
+            }, void 0, false, {
+                fileName: "[project]/src/components/canvas/MeadowScene.tsx",
+                lineNumber: 443,
+                columnNumber: 7
+            }, ("TURBOPACK compile-time value", void 0))
+        ]
+    }, void 0, true);
+};
+_s6(TransitionSparkles, "0FwN/Y3NX3tQ2jxYVrPh9iHqItw=", false, function() {
+    return [
+        __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$react$2d$three$2f$fiber$2f$dist$2f$events$2d$f8cd670d$2e$esm$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__D__as__useFrame$3e$__["useFrame"]
+    ];
+});
+_c6 = TransitionSparkles;
+/* -------------------- Transition Scene -------------------- */ const TransitionScene = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["memo"])(({ isReducedMotion })=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Fragment"], {
+        children: [
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(ThreeDEnvironment, {}, void 0, false, {
+                fileName: "[project]/src/components/canvas/MeadowScene.tsx",
+                lineNumber: 462,
+                columnNumber: 5
+            }, ("TURBOPACK compile-time value", void 0)),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(ButterDrops, {
+                isAnimating: true
+            }, void 0, false, {
+                fileName: "[project]/src/components/canvas/MeadowScene.tsx",
+                lineNumber: 463,
+                columnNumber: 5
+            }, ("TURBOPACK compile-time value", void 0)),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(MusicDrops, {
+                isAnimating: true
+            }, void 0, false, {
+                fileName: "[project]/src/components/canvas/MeadowScene.tsx",
+                lineNumber: 464,
+                columnNumber: 5
+            }, ("TURBOPACK compile-time value", void 0)),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(FloatingFlowers, {}, void 0, false, {
+                fileName: "[project]/src/components/canvas/MeadowScene.tsx",
+                lineNumber: 465,
+                columnNumber: 5
+            }, ("TURBOPACK compile-time value", void 0)),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(RotatingLotus, {}, void 0, false, {
+                fileName: "[project]/src/components/canvas/MeadowScene.tsx",
+                lineNumber: 466,
+                columnNumber: 5
+            }, ("TURBOPACK compile-time value", void 0)),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(DivineOrbs, {}, void 0, false, {
+                fileName: "[project]/src/components/canvas/MeadowScene.tsx",
+                lineNumber: 467,
+                columnNumber: 5
+            }, ("TURBOPACK compile-time value", void 0)),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(FlyingBirds, {}, void 0, false, {
+                fileName: "[project]/src/components/canvas/MeadowScene.tsx",
+                lineNumber: 468,
+                columnNumber: 5
+            }, ("TURBOPACK compile-time value", void 0)),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(SkySparkles, {}, void 0, false, {
+                fileName: "[project]/src/components/canvas/MeadowScene.tsx",
+                lineNumber: 469,
+                columnNumber: 5
+            }, ("TURBOPACK compile-time value", void 0)),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(TransitionSparkles, {
+                isReducedMotion: isReducedMotion
+            }, void 0, false, {
+                fileName: "[project]/src/components/canvas/MeadowScene.tsx",
+                lineNumber: 470,
+                columnNumber: 5
+            }, ("TURBOPACK compile-time value", void 0))
+        ]
+    }, void 0, true));
+_c7 = TransitionScene;
+/* -------------------- Enhanced Sky Sparkles -------------------- */ const SkySparkles = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["memo"])(_s7(()=>{
+    _s7();
+    const skySparklesRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(null);
+    const giantSkySparklesRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(null);
+    const frameRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(0);
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$react$2d$three$2f$fiber$2f$dist$2f$events$2d$f8cd670d$2e$esm$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__D__as__useFrame$3e$__["useFrame"])({
+        "SkySparkles.useFrame": ({ clock })=>{
+            frameRef.current = (frameRef.current + 1) % FRAME_SKIP;
+            if (frameRef.current !== 0) return;
+            const time = clock.elapsedTime;
+            if (skySparklesRef.current) {
+                skySparklesRef.current.position.y = 6 + Math.sin(time * 0.15) * 1;
+                skySparklesRef.current.rotation.y = time * 0.1;
+            }
+            if (giantSkySparklesRef.current) {
+                giantSkySparklesRef.current.position.x = Math.sin(time * 0.08) * 4;
+                giantSkySparklesRef.current.position.z = Math.cos(time * 0.08) * 4;
+            }
+        }
+    }["SkySparkles.useFrame"]);
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Fragment"], {
+        children: [
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$react$2d$three$2f$drei$2f$core$2f$Sparkles$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Sparkles"], {
+                ref: skySparklesRef,
+                count: 50,
+                scale: [
+                    22,
+                    10,
+                    22
+                ],
+                size: 2.0,
+                speed: 0.3,
+                position: [
+                    0,
+                    6,
+                    0
+                ],
+                color: "#fffae0",
+                opacity: 0.7
+            }, void 0, false, {
+                fileName: "[project]/src/components/canvas/MeadowScene.tsx",
+                lineNumber: 499,
+                columnNumber: 7
+            }, ("TURBOPACK compile-time value", void 0)),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$react$2d$three$2f$drei$2f$core$2f$Sparkles$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Sparkles"], {
+                ref: giantSkySparklesRef,
+                count: 12,
+                scale: [
+                    25,
+                    12,
+                    25
+                ],
+                size: 7,
+                speed: 0.2,
+                color: "#ffd700",
+                opacity: 0.8,
+                position: [
+                    0,
+                    8,
+                    0
+                ]
+            }, void 0, false, {
+                fileName: "[project]/src/components/canvas/MeadowScene.tsx",
+                lineNumber: 510,
+                columnNumber: 7
+            }, ("TURBOPACK compile-time value", void 0)),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(MovingSparkles, {
+                phase: 1,
+                count: 30,
+                scale: [
+                    20,
+                    8,
+                    20
+                ],
+                size: 1.5,
+                speed: 0.5,
+                color: "#ffd700",
+                opacity: 0.5,
+                position: [
+                    0,
+                    8,
+                    0
+                ],
+                movementType: "vertical"
+            }, void 0, false, {
+                fileName: "[project]/src/components/canvas/MeadowScene.tsx",
+                lineNumber: 521,
+                columnNumber: 7
+            }, ("TURBOPACK compile-time value", void 0))
+        ]
+    }, void 0, true);
+}, "hzNS/p4DIk8KCOyW75+cED8OhuU=", false, function() {
+    return [
+        __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$react$2d$three$2f$fiber$2f$dist$2f$events$2d$f8cd670d$2e$esm$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__D__as__useFrame$3e$__["useFrame"]
+    ];
+}));
+_c8 = SkySparkles;
+/* -------------------- 3D Environment -------------------- */ const ThreeDEnvironment = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["memo"])(_s8(()=>{
+    _s8();
+    const ref = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(null);
+    const frameRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(0);
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$react$2d$three$2f$fiber$2f$dist$2f$events$2d$f8cd670d$2e$esm$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__D__as__useFrame$3e$__["useFrame"])({
+        "ThreeDEnvironment.useFrame": ({ clock })=>{
+            // throttle a bit
+            frameRef.current = (frameRef.current + 1) % FRAME_SKIP;
+            if (frameRef.current !== 0) return;
+            if (!ref.current) return;
+            const t = clock.elapsedTime;
+            ref.current.rotation.y = Math.sin(t * 0.05) * 0.2;
+            ref.current.position.y = Math.sin(t * 0.1) * 0.1;
+        }
+    }["ThreeDEnvironment.useFrame"]);
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("group", {
+        ref: ref,
+        children: [
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(Terrain, {}, void 0, false, {
+                fileName: "[project]/src/components/canvas/MeadowScene.tsx",
+                lineNumber: 553,
+                columnNumber: 7
+            }, ("TURBOPACK compile-time value", void 0)),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(FloatingTemples3D, {}, void 0, false, {
+                fileName: "[project]/src/components/canvas/MeadowScene.tsx",
+                lineNumber: 554,
+                columnNumber: 7
+            }, ("TURBOPACK compile-time value", void 0)),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(ForestEnvironment, {}, void 0, false, {
+                fileName: "[project]/src/components/canvas/MeadowScene.tsx",
+                lineNumber: 555,
+                columnNumber: 7
+            }, ("TURBOPACK compile-time value", void 0)),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(DivineLights3D, {}, void 0, false, {
+                fileName: "[project]/src/components/canvas/MeadowScene.tsx",
+                lineNumber: 556,
+                columnNumber: 7
+            }, ("TURBOPACK compile-time value", void 0)),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(FlowingStream, {}, void 0, false, {
+                fileName: "[project]/src/components/canvas/MeadowScene.tsx",
+                lineNumber: 557,
+                columnNumber: 7
+            }, ("TURBOPACK compile-time value", void 0))
+        ]
+    }, void 0, true, {
+        fileName: "[project]/src/components/canvas/MeadowScene.tsx",
+        lineNumber: 552,
+        columnNumber: 5
+    }, ("TURBOPACK compile-time value", void 0));
+}, "BXzRBxz75FfREtx+t+RVHwcAvlY=", false, function() {
+    return [
+        __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$react$2d$three$2f$fiber$2f$dist$2f$events$2d$f8cd670d$2e$esm$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__D__as__useFrame$3e$__["useFrame"]
+    ];
+}));
+_c9 = ThreeDEnvironment;
+/* -------------------- Terrain -------------------- */ const Terrain = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["memo"])(_s9(()=>{
+    _s9();
+    const ref = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(null);
+    const geom = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useMemo"])({
+        "Terrain.useMemo[geom]": ()=>{
+            const g = new __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$three$2f$build$2f$three$2e$core$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["PlaneGeometry"](25, 25, 16, 16);
+            const pos = g.attributes.position.array;
+            for(let i = 0; i < pos.length; i += 3){
+                const x = pos[i], z = pos[i + 2];
+                pos[i + 1] = Math.sin(x * 0.2) * Math.cos(z * 0.2) * 0.6 + Math.sin(x * 0.5 + z * 0.3) * 0.2;
+            }
+            g.computeVertexNormals();
+            return g;
+        }
+    }["Terrain.useMemo[geom]"], []);
+    const frameRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(0);
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$react$2d$three$2f$fiber$2f$dist$2f$events$2d$f8cd670d$2e$esm$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__D__as__useFrame$3e$__["useFrame"])({
+        "Terrain.useFrame": ({ clock })=>{
+            // throttle vertex updates to be less frequent for performance
+            frameRef.current = (frameRef.current + 1) % FRAME_SKIP;
+            if (frameRef.current !== 0) return;
+            if (!ref.current) return;
+            const t = clock.elapsedTime, p = geom.attributes.position.array;
+            for(let i = 0; i < p.length; i += 3)p[i + 1] += Math.sin(t * 0.3 + p[i] * 0.1 + p[i + 2] * 0.1) * 0.003;
+            geom.attributes.position.needsUpdate = true;
+        }
+    }["Terrain.useFrame"]);
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("mesh", {
-        ref: groundRef,
+        ref: ref,
+        geometry: geom,
         rotation: [
             -Math.PI / 2,
             0,
@@ -382,863 +892,718 @@ function AnimatedGround() {
         ],
         position: [
             0,
-            -1,
+            -2,
             0
         ],
-        receiveShadow: true,
-        children: [
-            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("planeGeometry", {
-                args: [
-                    20,
-                    20,
-                    32,
-                    32
-                ]
-            }, void 0, false, {
-                fileName: "[project]/src/components/canvas/MeadowScene.tsx",
-                lineNumber: 248,
-                columnNumber: 7
-            }, this),
-            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("meshStandardMaterial", {
-                color: "#2d5016",
-                emissive: "#1a3a08",
-                roughness: 0.8,
-                metalness: 0.1
-            }, void 0, false, {
-                fileName: "[project]/src/components/canvas/MeadowScene.tsx",
-                lineNumber: 249,
-                columnNumber: 7
-            }, this)
-        ]
-    }, void 0, true, {
+        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("meshStandardMaterial", {
+            color: "#2d5016",
+            roughness: 0.8,
+            metalness: 0.1
+        }, void 0, false, {
+            fileName: "[project]/src/components/canvas/MeadowScene.tsx",
+            lineNumber: 592,
+            columnNumber: 7
+        }, ("TURBOPACK compile-time value", void 0))
+    }, void 0, false, {
         fileName: "[project]/src/components/canvas/MeadowScene.tsx",
-        lineNumber: 247,
+        lineNumber: 591,
         columnNumber: 5
-    }, this);
-}
-_s3(AnimatedGround, "TDznZoPmjGRmZwmBK5sGEldA/cs=", false, function() {
+    }, ("TURBOPACK compile-time value", void 0));
+}, "WeCM2qOglpXkvBWopJAj6Qb+8FY=", false, function() {
     return [
         __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$react$2d$three$2f$fiber$2f$dist$2f$events$2d$f8cd670d$2e$esm$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__D__as__useFrame$3e$__["useFrame"]
     ];
-});
-_c3 = AnimatedGround;
-function FloatingTemples() {
-    _s4();
-    const templesRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(null);
-    const templeCount = 4;
-    const temples = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useMemo"])({
-        "FloatingTemples.useMemo[temples]": ()=>{
-            const templeData = [];
-            for(let i = 0; i < templeCount; i++){
-                const angle = i / templeCount * Math.PI * 2;
-                const radius = 8;
-                templeData.push({
-                    position: [
-                        Math.cos(angle) * radius,
-                        Math.random() * 2 + 1,
-                        Math.sin(angle) * radius
-                    ],
-                    scale: 0.3 + Math.random() * 0.2
-                });
-            }
-            return templeData;
-        }
-    }["FloatingTemples.useMemo[temples]"], [
-        templeCount
-    ]);
-    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$react$2d$three$2f$fiber$2f$dist$2f$events$2d$f8cd670d$2e$esm$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__D__as__useFrame$3e$__["useFrame"])({
-        "FloatingTemples.useFrame": (state)=>{
-            if (templesRef.current?.children) {
-                const time = state.clock.elapsedTime;
-                templesRef.current.children.forEach({
-                    "FloatingTemples.useFrame": (temple, index)=>{
-                        // Gentle floating motion
-                        temple.position.y = temples[index].position[1] + Math.sin(time * 0.5 + index) * 0.3;
-                        temple.rotation.y = time * 0.2 + index;
-                    }
-                }["FloatingTemples.useFrame"]);
-            }
-        }
-    }["FloatingTemples.useFrame"]);
+}));
+_c10 = Terrain;
+/* -------------------- Forest (optimized for mobile) -------------------- */ const ForestEnvironment = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["memo"])(_s10(()=>{
+    _s10();
+    // small memoized geometry/material to avoid repeated allocations
+    const trunkGeom = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useMemo"])({
+        "ForestEnvironment.useMemo[trunkGeom]": ()=>new __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$three$2f$build$2f$three$2e$core$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["CylinderGeometry"](0.15, 0.2, 1.5, 6)
+    }["ForestEnvironment.useMemo[trunkGeom]"], []);
+    const foliageGeom = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useMemo"])({
+        "ForestEnvironment.useMemo[foliageGeom]": ()=>new __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$three$2f$build$2f$three$2e$core$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SphereGeometry"](0.8, 6, 5)
+    }["ForestEnvironment.useMemo[foliageGeom]"], []);
+    const trunkMat = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useMemo"])({
+        "ForestEnvironment.useMemo[trunkMat]": ()=>new __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$three$2f$build$2f$three$2e$core$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["MeshStandardMaterial"]({
+                color: '#8B4513'
+            })
+    }["ForestEnvironment.useMemo[trunkMat]"], []);
+    const foliageMat = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useMemo"])({
+        "ForestEnvironment.useMemo[foliageMat]": ()=>new __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$three$2f$build$2f$three$2e$core$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["MeshStandardMaterial"]({
+                color: '#228B22'
+            })
+    }["ForestEnvironment.useMemo[foliageMat]"], []);
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("group", {
-        ref: templesRef,
-        children: temples.map((temple, i)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("group", {
-                position: temple.position,
-                scale: temple.scale,
+        children: Array.from({
+            length: 5
+        }).map((_, i)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("group", {
+                position: [
+                    Math.cos(i) * 6,
+                    0,
+                    Math.sin(i) * 6
+                ],
                 children: [
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("mesh", {
-                        children: [
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("boxGeometry", {
-                                args: [
-                                    1,
-                                    2,
-                                    1
-                                ]
-                            }, void 0, false, {
-                                fileName: "[project]/src/components/canvas/MeadowScene.tsx",
-                                lineNumber: 297,
-                                columnNumber: 13
-                            }, this),
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("meshStandardMaterial", {
-                                color: "#d4af37",
-                                emissive: "#d4af37",
-                                emissiveIntensity: 0.1
-                            }, void 0, false, {
-                                fileName: "[project]/src/components/canvas/MeadowScene.tsx",
-                                lineNumber: 298,
-                                columnNumber: 13
-                            }, this)
-                        ]
-                    }, void 0, true, {
-                        fileName: "[project]/src/components/canvas/MeadowScene.tsx",
-                        lineNumber: 296,
-                        columnNumber: 11
-                    }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("mesh", {
                         position: [
                             0,
-                            1.5,
+                            1,
                             0
                         ],
-                        children: [
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("coneGeometry", {
-                                args: [
-                                    0.8,
-                                    1,
-                                    4
-                                ]
-                            }, void 0, false, {
-                                fileName: "[project]/src/components/canvas/MeadowScene.tsx",
-                                lineNumber: 301,
-                                columnNumber: 13
-                            }, this),
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("meshStandardMaterial", {
-                                color: "#b8860b"
-                            }, void 0, false, {
-                                fileName: "[project]/src/components/canvas/MeadowScene.tsx",
-                                lineNumber: 302,
-                                columnNumber: 13
-                            }, this)
-                        ]
-                    }, void 0, true, {
+                        geometry: trunkGeom,
+                        material: trunkMat
+                    }, void 0, false, {
                         fileName: "[project]/src/components/canvas/MeadowScene.tsx",
-                        lineNumber: 300,
+                        lineNumber: 609,
                         columnNumber: 11
-                    }, this)
+                    }, ("TURBOPACK compile-time value", void 0)),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("mesh", {
+                        position: [
+                            0,
+                            2,
+                            0
+                        ],
+                        geometry: foliageGeom,
+                        material: foliageMat
+                    }, void 0, false, {
+                        fileName: "[project]/src/components/canvas/MeadowScene.tsx",
+                        lineNumber: 610,
+                        columnNumber: 11
+                    }, ("TURBOPACK compile-time value", void 0))
                 ]
             }, i, true, {
                 fileName: "[project]/src/components/canvas/MeadowScene.tsx",
-                lineNumber: 295,
+                lineNumber: 608,
                 columnNumber: 9
-            }, this))
+            }, ("TURBOPACK compile-time value", void 0)))
     }, void 0, false, {
         fileName: "[project]/src/components/canvas/MeadowScene.tsx",
-        lineNumber: 293,
+        lineNumber: 606,
         columnNumber: 5
-    }, this);
-}
-_s4(FloatingTemples, "nJdZ2yXgDXeQFJn16l4LwLFIbZA=", false, function() {
+    }, ("TURBOPACK compile-time value", void 0));
+}, "JueVyi98ODlZY20PkuM7mQrklxg="));
+_c11 = ForestEnvironment;
+/* -------------------- Flying Birds (mobile optimized) -------------------- */ const FlyingBirds = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["memo"])(_s11(()=>{
+    _s11();
+    const ref = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(null);
+    const birds = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useMemo"])({
+        "FlyingBirds.useMemo[birds]": ()=>Array.from({
+                length: 4
+            }).map({
+                "FlyingBirds.useMemo[birds]": (_, i)=>({
+                        angle: i / 4 * Math.PI * 2,
+                        height: 4 + Math.random() * 2,
+                        speed: 0.2 + Math.random() * 0.15,
+                        radius: 6 + Math.random() * 1
+                    })
+            }["FlyingBirds.useMemo[birds]"])
+    }["FlyingBirds.useMemo[birds]"], []);
+    const frameRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(0);
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$react$2d$three$2f$fiber$2f$dist$2f$events$2d$f8cd670d$2e$esm$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__D__as__useFrame$3e$__["useFrame"])({
+        "FlyingBirds.useFrame": ({ clock })=>{
+            frameRef.current = (frameRef.current + 1) % FRAME_SKIP;
+            if (frameRef.current !== 0) return;
+            if (!ref.current || !ref.current.children.length) return;
+            const t = clock.elapsedTime;
+            ref.current.children.forEach({
+                "FlyingBirds.useFrame": (bird, i)=>{
+                    const d = birds[i];
+                    if (!d) return;
+                    const { radius, speed, angle, height } = d;
+                    bird.position.x = Math.cos(t * speed + angle) * radius;
+                    bird.position.z = Math.sin(t * speed + angle) * radius;
+                    bird.position.y = height + Math.sin(t * 1.5 + i) * 0.2;
+                }
+            }["FlyingBirds.useFrame"]);
+        }
+    }["FlyingBirds.useFrame"]);
+    // reuse a simple cone geometry and material for all birds
+    const coneGeom = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useMemo"])({
+        "FlyingBirds.useMemo[coneGeom]": ()=>new __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$three$2f$build$2f$three$2e$core$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["ConeGeometry"](0.08, 0.2, 6)
+    }["FlyingBirds.useMemo[coneGeom]"], []);
+    const birdMat = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useMemo"])({
+        "FlyingBirds.useMemo[birdMat]": ()=>new __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$three$2f$build$2f$three$2e$core$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["MeshStandardMaterial"]({
+                color: '#ffffff'
+            })
+    }["FlyingBirds.useMemo[birdMat]"], []);
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("group", {
+        ref: ref,
+        children: birds.map((_, i)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("mesh", {
+                geometry: coneGeom,
+                material: birdMat
+            }, i, false, {
+                fileName: "[project]/src/components/canvas/MeadowScene.tsx",
+                lineNumber: 655,
+                columnNumber: 9
+            }, ("TURBOPACK compile-time value", void 0)))
+    }, void 0, false, {
+        fileName: "[project]/src/components/canvas/MeadowScene.tsx",
+        lineNumber: 653,
+        columnNumber: 5
+    }, ("TURBOPACK compile-time value", void 0));
+}, "SlDvHEq2NmMvh/56aXpZ5EfRZsk=", false, function() {
     return [
         __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$react$2d$three$2f$fiber$2f$dist$2f$events$2d$f8cd670d$2e$esm$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__D__as__useFrame$3e$__["useFrame"]
     ];
-});
-_c4 = FloatingTemples;
-function DivineLights() {
-    _s5();
-    const lightsRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(null);
+}));
+_c12 = FlyingBirds;
+/* -------------------- Floating Temples (mobile optimized) -------------------- */ const FloatingTemples3D = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["memo"])(_s12(()=>{
+    _s12();
+    const ref = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(null);
+    const temples = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useMemo"])({
+        "FloatingTemples3D.useMemo[temples]": ()=>Array.from({
+                length: 4
+            }).map({
+                "FloatingTemples3D.useMemo[temples]": (_, i)=>{
+                    const a = i / 4 * Math.PI * 2, r = 8 + Math.random() * 3;
+                    return {
+                        pos: [
+                            Math.cos(a) * r,
+                            1.5 + Math.random() * 2,
+                            Math.sin(a) * r
+                        ],
+                        s: 0.3 + Math.random() * 0.2
+                    };
+                }
+            }["FloatingTemples3D.useMemo[temples]"])
+    }["FloatingTemples3D.useMemo[temples]"], []);
+    const frameRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(0);
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$react$2d$three$2f$fiber$2f$dist$2f$events$2d$f8cd670d$2e$esm$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__D__as__useFrame$3e$__["useFrame"])({
-        "DivineLights.useFrame": (state)=>{
-            if (lightsRef.current) {
-                const time = state.clock.elapsedTime;
-                lightsRef.current.rotation.y = time * 0.1;
-            }
+        "FloatingTemples3D.useFrame": ({ clock })=>{
+            frameRef.current = (frameRef.current + 1) % FRAME_SKIP;
+            if (frameRef.current !== 0) return;
+            if (!ref.current) return;
+            const t = clock.elapsedTime;
+            ref.current.children.forEach({
+                "FloatingTemples3D.useFrame": (temple, i)=>{
+                    const d = temples[i];
+                    if (!d) return;
+                    temple.position.y = d.pos[1] + Math.sin(t * 0.2 + i) * 0.3;
+                }
+            }["FloatingTemples3D.useFrame"]);
         }
-    }["DivineLights.useFrame"]);
+    }["FloatingTemples3D.useFrame"]);
+    // memoized small geometries/materials for temple parts
+    const baseGeom = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useMemo"])({
+        "FloatingTemples3D.useMemo[baseGeom]": ()=>new __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$three$2f$build$2f$three$2e$core$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["BoxGeometry"](1, 0.2, 1)
+    }["FloatingTemples3D.useMemo[baseGeom]"], []);
+    const midGeom = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useMemo"])({
+        "FloatingTemples3D.useMemo[midGeom]": ()=>new __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$three$2f$build$2f$three$2e$core$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["BoxGeometry"](0.8, 1, 0.8)
+    }["FloatingTemples3D.useMemo[midGeom]"], []);
+    const topGeom = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useMemo"])({
+        "FloatingTemples3D.useMemo[topGeom]": ()=>new __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$three$2f$build$2f$three$2e$core$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["ConeGeometry"](0.6, 0.8, 6)
+    }["FloatingTemples3D.useMemo[topGeom]"], []);
+    const brownMat = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useMemo"])({
+        "FloatingTemples3D.useMemo[brownMat]": ()=>new __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$three$2f$build$2f$three$2e$core$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["MeshStandardMaterial"]({
+                color: '#8B4513'
+            })
+    }["FloatingTemples3D.useMemo[brownMat]"], []);
+    const goldMat = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useMemo"])({
+        "FloatingTemples3D.useMemo[goldMat]": ()=>new __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$three$2f$build$2f$three$2e$core$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["MeshStandardMaterial"]({
+                color: '#d4af37'
+            })
+    }["FloatingTemples3D.useMemo[goldMat]"], []);
+    const topMat = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useMemo"])({
+        "FloatingTemples3D.useMemo[topMat]": ()=>new __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$three$2f$build$2f$three$2e$core$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["MeshStandardMaterial"]({
+                color: '#b8860b'
+            })
+    }["FloatingTemples3D.useMemo[topMat]"], []);
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("group", {
-        ref: lightsRef,
+        ref: ref,
+        children: temples.map((t, i)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("group", {
+                position: t.pos,
+                scale: t.s,
+                children: [
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("mesh", {
+                        geometry: baseGeom,
+                        material: brownMat
+                    }, void 0, false, {
+                        fileName: "[project]/src/components/canvas/MeadowScene.tsx",
+                        lineNumber: 694,
+                        columnNumber: 11
+                    }, ("TURBOPACK compile-time value", void 0)),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("mesh", {
+                        position: [
+                            0,
+                            0.6,
+                            0
+                        ],
+                        geometry: midGeom,
+                        material: goldMat
+                    }, void 0, false, {
+                        fileName: "[project]/src/components/canvas/MeadowScene.tsx",
+                        lineNumber: 695,
+                        columnNumber: 11
+                    }, ("TURBOPACK compile-time value", void 0)),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("mesh", {
+                        position: [
+                            0,
+                            1.4,
+                            0
+                        ],
+                        geometry: topGeom,
+                        material: topMat
+                    }, void 0, false, {
+                        fileName: "[project]/src/components/canvas/MeadowScene.tsx",
+                        lineNumber: 696,
+                        columnNumber: 11
+                    }, ("TURBOPACK compile-time value", void 0))
+                ]
+            }, i, true, {
+                fileName: "[project]/src/components/canvas/MeadowScene.tsx",
+                lineNumber: 693,
+                columnNumber: 9
+            }, ("TURBOPACK compile-time value", void 0)))
+    }, void 0, false, {
+        fileName: "[project]/src/components/canvas/MeadowScene.tsx",
+        lineNumber: 691,
+        columnNumber: 5
+    }, ("TURBOPACK compile-time value", void 0));
+}, "/z5NlNVkqJ1D8F3I6XXUNOZx9X8=", false, function() {
+    return [
+        __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$react$2d$three$2f$fiber$2f$dist$2f$events$2d$f8cd670d$2e$esm$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__D__as__useFrame$3e$__["useFrame"]
+    ];
+}));
+_c13 = FloatingTemples3D;
+/* -------------------- Lights, Stream, Camera -------------------- */ const DivineLights3D = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["memo"])(()=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("group", {
         children: [
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("pointLight", {
                 color: "#ffd87a",
                 intensity: 2,
                 distance: 15,
                 position: [
-                    5,
-                    5,
-                    5
+                    6,
+                    6,
+                    6
                 ]
             }, void 0, false, {
                 fileName: "[project]/src/components/canvas/MeadowScene.tsx",
-                lineNumber: 322,
-                columnNumber: 7
-            }, this),
+                lineNumber: 706,
+                columnNumber: 5
+            }, ("TURBOPACK compile-time value", void 0)),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("pointLight", {
                 color: "#9fc7ff",
                 intensity: 1.5,
                 distance: 12,
                 position: [
-                    -5,
-                    3,
-                    -5
+                    -6,
+                    4,
+                    -6
                 ]
             }, void 0, false, {
                 fileName: "[project]/src/components/canvas/MeadowScene.tsx",
-                lineNumber: 323,
-                columnNumber: 7
-            }, this)
+                lineNumber: 707,
+                columnNumber: 5
+            }, ("TURBOPACK compile-time value", void 0))
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/canvas/MeadowScene.tsx",
-        lineNumber: 321,
-        columnNumber: 5
-    }, this);
-}
-_s5(DivineLights, "WMmacxsShUEEgtBOSL+ud3ruU2U=", false, function() {
-    return [
-        __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$react$2d$three$2f$fiber$2f$dist$2f$events$2d$f8cd670d$2e$esm$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__D__as__useFrame$3e$__["useFrame"]
-    ];
-});
-_c5 = DivineLights;
-function TransitionSparkles({ isReducedMotion }) {
-    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$react$2d$three$2f$drei$2f$core$2f$Sparkles$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Sparkles"], {
-        count: isReducedMotion ? 30 : 80,
-        scale: 20,
-        size: 2,
-        speed: isReducedMotion ? 0.2 : 1,
-        color: "#fef3c7"
+        lineNumber: 705,
+        columnNumber: 3
+    }, ("TURBOPACK compile-time value", void 0)));
+_c14 = DivineLights3D;
+const FlowingStream = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["memo"])(_s13(()=>{
+    _s13();
+    const ref = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(null);
+    const geom = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useMemo"])({
+        "FlowingStream.useMemo[geom]": ()=>new __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$three$2f$build$2f$three$2e$core$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["PlaneGeometry"](6, 15, 12, 12)
+    }["FlowingStream.useMemo[geom]"], []);
+    const frameRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(0);
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$react$2d$three$2f$fiber$2f$dist$2f$events$2d$f8cd670d$2e$esm$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__D__as__useFrame$3e$__["useFrame"])({
+        "FlowingStream.useFrame": ({ clock })=>{
+            // throttle vertex updates to reduce cost
+            frameRef.current = (frameRef.current + 1) % FRAME_SKIP;
+            if (frameRef.current !== 0) return;
+            if (!ref.current) return;
+            const t = clock.elapsedTime, p = geom.attributes.position.array;
+            for(let i = 0; i < p.length; i += 3)p[i + 1] = Math.sin(p[i] * 0.5 + t * 1.5) * 0.08;
+            geom.attributes.position.needsUpdate = true;
+        }
+    }["FlowingStream.useFrame"]);
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("mesh", {
+        ref: ref,
+        geometry: geom,
+        rotation: [
+            -Math.PI / 2,
+            0,
+            0
+        ],
+        position: [
+            0,
+            -1.8,
+            0
+        ],
+        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("meshStandardMaterial", {
+            color: "#1e90ff",
+            transparent: true,
+            opacity: 0.6,
+            roughness: 0.1,
+            metalness: 0.8
+        }, void 0, false, {
+            fileName: "[project]/src/components/canvas/MeadowScene.tsx",
+            lineNumber: 728,
+            columnNumber: 7
+        }, ("TURBOPACK compile-time value", void 0))
     }, void 0, false, {
         fileName: "[project]/src/components/canvas/MeadowScene.tsx",
-        lineNumber: 330,
+        lineNumber: 727,
         columnNumber: 5
-    }, this);
-}
-_c6 = TransitionSparkles;
-// Updated ButterDrops with phase control
-function ButterDrops({ isAnimating }) {
-    _s6();
-    const butterRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(null);
-    const butterJarRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(null);
-    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$react$2d$three$2f$fiber$2f$dist$2f$events$2d$f8cd670d$2e$esm$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__D__as__useFrame$3e$__["useFrame"])({
-        "ButterDrops.useFrame": (state)=>{
-            if (butterRef.current && butterJarRef.current && isAnimating) {
-                const time = state.clock.elapsedTime;
-                // Gentle floating up and down for butter
-                butterRef.current.position.y = Math.sin(time * 1.5) * 0.2 + 1;
-                // Butter jar subtle floating
-                butterJarRef.current.position.y = Math.sin(time * 0.8) * 0.1 + 2;
-            }
-        }
-    }["ButterDrops.useFrame"]);
-    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Fragment"], {
-        children: [
-            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("group", {
-                ref: butterRef,
-                position: [
-                    2,
-                    1,
-                    1
-                ],
-                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("mesh", {
-                    children: [
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("sphereGeometry", {
-                            args: [
-                                0.15,
-                                16,
-                                16
-                            ]
-                        }, void 0, false, {
-                            fileName: "[project]/src/components/canvas/MeadowScene.tsx",
-                            lineNumber: 362,
-                            columnNumber: 11
-                        }, this),
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("meshStandardMaterial", {
-                            color: "#fef3c7",
-                            emissive: "#fef3c7",
-                            emissiveIntensity: 0.2
-                        }, void 0, false, {
-                            fileName: "[project]/src/components/canvas/MeadowScene.tsx",
-                            lineNumber: 363,
-                            columnNumber: 11
-                        }, this)
-                    ]
-                }, void 0, true, {
-                    fileName: "[project]/src/components/canvas/MeadowScene.tsx",
-                    lineNumber: 361,
-                    columnNumber: 9
-                }, this)
-            }, void 0, false, {
-                fileName: "[project]/src/components/canvas/MeadowScene.tsx",
-                lineNumber: 360,
-                columnNumber: 7
-            }, this),
-            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("group", {
-                ref: butterJarRef,
-                position: [
-                    -2,
-                    2,
-                    1
-                ],
-                children: [
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("mesh", {
-                        children: [
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("cylinderGeometry", {
-                                args: [
-                                    0.25,
-                                    0.2,
-                                    0.5,
-                                    16
-                                ]
-                            }, void 0, false, {
-                                fileName: "[project]/src/components/canvas/MeadowScene.tsx",
-                                lineNumber: 374,
-                                columnNumber: 11
-                            }, this),
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("meshStandardMaterial", {
-                                color: "#a16207"
-                            }, void 0, false, {
-                                fileName: "[project]/src/components/canvas/MeadowScene.tsx",
-                                lineNumber: 375,
-                                columnNumber: 11
-                            }, this)
-                        ]
-                    }, void 0, true, {
-                        fileName: "[project]/src/components/canvas/MeadowScene.tsx",
-                        lineNumber: 373,
-                        columnNumber: 9
-                    }, this),
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("mesh", {
-                        position: [
-                            0,
-                            0.25,
-                            0
-                        ],
-                        children: [
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("sphereGeometry", {
-                                args: [
-                                    0.2,
-                                    16,
-                                    16
-                                ]
-                            }, void 0, false, {
-                                fileName: "[project]/src/components/canvas/MeadowScene.tsx",
-                                lineNumber: 378,
-                                columnNumber: 11
-                            }, this),
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("meshStandardMaterial", {
-                                color: "#fef3c7"
-                            }, void 0, false, {
-                                fileName: "[project]/src/components/canvas/MeadowScene.tsx",
-                                lineNumber: 379,
-                                columnNumber: 11
-                            }, this)
-                        ]
-                    }, void 0, true, {
-                        fileName: "[project]/src/components/canvas/MeadowScene.tsx",
-                        lineNumber: 377,
-                        columnNumber: 9
-                    }, this)
-                ]
-            }, void 0, true, {
-                fileName: "[project]/src/components/canvas/MeadowScene.tsx",
-                lineNumber: 372,
-                columnNumber: 7
-            }, this)
-        ]
-    }, void 0, true);
-}
-_s6(ButterDrops, "2j/dwcBQx/PVRQ5GTml28d3wk/4=", false, function() {
+    }, ("TURBOPACK compile-time value", void 0));
+}, "WeCM2qOglpXkvBWopJAj6Qb+8FY=", false, function() {
     return [
         __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$react$2d$three$2f$fiber$2f$dist$2f$events$2d$f8cd670d$2e$esm$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__D__as__useFrame$3e$__["useFrame"]
     ];
-});
-_c7 = ButterDrops;
-// Updated MusicDrops with phase control
-function MusicDrops({ isAnimating }) {
-    _s7();
-    const dropsRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(null);
-    const dropCount = 6;
-    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$react$2d$three$2f$fiber$2f$dist$2f$events$2d$f8cd670d$2e$esm$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__D__as__useFrame$3e$__["useFrame"])({
-        "MusicDrops.useFrame": (state)=>{
-            if (dropsRef.current && isAnimating) {
-                const time = state.clock.elapsedTime;
-                dropsRef.current.children.forEach({
-                    "MusicDrops.useFrame": (drop, index)=>{
-                        const angle = index / dropCount * Math.PI * 2;
-                        const radius = 2.5;
-                        drop.position.x = Math.cos(angle) * radius;
-                        drop.position.z = Math.sin(angle) * radius;
-                        // Gentle floating up and down
-                        drop.position.y = Math.sin(time * 1.2 + index * 0.5) * 0.3 + 1;
-                        // Subtle scale pulsing
-                        const pulse = Math.sin(time * 2 + index) * 0.1 + 0.9;
-                        drop.scale.setScalar(pulse);
-                    }
-                }["MusicDrops.useFrame"]);
-            }
-        }
-    }["MusicDrops.useFrame"]);
-    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("group", {
-        ref: dropsRef,
-        children: Array.from({
-            length: dropCount
-        }).map((_, i)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("mesh", {
-                children: [
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("sphereGeometry", {
-                        args: [
-                            0.08,
-                            12,
-                            12
-                        ]
-                    }, void 0, false, {
-                        fileName: "[project]/src/components/canvas/MeadowScene.tsx",
-                        lineNumber: 416,
-                        columnNumber: 11
-                    }, this),
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("meshStandardMaterial", {
-                        color: "#fbbf24",
-                        emissive: "#f59e0b",
-                        emissiveIntensity: 0.3
-                    }, void 0, false, {
-                        fileName: "[project]/src/components/canvas/MeadowScene.tsx",
-                        lineNumber: 417,
-                        columnNumber: 11
-                    }, this)
-                ]
-            }, i, true, {
-                fileName: "[project]/src/components/canvas/MeadowScene.tsx",
-                lineNumber: 415,
-                columnNumber: 9
-            }, this))
-    }, void 0, false, {
-        fileName: "[project]/src/components/canvas/MeadowScene.tsx",
-        lineNumber: 413,
-        columnNumber: 5
-    }, this);
-}
-_s7(MusicDrops, "+eagBMRs02MxceSr7MWPDA+TjJA=", false, function() {
-    return [
-        __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$react$2d$three$2f$fiber$2f$dist$2f$events$2d$f8cd670d$2e$esm$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__D__as__useFrame$3e$__["useFrame"]
-    ];
-});
-_c8 = MusicDrops;
-// Updated GopiDrops with phase control
-function GopiDrops({ isAnimating }) {
-    _s8();
-    const dropsRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(null);
-    const dropCount = 4;
-    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$react$2d$three$2f$fiber$2f$dist$2f$events$2d$f8cd670d$2e$esm$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__D__as__useFrame$3e$__["useFrame"])({
-        "GopiDrops.useFrame": (state)=>{
-            if (dropsRef.current && isAnimating) {
-                const time = state.clock.elapsedTime;
-                dropsRef.current.children.forEach({
-                    "GopiDrops.useFrame": (drop, index)=>{
-                        const angle = index / dropCount * Math.PI * 2 + time * 0.2;
-                        const radius = 3;
-                        drop.position.x = Math.cos(angle) * radius;
-                        drop.position.z = Math.sin(angle) * radius;
-                        // Gentle floating
-                        drop.position.y = Math.sin(time * 1 + index * 0.7) * 0.2 + 0.5;
-                    }
-                }["GopiDrops.useFrame"]);
-            }
-        }
-    }["GopiDrops.useFrame"]);
-    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("group", {
-        ref: dropsRef,
-        children: Array.from({
-            length: dropCount
-        }).map((_, i)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("mesh", {
-                children: [
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("sphereGeometry", {
-                        args: [
-                            0.12,
-                            12,
-                            12
-                        ]
-                    }, void 0, false, {
-                        fileName: "[project]/src/components/canvas/MeadowScene.tsx",
-                        lineNumber: 454,
-                        columnNumber: 11
-                    }, this),
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("meshStandardMaterial", {
-                        color: `hsl(${i * 90}, 70%, 60%)`
-                    }, void 0, false, {
-                        fileName: "[project]/src/components/canvas/MeadowScene.tsx",
-                        lineNumber: 455,
-                        columnNumber: 11
-                    }, this)
-                ]
-            }, i, true, {
-                fileName: "[project]/src/components/canvas/MeadowScene.tsx",
-                lineNumber: 453,
-                columnNumber: 9
-            }, this))
-    }, void 0, false, {
-        fileName: "[project]/src/components/canvas/MeadowScene.tsx",
-        lineNumber: 451,
-        columnNumber: 5
-    }, this);
-}
-_s8(GopiDrops, "+eagBMRs02MxceSr7MWPDA+TjJA=", false, function() {
-    return [
-        __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$react$2d$three$2f$fiber$2f$dist$2f$events$2d$f8cd670d$2e$esm$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__D__as__useFrame$3e$__["useFrame"]
-    ];
-});
-_c9 = GopiDrops;
-// Updated DivineDrops with phase control
-function DivineDrops({ isAnimating }) {
-    _s9();
-    const dropsRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(null);
-    const dropCount = 30;
-    const { positions, colors, sizes } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useMemo"])({
-        "DivineDrops.useMemo": ()=>{
-            const positions = new Float32Array(dropCount * 3);
-            const colors = new Float32Array(dropCount * 3);
-            const sizes = new Float32Array(dropCount);
-            for(let i = 0; i < dropCount; i++){
-                const i3 = i * 3;
-                // Spread drops around the scene
-                positions[i3] = (Math.random() - 0.5) * 15;
-                positions[i3 + 1] = Math.random() * 8;
-                positions[i3 + 2] = (Math.random() - 0.5) * 10;
-                // Golden divine colors
-                colors[i3] = 1.0;
-                colors[i3 + 1] = 0.9;
-                colors[i3 + 2] = 0.3;
-                // Random sizes
-                sizes[i] = Math.random() * 0.08 + 0.03;
-            }
-            return {
-                positions,
-                colors,
-                sizes
-            };
-        }
-    }["DivineDrops.useMemo"], [
-        dropCount
-    ]);
-    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$react$2d$three$2f$fiber$2f$dist$2f$events$2d$f8cd670d$2e$esm$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__D__as__useFrame$3e$__["useFrame"])({
-        "DivineDrops.useFrame": (state)=>{
-            if (dropsRef.current?.geometry && isAnimating) {
-                const time = state.clock.elapsedTime;
-                const positions = dropsRef.current.geometry.attributes.position.array;
-                for(let i = 0; i < dropCount; i++){
-                    const i3 = i * 3;
-                    // Gentle floating motion
-                    positions[i3 + 1] += Math.sin(time * 0.5 + i) * 0.005;
-                    // Reset drops that go too high
-                    if (positions[i3 + 1] > 8) {
-                        positions[i3 + 1] = 0;
-                        positions[i3] = (Math.random() - 0.5) * 15;
-                        positions[i3 + 2] = (Math.random() - 0.5) * 10;
-                    }
-                }
-                dropsRef.current.geometry.attributes.position.needsUpdate = true;
-            }
-        }
-    }["DivineDrops.useFrame"]);
-    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("points", {
-        ref: dropsRef,
-        children: [
-            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("bufferGeometry", {
-                children: [
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("bufferAttribute", {
-                        attach: "attributes-position",
-                        count: dropCount,
-                        array: positions,
-                        itemSize: 3
-                    }, void 0, false, {
-                        fileName: "[project]/src/components/canvas/MeadowScene.tsx",
-                        lineNumber: 518,
-                        columnNumber: 9
-                    }, this),
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("bufferAttribute", {
-                        attach: "attributes-color",
-                        count: dropCount,
-                        array: colors,
-                        itemSize: 3
-                    }, void 0, false, {
-                        fileName: "[project]/src/components/canvas/MeadowScene.tsx",
-                        lineNumber: 524,
-                        columnNumber: 9
-                    }, this),
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("bufferAttribute", {
-                        attach: "attributes-size",
-                        count: dropCount,
-                        array: sizes,
-                        itemSize: 1
-                    }, void 0, false, {
-                        fileName: "[project]/src/components/canvas/MeadowScene.tsx",
-                        lineNumber: 530,
-                        columnNumber: 9
-                    }, this)
-                ]
-            }, void 0, true, {
-                fileName: "[project]/src/components/canvas/MeadowScene.tsx",
-                lineNumber: 517,
-                columnNumber: 7
-            }, this),
-            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("pointsMaterial", {
-                size: 0.1,
-                vertexColors: true,
-                transparent: true,
-                opacity: 0.7,
-                sizeAttenuation: true,
-                blending: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$three$2f$build$2f$three$2e$core$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["AdditiveBlending"]
-            }, void 0, false, {
-                fileName: "[project]/src/components/canvas/MeadowScene.tsx",
-                lineNumber: 537,
-                columnNumber: 7
-            }, this)
-        ]
-    }, void 0, true, {
-        fileName: "[project]/src/components/canvas/MeadowScene.tsx",
-        lineNumber: 516,
-        columnNumber: 5
-    }, this);
-}
-_s9(DivineDrops, "NTyY1tJmtLRiZLSv0/kangpXusU=", false, function() {
-    return [
-        __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$react$2d$three$2f$fiber$2f$dist$2f$events$2d$f8cd670d$2e$esm$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__D__as__useFrame$3e$__["useFrame"]
-    ];
-});
-_c10 = DivineDrops;
-// Updated FallingButterDrops with phase control
-function FallingButterDrops({ isAnimating }) {
-    _s10();
-    const dropsRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(null);
-    const dropCount = 20;
-    const { positions, colors } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useMemo"])({
-        "FallingButterDrops.useMemo": ()=>{
-            const positions = new Float32Array(dropCount * 3);
-            const colors = new Float32Array(dropCount * 3);
-            for(let i = 0; i < dropCount; i++){
-                const i3 = i * 3;
-                // Start positions for falling drops
-                positions[i3] = (Math.random() - 0.5) * 12;
-                positions[i3 + 1] = Math.random() * 10 + 5;
-                positions[i3 + 2] = (Math.random() - 0.5) * 8;
-                // Butter yellow colors
-                colors[i3] = 1.0;
-                colors[i3 + 1] = 0.95;
-                colors[i3 + 2] = 0.6;
-            }
-            return {
-                positions,
-                colors
-            };
-        }
-    }["FallingButterDrops.useMemo"], [
-        dropCount
-    ]);
-    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$react$2d$three$2f$fiber$2f$dist$2f$events$2d$f8cd670d$2e$esm$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__D__as__useFrame$3e$__["useFrame"])({
-        "FallingButterDrops.useFrame": (state)=>{
-            if (dropsRef.current?.geometry && isAnimating) {
-                const time = state.clock.elapsedTime;
-                const positions = dropsRef.current.geometry.attributes.position.array;
-                for(let i = 0; i < dropCount; i++){
-                    const i3 = i * 3;
-                    // Falling motion
-                    positions[i3 + 1] -= 0.05;
-                    // Gentle side-to-side sway
-                    positions[i3] += Math.sin(time * 2 + i) * 0.01;
-                    // Reset drops that fall too low
-                    if (positions[i3 + 1] < -2) {
-                        positions[i3 + 1] = Math.random() * 5 + 8;
-                        positions[i3] = (Math.random() - 0.5) * 12;
-                        positions[i3 + 2] = (Math.random() - 0.5) * 8;
-                    }
-                }
-                dropsRef.current.geometry.attributes.position.needsUpdate = true;
-            }
-        }
-    }["FallingButterDrops.useFrame"]);
-    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("points", {
-        ref: dropsRef,
-        children: [
-            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("bufferGeometry", {
-                children: [
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("bufferAttribute", {
-                        attach: "attributes-position",
-                        count: dropCount,
-                        array: positions,
-                        itemSize: 3
-                    }, void 0, false, {
-                        fileName: "[project]/src/components/canvas/MeadowScene.tsx",
-                        lineNumber: 604,
-                        columnNumber: 9
-                    }, this),
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("bufferAttribute", {
-                        attach: "attributes-color",
-                        count: dropCount,
-                        array: colors,
-                        itemSize: 3
-                    }, void 0, false, {
-                        fileName: "[project]/src/components/canvas/MeadowScene.tsx",
-                        lineNumber: 610,
-                        columnNumber: 9
-                    }, this)
-                ]
-            }, void 0, true, {
-                fileName: "[project]/src/components/canvas/MeadowScene.tsx",
-                lineNumber: 603,
-                columnNumber: 7
-            }, this),
-            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("pointsMaterial", {
-                size: 0.05,
-                vertexColors: true,
-                transparent: true,
-                opacity: 0.8,
-                sizeAttenuation: true
-            }, void 0, false, {
-                fileName: "[project]/src/components/canvas/MeadowScene.tsx",
-                lineNumber: 617,
-                columnNumber: 7
-            }, this)
-        ]
-    }, void 0, true, {
-        fileName: "[project]/src/components/canvas/MeadowScene.tsx",
-        lineNumber: 602,
-        columnNumber: 5
-    }, this);
-}
-_s10(FallingButterDrops, "zgN7vMOsNyhFwz11NxBjVGVHnJk=", false, function() {
-    return [
-        __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$react$2d$three$2f$fiber$2f$dist$2f$events$2d$f8cd670d$2e$esm$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__D__as__useFrame$3e$__["useFrame"]
-    ];
-});
-_c11 = FallingButterDrops;
-// Camera Controller for 10-second transition
-function CameraController({ isReducedMotion, phase }) {
-    _s11();
+}));
+_c15 = FlowingStream;
+const CameraController = ({ isReducedMotion, phase, showBoom, showBackground })=>{
+    _s14();
     const { camera } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$react$2d$three$2f$fiber$2f$dist$2f$events$2d$f8cd670d$2e$esm$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__C__as__useThree$3e$__["useThree"])();
-    const animationStartTime = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(0);
+    const start = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(0);
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$react$2d$three$2f$fiber$2f$dist$2f$events$2d$f8cd670d$2e$esm$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__D__as__useFrame$3e$__["useFrame"])({
-        "CameraController.useFrame": (state)=>{
-            if (isReducedMotion) {
-                camera.position.set(0, 3, 10);
-                camera.lookAt(0, 1, 0);
-                return;
-            }
-            if (animationStartTime.current === 0) {
-                animationStartTime.current = state.clock.elapsedTime;
-            }
-            const elapsed = state.clock.elapsedTime - animationStartTime.current;
-            if (phase === 0) {
-                // 10-second transition phase - dynamic camera movement
-                if (elapsed < 3) {
-                    // First 3 seconds - wide overview
-                    camera.position.lerp(new __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$three$2f$build$2f$three$2e$core$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Vector3"](0, 6, 12), 0.1);
-                } else if (elapsed < 7) {
-                    // Middle 4 seconds - medium view
-                    camera.position.lerp(new __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$three$2f$build$2f$three$2e$core$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Vector3"](0, 4, 8), 0.1);
-                } else {
-                    // Last 3 seconds - close view
-                    camera.position.lerp(new __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$three$2f$build$2f$three$2e$core$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Vector3"](0, 2, 6), 0.1);
-                }
-                camera.lookAt(0, 1, 0);
+        "CameraController.useFrame": ({ clock })=>{
+            if (!camera) return;
+            if (!start.current) start.current = clock.elapsedTime;
+            const t = clock.elapsedTime - start.current;
+            let target;
+            if (showBoom) {
+                // During boom transition, pull back camera for dramatic effect
+                target = new __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$three$2f$build$2f$three$2e$core$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Vector3"](0, 5, 20);
+            } else if (showBackground) {
+                // Final position with background
+                target = new __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$three$2f$build$2f$three$2e$core$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Vector3"](0, 6, 12);
             } else {
-                // Static phase - fixed position
-                camera.position.lerp(new __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$three$2f$build$2f$three$2e$core$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Vector3"](0, 3, 10), 0.05);
-                camera.lookAt(0, 1, 0);
+                // Normal scene transitions
+                target = t < 4 ? new __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$three$2f$build$2f$three$2e$core$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Vector3"](0, 8, 15) : t < 8 ? new __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$three$2f$build$2f$three$2e$core$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Vector3"](0, 5, 10) : new __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$three$2f$build$2f$three$2e$core$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Vector3"](0, 3, 6);
             }
+            camera.position.lerp(target, 0.05);
+            camera.lookAt(0, 0, 0);
         }
     }["CameraController.useFrame"]);
     return null;
-}
-_s11(CameraController, "u903Kbn0iScjdWA/tuYFtkkG1YY=", false, function() {
+};
+_s14(CameraController, "TgsGfwiuMAHRwG7+dOHrCz1jgNo=", false, function() {
     return [
         __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$react$2d$three$2f$fiber$2f$dist$2f$events$2d$f8cd670d$2e$esm$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__C__as__useThree$3e$__["useThree"],
         __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$react$2d$three$2f$fiber$2f$dist$2f$events$2d$f8cd670d$2e$esm$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__D__as__useFrame$3e$__["useFrame"]
     ];
 });
-_c12 = CameraController;
+_c16 = CameraController;
 function MeadowScene({ isReducedMotion }) {
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$react$2d$three$2f$fiber$2f$dist$2f$react$2d$three$2d$fiber$2e$esm$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["Canvas"], {
         camera: {
             position: [
                 0,
-                6,
-                12
+                8,
+                15
             ],
-            fov: 50
+            fov: 45
         },
         style: {
             background: 'transparent'
         },
+        gl: {
+            antialias: false,
+            powerPreference: 'high-performance',
+            alpha: true
+        },
+        dpr: [
+            1,
+            1
+        ],
         children: [
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(SceneManager, {
                 isReducedMotion: isReducedMotion
             }, void 0, false, {
                 fileName: "[project]/src/components/canvas/MeadowScene.tsx",
-                lineNumber: 675,
+                lineNumber: 778,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$react$2d$three$2f$drei$2f$core$2f$Environment$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Environment"], {
                 preset: "sunset"
             }, void 0, false, {
                 fileName: "[project]/src/components/canvas/MeadowScene.tsx",
-                lineNumber: 677,
-                columnNumber: 7
-            }, this),
-            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$react$2d$three$2f$drei$2f$core$2f$OrbitControls$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["OrbitControls"], {
-                enableZoom: false,
-                enablePan: false,
-                maxPolarAngle: Math.PI / 2,
-                minPolarAngle: Math.PI / 6,
-                enabled: false
-            }, void 0, false, {
-                fileName: "[project]/src/components/canvas/MeadowScene.tsx",
-                lineNumber: 679,
+                lineNumber: 779,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$react$2d$three$2f$postprocessing$2f$dist$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["EffectComposer"], {
+                multisampling: 0,
                 children: [
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$react$2d$three$2f$postprocessing$2f$dist$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Bloom"], {
-                        intensity: 0.6,
+                        intensity: 0.5,
                         luminanceThreshold: 0.5
                     }, void 0, false, {
                         fileName: "[project]/src/components/canvas/MeadowScene.tsx",
-                        lineNumber: 688,
+                        lineNumber: 781,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$react$2d$three$2f$postprocessing$2f$dist$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Vignette"], {
                         eskil: false,
                         offset: 0.1,
-                        darkness: 0.4
+                        darkness: 0.3
                     }, void 0, false, {
                         fileName: "[project]/src/components/canvas/MeadowScene.tsx",
-                        lineNumber: 689,
+                        lineNumber: 782,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/canvas/MeadowScene.tsx",
-                lineNumber: 687,
+                lineNumber: 780,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/canvas/MeadowScene.tsx",
-        lineNumber: 671,
+        lineNumber: 768,
         columnNumber: 5
     }, this);
 }
-_c13 = MeadowScene;
-var _c, _c1, _c2, _c3, _c4, _c5, _c6, _c7, _c8, _c9, _c10, _c11, _c12, _c13;
-__turbopack_context__.k.register(_c, "SceneManager");
-__turbopack_context__.k.register(_c1, "SprinkleDrops");
-__turbopack_context__.k.register(_c2, "TransitionEnvironment");
-__turbopack_context__.k.register(_c3, "AnimatedGround");
-__turbopack_context__.k.register(_c4, "FloatingTemples");
-__turbopack_context__.k.register(_c5, "DivineLights");
+_c17 = MeadowScene;
+/* -------------------- Reusable Particles (mobile optimized) -------------------- */ function ButterDrops({ isAnimating }) {
+    _s15();
+    return useAnimatedSphere(isAnimating, [
+        1.5,
+        0.8,
+        1
+    ], '#fef3c7', 0.12);
+}
+_s15(ButterDrops, "NPbb8pimxBWvn75Xz7KUwt7q44k=", false, function() {
+    return [
+        useAnimatedSphere
+    ];
+});
+_c18 = ButterDrops;
+function MusicDrops({ isAnimating }) {
+    _s16();
+    return useCircularSpheres(isAnimating, 4, 1.5, '#fbbf24');
+}
+_s16(MusicDrops, "nr0SJrosTR713BdLjhwVwRjk6xg=", false, function() {
+    return [
+        useCircularSpheres
+    ];
+});
+_c19 = MusicDrops;
+const FloatingFlowers = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["memo"])(_s17(()=>{
+    _s17();
+    return useFloatingMeshes(6, 'hsl(50, 70%, 60%)');
+}, "bvp+/c4BtIqxwottm+3qLdYxJws=", false, function() {
+    return [
+        useFloatingMeshes
+    ];
+}));
+_c20 = FloatingFlowers;
+const RotatingLotus = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["memo"])(_s18(()=>{
+    _s18();
+    return useFloatingMeshes(4, '#ff6b6b', 3);
+}, "bvp+/c4BtIqxwottm+3qLdYxJws=", false, function() {
+    return [
+        useFloatingMeshes
+    ];
+}));
+_c21 = RotatingLotus;
+const DivineOrbs = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["memo"])(_s19(()=>{
+    _s19();
+    return useFloatingMeshes(3, '#ffd700', 2);
+}, "bvp+/c4BtIqxwottm+3qLdYxJws=", false, function() {
+    return [
+        useFloatingMeshes
+    ];
+}));
+_c22 = DivineOrbs;
+/* -------------------- Utility Hooks (mobile optimized) -------------------- */ const useAnimatedSphere = (animate, pos, color, size)=>{
+    _s20();
+    const ref = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(null);
+    const frameRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(0);
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$react$2d$three$2f$fiber$2f$dist$2f$events$2d$f8cd670d$2e$esm$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__D__as__useFrame$3e$__["useFrame"])({
+        "useAnimatedSphere.useFrame": ({ clock })=>{
+            frameRef.current = (frameRef.current + 1) % FRAME_SKIP;
+            if (frameRef.current !== 0) return;
+            if (animate && ref.current) ref.current.position.y = Math.sin(clock.elapsedTime * 1.2) * 0.15 + 0.8;
+        }
+    }["useAnimatedSphere.useFrame"]);
+    // reuse sphere geometry and material to avoid reallocation
+    const sphereGeom = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useMemo"])({
+        "useAnimatedSphere.useMemo[sphereGeom]": ()=>new __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$three$2f$build$2f$three$2e$core$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SphereGeometry"](size, 12, 12)
+    }["useAnimatedSphere.useMemo[sphereGeom]"], [
+        size
+    ]);
+    const mat = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useMemo"])({
+        "useAnimatedSphere.useMemo[mat]": ()=>new __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$three$2f$build$2f$three$2e$core$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["MeshStandardMaterial"]({
+                color
+            })
+    }["useAnimatedSphere.useMemo[mat]"], [
+        color
+    ]);
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("group", {
+        ref: ref,
+        position: pos,
+        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("mesh", {
+            geometry: sphereGeom,
+            material: mat
+        }, void 0, false, {
+            fileName: "[project]/src/components/canvas/MeadowScene.tsx",
+            lineNumber: 815,
+            columnNumber: 7
+        }, ("TURBOPACK compile-time value", void 0))
+    }, void 0, false, {
+        fileName: "[project]/src/components/canvas/MeadowScene.tsx",
+        lineNumber: 814,
+        columnNumber: 5
+    }, ("TURBOPACK compile-time value", void 0));
+};
+_s20(useAnimatedSphere, "3hM1fj68E73AOFdu3UCGG9E3eMs=", false, function() {
+    return [
+        __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$react$2d$three$2f$fiber$2f$dist$2f$events$2d$f8cd670d$2e$esm$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__D__as__useFrame$3e$__["useFrame"]
+    ];
+});
+const useCircularSpheres = (animate, count, r, color)=>{
+    _s21();
+    const ref = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(null);
+    const frameRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(0);
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$react$2d$three$2f$fiber$2f$dist$2f$events$2d$f8cd670d$2e$esm$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__D__as__useFrame$3e$__["useFrame"])({
+        "useCircularSpheres.useFrame": ({ clock })=>{
+            frameRef.current = (frameRef.current + 1) % FRAME_SKIP;
+            if (frameRef.current !== 0) return;
+            if (!ref.current || !animate) return;
+            const t = clock.elapsedTime;
+            ref.current.children.forEach({
+                "useCircularSpheres.useFrame": (d, i)=>{
+                    const a = i / count * Math.PI * 2;
+                    d.position.set(Math.cos(a) * r, Math.sin(t + i) * 0.2 + 0.8, Math.sin(a) * r);
+                }
+            }["useCircularSpheres.useFrame"]);
+        }
+    }["useCircularSpheres.useFrame"]);
+    const geom = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useMemo"])({
+        "useCircularSpheres.useMemo[geom]": ()=>new __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$three$2f$build$2f$three$2e$core$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SphereGeometry"](0.06, 8, 8)
+    }["useCircularSpheres.useMemo[geom]"], []);
+    const mat = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useMemo"])({
+        "useCircularSpheres.useMemo[mat]": ()=>new __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$three$2f$build$2f$three$2e$core$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["MeshStandardMaterial"]({
+                color
+            })
+    }["useCircularSpheres.useMemo[mat]"], [
+        color
+    ]);
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("group", {
+        ref: ref,
+        children: Array.from({
+            length: count
+        }).map((_, i)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("mesh", {
+                geometry: geom,
+                material: mat
+            }, i, false, {
+                fileName: "[project]/src/components/canvas/MeadowScene.tsx",
+                lineNumber: 838,
+                columnNumber: 9
+            }, ("TURBOPACK compile-time value", void 0)))
+    }, void 0, false, {
+        fileName: "[project]/src/components/canvas/MeadowScene.tsx",
+        lineNumber: 836,
+        columnNumber: 5
+    }, ("TURBOPACK compile-time value", void 0));
+};
+_s21(useCircularSpheres, "PyubXUVB95mwnxaRYNjjLE5Bzzs=", false, function() {
+    return [
+        __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$react$2d$three$2f$fiber$2f$dist$2f$events$2d$f8cd670d$2e$esm$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__D__as__useFrame$3e$__["useFrame"]
+    ];
+});
+const useFloatingMeshes = (count, color, radius = 0)=>{
+    _s22();
+    const ref = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(null);
+    const frameRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(0);
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$react$2d$three$2f$fiber$2f$dist$2f$events$2d$f8cd670d$2e$esm$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__D__as__useFrame$3e$__["useFrame"])({
+        "useFloatingMeshes.useFrame": ({ clock })=>{
+            frameRef.current = (frameRef.current + 1) % FRAME_SKIP;
+            if (frameRef.current !== 0) return;
+            if (!ref.current) return;
+            const t = clock.elapsedTime;
+            ref.current.children.forEach({
+                "useFloatingMeshes.useFrame": (m, i)=>{
+                    m.position.y = 0.8 + Math.sin(t * 0.6 + i) * 0.2;
+                }
+            }["useFloatingMeshes.useFrame"]);
+        }
+    }["useFloatingMeshes.useFrame"]);
+    const sphereGeom = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useMemo"])({
+        "useFloatingMeshes.useMemo[sphereGeom]": ()=>new __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$three$2f$build$2f$three$2e$core$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SphereGeometry"](0.2, 6, 6)
+    }["useFloatingMeshes.useMemo[sphereGeom]"], []);
+    const mat = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useMemo"])({
+        "useFloatingMeshes.useMemo[mat]": ()=>new __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$three$2f$build$2f$three$2e$core$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["MeshStandardMaterial"]({
+                color
+            })
+    }["useFloatingMeshes.useMemo[mat]"], [
+        color
+    ]);
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("group", {
+        ref: ref,
+        children: Array.from({
+            length: count
+        }).map((_, i)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("mesh", {
+                position: radius ? [
+                    Math.cos(i) * radius,
+                    0.8,
+                    Math.sin(i) * radius
+                ] : [
+                    (i - count / 2) * 1.5,
+                    0.8,
+                    0
+                ],
+                children: [
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("primitive", {
+                        object: sphereGeom
+                    }, void 0, false, {
+                        fileName: "[project]/src/components/canvas/MeadowScene.tsx",
+                        lineNumber: 862,
+                        columnNumber: 11
+                    }, ("TURBOPACK compile-time value", void 0)),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("meshStandardMaterial", {
+                        color: color
+                    }, void 0, false, {
+                        fileName: "[project]/src/components/canvas/MeadowScene.tsx",
+                        lineNumber: 864,
+                        columnNumber: 11
+                    }, ("TURBOPACK compile-time value", void 0))
+                ]
+            }, i, true, {
+                fileName: "[project]/src/components/canvas/MeadowScene.tsx",
+                lineNumber: 861,
+                columnNumber: 9
+            }, ("TURBOPACK compile-time value", void 0)))
+    }, void 0, false, {
+        fileName: "[project]/src/components/canvas/MeadowScene.tsx",
+        lineNumber: 859,
+        columnNumber: 5
+    }, ("TURBOPACK compile-time value", void 0));
+};
+_s22(useFloatingMeshes, "3hM1fj68E73AOFdu3UCGG9E3eMs=", false, function() {
+    return [
+        __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$react$2d$three$2f$fiber$2f$dist$2f$events$2d$f8cd670d$2e$esm$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__D__as__useFrame$3e$__["useFrame"]
+    ];
+});
+var _c, _c1, _c2, _c3, _c4, _c5, _c6, _c7, _c8, _c9, _c10, _c11, _c12, _c13, _c14, _c15, _c16, _c17, _c18, _c19, _c20, _c21, _c22;
+__turbopack_context__.k.register(_c, "ThreeDGlowingSparkles");
+__turbopack_context__.k.register(_c1, "BackgroundImage");
+__turbopack_context__.k.register(_c2, "GoldenBoomTransition");
+__turbopack_context__.k.register(_c3, "SceneManager");
+__turbopack_context__.k.register(_c4, "EnhancedBackgroundSparkles");
+__turbopack_context__.k.register(_c5, "MovingSparkles");
 __turbopack_context__.k.register(_c6, "TransitionSparkles");
-__turbopack_context__.k.register(_c7, "ButterDrops");
-__turbopack_context__.k.register(_c8, "MusicDrops");
-__turbopack_context__.k.register(_c9, "GopiDrops");
-__turbopack_context__.k.register(_c10, "DivineDrops");
-__turbopack_context__.k.register(_c11, "FallingButterDrops");
-__turbopack_context__.k.register(_c12, "CameraController");
-__turbopack_context__.k.register(_c13, "MeadowScene");
+__turbopack_context__.k.register(_c7, "TransitionScene");
+__turbopack_context__.k.register(_c8, "SkySparkles");
+__turbopack_context__.k.register(_c9, "ThreeDEnvironment");
+__turbopack_context__.k.register(_c10, "Terrain");
+__turbopack_context__.k.register(_c11, "ForestEnvironment");
+__turbopack_context__.k.register(_c12, "FlyingBirds");
+__turbopack_context__.k.register(_c13, "FloatingTemples3D");
+__turbopack_context__.k.register(_c14, "DivineLights3D");
+__turbopack_context__.k.register(_c15, "FlowingStream");
+__turbopack_context__.k.register(_c16, "CameraController");
+__turbopack_context__.k.register(_c17, "MeadowScene");
+__turbopack_context__.k.register(_c18, "ButterDrops");
+__turbopack_context__.k.register(_c19, "MusicDrops");
+__turbopack_context__.k.register(_c20, "FloatingFlowers");
+__turbopack_context__.k.register(_c21, "RotatingLotus");
+__turbopack_context__.k.register(_c22, "DivineOrbs");
 if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelpers !== null) {
     __turbopack_context__.k.registerExports(__turbopack_context__.m, globalThis.$RefreshHelpers$);
 }

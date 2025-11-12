@@ -1,259 +1,195 @@
 'use client'
 
-import { useRef, useEffect, useState } from 'react'
-import { motion } from 'framer-motion'
-import Contact from '../sections/Contact'
+import { Canvas, useFrame, useThree } from '@react-three/fiber'
+import { OrbitControls, Environment, Sparkles } from '@react-three/drei'
+import { EffectComposer, Bloom, Vignette } from '@react-three/postprocessing'
+import { useRef, useEffect, useMemo, memo } from 'react'
+import * as THREE from 'three'
 
 interface ContactSceneProps {
   isReducedMotion: boolean
 }
 
-interface Particle {
-  id: number
-  x: number
-  y: number
-  size: number
-  speedX: number
-  speedY: number
-  opacity: number
+/* -------------------- 3D Glowing Sparkles Component (Smaller Size) -------------------- */
+const ThreeDGlowingSparkles = memo(() => {
+  const groupRef = useRef<THREE.Group>(null!)
+  
+  const sparkles = useMemo(() => {
+    return Array.from({ length: 20 }).map((_, i) => ({
+      id: i,
+      position: [
+        (Math.random() - 0.5) * 18,
+        (Math.random() - 0.5) * 12,
+        (Math.random() - 0.5) * 12 - 3
+      ],
+      scale: 0.15 + Math.random() * 0.25,
+      speed: 0.3 + Math.random() * 0.4,
+      rotationSpeed: 0.15 + Math.random() * 0.3,
+      orbitRadius: 1.5 + Math.random() * 2,
+      color: ['#ffd700', '#ffed4a', '#fff5cc', '#ffe4b5', '#ffa500'][Math.floor(Math.random() * 5)],
+      shape: ['star', 'diamond', 'octahedron'][Math.floor(Math.random() * 3)]
+    }))
+  }, [])
+  
+  useFrame(({ clock }) => {
+    if (typeof document !== 'undefined' && document.hidden) return
+    if (!groupRef.current) return
+    const time = clock.elapsedTime
+    
+    try {
+      groupRef.current.children.forEach((child, i) => {
+        const sparkle = sparkles[i]
+        if (!sparkle) return
+        
+        const angle = time * sparkle.speed + i
+        child.position.x = sparkle.position[0] + Math.cos(angle) * sparkle.orbitRadius
+        child.position.y = sparkle.position[1] + Math.sin(time * sparkle.speed * 0.5 + i) * 1.5
+        child.position.z = sparkle.position[2] + Math.sin(angle) * sparkle.orbitRadius
+        
+        child.rotation.x = time * sparkle.rotationSpeed
+        child.rotation.y = time * sparkle.rotationSpeed * 1.5
+        child.rotation.z = time * sparkle.rotationSpeed * 0.7
+        
+        const pulse = Math.sin(time * 2 + i) * 0.15 + 1
+        child.scale.setScalar(sparkle.scale * pulse)
+      })
+    } catch (err) {
+      // console.warn('ThreeDGlowingSparkles frame error', err)
+    }
+  })
+  
+  return (
+    <group ref={groupRef}>
+      {sparkles.map((sparkle, i) => (
+        <mesh key={i} position={sparkle.position as [number, number, number]}>
+          {sparkle.shape === 'star' && <octahedronGeometry args={[0.2, 0]} />}
+          {sparkle.shape === 'diamond' && <tetrahedronGeometry args={[0.2, 0]} />}
+          {sparkle.shape === 'octahedron' && <octahedronGeometry args={[0.15, 1]} />}
+          <meshStandardMaterial
+            color={sparkle.color}
+            emissive={sparkle.color}
+            emissiveIntensity={1.8}
+            metalness={0.7}
+            roughness={0.3}
+            transparent
+            opacity={0.85}
+          />
+        </mesh>
+      ))}
+    </group>
+  )
+})
+
+/* -------------------- Background Image Component -------------------- */
+function BackgroundImage() {
+  const { scene } = useThree()
+  
+  useEffect(() => {
+    const loader = new THREE.TextureLoader()
+    loader.load(
+      '/krishna-resting.png.png', 
+      (texture) => {
+        texture.colorSpace = THREE.SRGBColorSpace
+        scene.background = texture
+      },
+      undefined, 
+      (error) => {
+        console.error('Error loading background image:', error)
+        scene.background = new THREE.Color(0x1a237e)
+      }
+    )
+  }, [scene])
+
+  return null
 }
 
-export default function ContactScene({ isReducedMotion }: ContactSceneProps) {
-  const sceneRef = useRef<HTMLDivElement>(null)
-  const [particles, setParticles] = useState<Particle[]>([])
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
-
-  // Initialize particles
-  useEffect(() => {
-    if (isReducedMotion) return
-
-    const initialParticles: Particle[] = Array.from({ length: 15 }, (_, i) => ({
-      id: i,
-      x: Math.random() * 100,
-      y: Math.random() * 100,
-      size: Math.random() * 4 + 1,
-      speedX: (Math.random() - 0.5) * 0.3,
-      speedY: (Math.random() - 0.5) * 0.3,
-      opacity: Math.random() * 0.3 + 0.1
-    }))
-    
-    setParticles(initialParticles)
-  }, [isReducedMotion])
-
-  // Mouse move effect
-  useEffect(() => {
-    if (isReducedMotion) return
-
-    const handleMouseMove = (e: MouseEvent) => {
-      if (!sceneRef.current) return
-      
-      const rect = sceneRef.current.getBoundingClientRect()
-      const x = ((e.clientX - rect.left) / rect.width) * 100
-      const y = ((e.clientY - rect.top) / rect.height) * 100
-      
-      setMousePosition({ x, y })
+/* -------------------- Scene Manager -------------------- */
+function SceneManager({ isReducedMotion }: { isReducedMotion: boolean }) {
+  const sparklesRef = useRef<any>(null!)
+  
+  useFrame(({ clock }) => {
+    if (sparklesRef.current) {
+      const time = clock.elapsedTime
+      sparklesRef.current.position.y = Math.sin(time * 0.1) * 0.5
+      sparklesRef.current.rotation.y = time * 0.05
     }
-
-    window.addEventListener('mousemove', handleMouseMove)
-    return () => window.removeEventListener('mousemove', handleMouseMove)
-  }, [isReducedMotion])
-
-  // Particle animation
-  useEffect(() => {
-    if (isReducedMotion || particles.length === 0) return
-
-    const interval = setInterval(() => {
-      setParticles(prev => prev.map(particle => {
-        let newX = particle.x + particle.speedX
-        let newY = particle.y + particle.speedY
-
-        // Boundary check with wrap-around
-        if (newX > 100) newX = 0
-        if (newX < 0) newX = 100
-        if (newY > 100) newY = 0
-        if (newY < 0) newY = 100
-
-        // Mouse interaction
-        const dx = particle.x - mousePosition.x
-        const dy = particle.y - mousePosition.y
-        const distance = Math.sqrt(dx * dx + dy * dy)
-        
-        let adjustedSpeedX = particle.speedX
-        let adjustedSpeedY = particle.speedY
-        
-        if (distance < 20) {
-          // Repel from mouse
-          const force = (20 - distance) / 20
-          adjustedSpeedX += (dx / distance) * force * 0.5
-          adjustedSpeedY += (dy / distance) * force * 0.5
-        }
-
-        return {
-          ...particle,
-          x: newX,
-          y: newY,
-          speedX: adjustedSpeedX,
-          speedY: adjustedSpeedY
-        }
-      }))
-    }, 50)
-
-    return () => clearInterval(interval)
-  }, [particles, mousePosition, isReducedMotion])
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        duration: isReducedMotion ? 0 : 1.2,
-        ease: "easeOut"
-      }
-    }
-  }
-
-  const floatingVariants = {
-    float: {
-      y: [-10, 10, -10],
-      transition: {
-        duration: 4,
-        repeat: Infinity,
-        ease: "easeInOut"
-      }
-    }
-  }
-
-  const shimmerVariants = {
-    animate: {
-      backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'],
-      transition: {
-        duration: 8,
-        repeat: Infinity,
-        ease: "linear"
-      }
-    }
-  }
+  })
 
   return (
-    <motion.div
-      ref={sceneRef}
-      variants={containerVariants}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, amount: 0.3 }}
-      className="contact-scene relative overflow-hidden"
+    <>
+      <BackgroundImage />
+      
+      {/* 3D Glowing Sparkles - Always visible */}
+      <ThreeDGlowingSparkles />
+      
+      <Sparkles
+        ref={sparklesRef}
+        count={100}
+        scale={[40, 25, 40]}
+        size={4}
+        speed={0.5}
+        color="#ffd700"
+        opacity={1}
+        position={[0, 0, 0]}
+      />
+      
+      <Sparkles
+        count={60}
+        scale={[35, 20, 35]}
+        size={2}
+        speed={0.3}
+        color="#ffffff"
+        opacity={0.6}
+        position={[0, 5, 0]}
+      />
+
+      <CameraController />
+    </>
+  )
+}
+
+/* -------------------- Camera Controller -------------------- */
+function CameraController() {
+  const { camera } = useThree()
+  
+  useFrame(() => {
+    camera.position.lerp(new THREE.Vector3(0, 3, 10), 0.05)
+    camera.lookAt(0, 2, 0)
+  })
+
+  return null
+}
+
+/* -------------------- Main Scene -------------------- */
+export default function ContactScene({ isReducedMotion }: ContactSceneProps) {
+  return (
+    <Canvas
+      camera={{ position: [0, 3, 10], fov: 45 }}
+      style={{ background: 'transparent' }}
+      gl={{
+        antialias: true,
+        alpha: true,
+        powerPreference: 'high-performance',
+      }}
+      dpr={[1, 1]}
+      frameloop="always"
     >
-      {/* Animated Background Overlay */}
-      <motion.div
-        className="absolute inset-0 pointer-events-none"
-        variants={shimmerVariants}
-        animate="animate"
-        style={{
-          background: `linear-gradient(
-            45deg,
-            rgba(180, 143, 86, 0.03) 0%,
-            rgba(161, 98, 7, 0.05) 25%,
-            rgba(120, 53, 15, 0.03) 50%,
-            rgba(180, 143, 86, 0.05) 75%,
-            rgba(161, 98, 7, 0.03) 100%
-          )`,
-          backgroundSize: '400% 400%'
-        }}
+      <SceneManager isReducedMotion={isReducedMotion} />
+      
+      <Environment preset="sunset" />
+      
+      <OrbitControls
+        enableZoom={false}
+        enablePan={false}
+        maxPolarAngle={Math.PI / 2}
+        minPolarAngle={Math.PI / 6}
+        enabled={false}
       />
 
-      {/* Floating Particles */}
-      {!isReducedMotion && particles.map(particle => (
-        <motion.div
-          key={particle.id}
-          className="absolute rounded-full pointer-events-none"
-          style={{
-            left: `${particle.x}%`,
-            top: `${particle.y}%`,
-            width: `${particle.size}px`,
-            height: `${particle.size}px`,
-            background: `radial-gradient(circle, 
-              rgba(180, 143, 86, ${particle.opacity}) 0%,
-              rgba(180, 143, 86, ${particle.opacity * 0.3}) 70%,
-              transparent 100%)`,
-            boxShadow: `0 0 ${particle.size * 2}px ${particle.size}px rgba(180, 143, 86, ${particle.opacity * 0.5})`
-          }}
-          variants={floatingVariants}
-          animate="float"
-          transition={{
-            duration: Math.random() * 3 + 2,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: Math.random() * 2
-          }}
-        />
-      ))}
-
-      {/* Floating Orbs */}
-      {!isReducedMotion && (
-        <>
-          <motion.div
-            className="absolute w-32 h-32 rounded-full pointer-events-none opacity-10 blur-xl"
-            style={{
-              background: 'radial-gradient(circle, rgba(180, 143, 86, 0.3) 0%, transparent 70%)',
-              top: '20%',
-              left: '10%'
-            }}
-            variants={floatingVariants}
-            animate="float"
-            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-          />
-          <motion.div
-            className="absolute w-24 h-24 rounded-full pointer-events-none opacity-15 blur-lg"
-            style={{
-              background: 'radial-gradient(circle, rgba(161, 98, 7, 0.4) 0%, transparent 70%)',
-              top: '60%',
-              right: '15%'
-            }}
-            variants={floatingVariants}
-            animate="float"
-            transition={{ 
-              duration: 5, 
-              repeat: Infinity, 
-              ease: "easeInOut",
-              delay: 1 
-            }}
-          />
-          <motion.div
-            className="absolute w-20 h-20 rounded-full pointer-events-none opacity-20 blur-md"
-            style={{
-              background: 'radial-gradient(circle, rgba(120, 53, 15, 0.3) 0%, transparent 70%)',
-              bottom: '30%',
-              left: '20%'
-            }}
-            variants={floatingVariants}
-            animate="float"
-            transition={{ 
-              duration: 4, 
-              repeat: Infinity, 
-              ease: "easeInOut",
-              delay: 2 
-            }}
-          />
-        </>
-      )}
-
-      {/* Subtle Glow Effect */}
-      <motion.div
-        className="absolute inset-0 pointer-events-none"
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        transition={{ duration: 2 }}
-        style={{
-          background: `radial-gradient(
-            ellipse at center,
-            rgba(180, 143, 86, 0.1) 0%,
-            rgba(161, 98, 7, 0.05) 30%,
-            transparent 70%
-          )`
-        }}
-      />
-
-      <Contact />
-    </motion.div>
+      <EffectComposer multisampling={0}>
+        <Bloom intensity={0.4} luminanceThreshold={0.7} />
+        <Vignette eskil={false} offset={0.1} darkness={0.4} />
+      </EffectComposer>
+    </Canvas>
   )
 }

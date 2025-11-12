@@ -7,11 +7,10 @@
   "static/chunks/node_modules_three_build_three_module_f7d46d9b.js",
   "static/chunks/node_modules_three_examples_jsm_postprocessing_Pass_c600a609.js",
   "static/chunks/node_modules_@react-three_fiber_dist_bc7ce1ba._.js",
-  "static/chunks/node_modules_three-stdlib_46f73c35._.js",
   "static/chunks/b6290_postprocessing_build_index_efa7cb11.js",
   "static/chunks/b6290_maath_dist_717ba500._.js",
   "static/chunks/b6290_n8ao_dist_N8AO_8f63c5ff.js",
-  "static/chunks/node_modules_bcdb022f._.js",
+  "static/chunks/node_modules_5bd77734._.js",
   "static/chunks/src_components_canvas_PortfolioScene_tsx_9201af69._.js"
 ],
     source: "dynamic"

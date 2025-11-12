@@ -133,9 +133,20 @@ export default function Portfolio({ onVisible }: PortfolioProps) {
 
         <div className="portfolio-cta">
           <p className="cta-text">Ready to create something extraordinary together?</p>
-          <button className="cta-button">
-            Start Your Project
-          </button>
+       <button
+  className="cta-button"
+  onClick={() => {
+    const contactSection = document.getElementById('contact');
+    if (contactSection) {
+      contactSection.scrollIntoView({ behavior: 'smooth' });
+    } else {
+      window.location.href = '/contact';
+    }
+  }}
+>
+  Start Your Project
+</button>
+
         </div>
       </div>
     </section>

@@ -1,693 +1,869 @@
-// components/canvas/MeadowScene.tsx
 'use client'
 
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
-import { OrbitControls, Environment, useTexture, Sparkles } from '@react-three/drei'
+import { Environment, Sparkles, useTexture } from '@react-three/drei'
 import { EffectComposer, Bloom, Vignette } from '@react-three/postprocessing'
-import { useRef, useMemo, useEffect, useState } from 'react'
+import { useRef, useMemo, useEffect, useState, memo } from 'react'
 import * as THREE from 'three'
 
-interface MeadowSceneProps {
-  isReducedMotion: boolean
-}
+interface MeadowSceneProps { isReducedMotion: boolean }
 
-function SceneManager({ isReducedMotion }: { isReducedMotion: boolean }) {
-  const { scene } = useThree()
-  const [currentPhase, setCurrentPhase] = useState(0) // 0: Transition (10s), 1: Static background
-  const animationStartTime = useRef(0)
+/* -------------------- GLOBAL PERFORMANCE TUNING -------------------- */
+// How many render frames to skip between heavy update runs.
+// Increase this to reduce CPU/GPU usage further (animations remain similar but less smooth).
+const FRAME_SKIP = 2
 
-  useFrame((state) => {
-    if (animationStartTime.current === 0) {
-      animationStartTime.current = state.clock.elapsedTime
-    }
+/* -------------------- 3D Glowing Sparkles Component -------------------- */
+const ThreeDGlowingSparkles = memo(({ phase }: { phase: number }) => {
+  const groupRef = useRef<THREE.Group>(null!)
+  const frameRef = useRef(0)
 
-    const elapsed = state.clock.elapsedTime - animationStartTime.current
+  // Create multiple sparkle objects with different properties
+  const sparkles = useMemo(() => {
+    return Array.from({ length: 25 }).map((_, i) => ({
+      id: i,
+      position: [
+        (Math.random() - 0.5) * 20,
+        (Math.random() - 0.5) * 15,
+        (Math.random() - 0.5) * 15 - 5
+      ],
+      scale: 0.3 + Math.random() * 0.5,
+      speed: 0.3 + Math.random() * 0.5,
+      rotationSpeed: 0.2 + Math.random() * 0.4,
+      orbitRadius: 2 + Math.random() * 3,
+      color: ['#ffd700', '#ffed4a', '#fff5cc', '#ffe4b5', '#ffa500'][Math.floor(Math.random() * 5)],
+      shape: ['star', 'diamond', 'octahedron'][Math.floor(Math.random() * 3)]
+    }))
+  }, [])
 
-    // After 10 seconds, switch to static background
-    if (elapsed > 10 && currentPhase === 0) {
-      setCurrentPhase(1)
-    }
+  useFrame(({ clock }) => {
+    // Throttle heavy per-child updates to every FRAME_SKIP frames
+    frameRef.current = (frameRef.current + 1) % FRAME_SKIP
+    if (frameRef.current !== 0) return
+
+    if (!groupRef.current) return
+    const time = clock.elapsedTime
+
+    groupRef.current.children.forEach((child, i) => {
+      const sparkle = sparkles[i]
+      if (!sparkle) return
+
+      // Circular orbital movement
+      const angle = time * sparkle.speed + i
+      child.position.x = sparkle.position[0] + Math.cos(angle) * sparkle.orbitRadius
+      child.position.y = sparkle.position[1] + Math.sin(time * sparkle.speed * 0.5 + i) * 2
+      child.position.z = sparkle.position[2] + Math.sin(angle) * sparkle.orbitRadius
+
+      // Rotation for sparkle effect
+      child.rotation.x = time * sparkle.rotationSpeed
+      child.rotation.y = time * sparkle.rotationSpeed * 1.5
+      child.rotation.z = time * sparkle.rotationSpeed * 0.7
+
+      // Pulsing scale effect
+      const pulse = Math.sin(time * 2 + i) * 0.2 + 1
+      child.scale.setScalar(sparkle.scale * pulse)
+    })
   })
 
+  return (
+    <group ref={groupRef}>
+      {sparkles.map((sparkle, i) => (
+        <mesh key={i} position={sparkle.position as [number, number, number]}>
+          {sparkle.shape === 'star' && <octahedronGeometry args={[0.4, 0]} />}
+          {sparkle.shape === 'diamond' && <tetrahedronGeometry args={[0.4, 0]} />}
+          {sparkle.shape === 'octahedron' && <octahedronGeometry args={[0.3, 1]} />}
+          <meshStandardMaterial
+            color={sparkle.color}
+            emissive={sparkle.color}
+            emissiveIntensity={2}
+            metalness={0.8}
+            roughness={0.2}
+            transparent
+            opacity={0.9}
+          />
+        </mesh>
+      ))}
+    </group>
+  )
+})
+
+/* -------------------- Background Image Component -------------------- */
+function BackgroundImage() {
+  const { scene } = useThree()
+  
   useEffect(() => {
-    // Set background to Krishna image after transition
-    if (currentPhase === 1) {
-      const loader = new THREE.TextureLoader()
-      loader.load(
-        '/krishna-playing.jpg.png', 
-        (texture) => {
-          scene.background = texture
-          texture.colorSpace = THREE.SRGBColorSpace
-        },
-        undefined, 
-        (error) => {
-          console.error('Error loading texture:', error)
-          scene.background = new THREE.Color(0x1a237e)
-        }
-      )
-    } else {
+    const loader = new THREE.TextureLoader()
+    loader.load(
+      '/krishna-playing.jpg.png',
+      (texture) => {
+        texture.colorSpace = THREE.SRGBColorSpace
+        // Only set background if we're still in the background phase
+        scene.background = texture
+      },
+      undefined,
+      () => {
+        // Fallback to black instead of blue during transitions
+        scene.background = new THREE.Color(0x000000)
+      }
+    )
+
+    // Cleanup function to clear background when component unmounts
+    return () => {
       scene.background = null
     }
-  }, [currentPhase, scene])
-
-  return (
-    <>
-      {/* Show transition animations ONLY in phase 0 (first 10 seconds) */}
-      {currentPhase === 0 && (
-        <>
-          <TransitionEnvironment />
-          <ButterDrops isAnimating={true} />
-          <MusicDrops isAnimating={true} />
-          <GopiDrops isAnimating={true} />
-          <DivineDrops isAnimating={true} />
-          <FallingButterDrops isAnimating={true} />
-          <SprinkleDrops isAnimating={true} />
-          <TransitionSparkles isReducedMotion={isReducedMotion} />
-        </>
-      )}
-
-      {/* Show static elements in both phases */}
-      <ButterDrops isAnimating={currentPhase === 0} />
-      <MusicDrops isAnimating={currentPhase === 0} />
-      
-      <CameraController isReducedMotion={isReducedMotion} phase={currentPhase} />
-    </>
-  )
-}
-
-// NEW: Sprinkle Drops Component - Only shows during 10-second transition
-function SprinkleDrops({ isAnimating }: { isAnimating: boolean }) {
-  const sprinklesRef = useRef<THREE.Points>(null!)
-  const sprinkleCount = 50
-
-  const { positions, colors, sizes, velocities } = useMemo(() => {
-    const positions = new Float32Array(sprinkleCount * 3)
-    const colors = new Float32Array(sprinkleCount * 3)
-    const sizes = new Float32Array(sprinkleCount)
-    const velocities = new Float32Array(sprinkleCount * 3)
-
-    for (let i = 0; i < sprinkleCount; i++) {
-      const i3 = i * 3
-      
-      // Start positions - spread around the scene
-      positions[i3] = (Math.random() - 0.5) * 25
-      positions[i3 + 1] = Math.random() * 15 + 5 // Start above the scene
-      positions[i3 + 2] = (Math.random() - 0.5) * 20
-
-      // Random velocities - falling with some horizontal movement
-      velocities[i3] = (Math.random() - 0.5) * 0.02 // X velocity
-      velocities[i3 + 1] = -0.05 - Math.random() * 0.03 // Y velocity (falling)
-      velocities[i3 + 2] = (Math.random() - 0.5) * 0.02 // Z velocity
-
-      // Color variations - golden, white, and light blue sprinkles
-      const colorType = Math.random()
-      if (colorType < 0.6) {
-        // Golden sprinkles (60%)
-        colors[i3] = 1.0
-        colors[i3 + 1] = 0.9
-        colors[i3 + 2] = 0.3
-      } else if (colorType < 0.8) {
-        // White sprinkles (20%)
-        colors[i3] = 1.0
-        colors[i3 + 1] = 1.0
-        colors[i3 + 2] = 1.0
-      } else {
-        // Light blue sprinkles (20%)
-        colors[i3] = 0.6
-        colors[i3 + 1] = 0.8
-        colors[i3 + 2] = 1.0
-      }
-
-      // Random sizes
-      sizes[i] = Math.random() * 0.04 + 0.02
-    }
-
-    return { positions, colors, sizes, velocities }
-  }, [sprinkleCount])
-
-  useFrame((state) => {
-    if (sprinklesRef.current?.geometry && isAnimating) {
-      const time = state.clock.elapsedTime
-      const positions = sprinklesRef.current.geometry.attributes.position.array as Float32Array
-      
-      for (let i = 0; i < sprinkleCount; i++) {
-        const i3 = i * 3
-        
-        // Apply velocity
-        positions[i3] += velocities[i3]
-        positions[i3 + 1] += velocities[i3 + 1]
-        positions[i3 + 2] += velocities[i3 + 2]
-        
-        // Add subtle swaying motion
-        positions[i3] += Math.sin(time * 3 + i) * 0.002
-        positions[i3 + 2] += Math.cos(time * 2 + i) * 0.002
-        
-        // Add slight rotation effect
-        const rotation = time * 0.5 + i
-        const radius = 0.1
-        positions[i3] += Math.sin(rotation) * radius * 0.01
-        positions[i3 + 2] += Math.cos(rotation) * radius * 0.01
-        
-        // Reset sprinkles that fall below the scene
-        if (positions[i3 + 1] < -5) {
-          positions[i3] = (Math.random() - 0.5) * 25
-          positions[i3 + 1] = Math.random() * 10 + 15 // Reset to top
-          positions[i3 + 2] = (Math.random() - 0.5) * 20
-          
-          // Reset velocity with some variation
-          velocities[i3] = (Math.random() - 0.5) * 0.02
-          velocities[i3 + 1] = -0.05 - Math.random() * 0.03
-          velocities[i3 + 2] = (Math.random() - 0.5) * 0.02
-        }
-        
-        // Flickering effect - random opacity changes
-        const material = sprinklesRef.current.material as THREE.PointsMaterial
-        if (Math.random() > 0.95) {
-          material.opacity = 0.3 + Math.random() * 0.5
-        }
-      }
-      
-      sprinklesRef.current.geometry.attributes.position.needsUpdate = true
-    }
-  })
-
-  return (
-    <points ref={sprinklesRef}>
-      <bufferGeometry>
-        <bufferAttribute
-          attach="attributes-position"
-          count={sprinkleCount}
-          array={positions}
-          itemSize={3}
-        />
-        <bufferAttribute
-          attach="attributes-color"
-          count={sprinkleCount}
-          array={colors}
-          itemSize={3}
-        />
-        <bufferAttribute
-          attach="attributes-size"
-          count={sprinkleCount}
-          array={sizes}
-          itemSize={1}
-        />
-      </bufferGeometry>
-      <pointsMaterial
-        size={0.06}
-        vertexColors
-        transparent
-        opacity={0.8}
-        sizeAttenuation
-        blending={THREE.AdditiveBlending}
-      />
-    </points>
-  )
-}
-
-// Enhanced Transition Environment with animated elements
-function TransitionEnvironment() {
-  const environmentRef = useRef<THREE.Group>(null!)
-  
-  useFrame((state) => {
-    if (environmentRef.current) {
-      const time = state.clock.elapsedTime
-      // Gentle overall movement
-      environmentRef.current.rotation.y = Math.sin(time * 0.1) * 0.1
-    }
-  })
-
-  return (
-    <group ref={environmentRef}>
-      {/* Animated ground plane */}
-      <AnimatedGround />
-      
-      {/* Floating temple structures */}
-      <FloatingTemples />
-      
-      {/* Divine light sources */}
-      <DivineLights />
-    </group>
-  )
-}
-
-function AnimatedGround() {
-  const groundRef = useRef<THREE.Mesh>(null!)
-
-  useFrame((state) => {
-    if (groundRef.current) {
-      const time = state.clock.elapsedTime
-      // Subtle pulsing effect
-      const material = groundRef.current.material as THREE.MeshStandardMaterial
-      material.emissiveIntensity = 0.1 + Math.sin(time * 2) * 0.05
-    }
-  })
-
-  return (
-    <mesh ref={groundRef} rotation={[-Math.PI / 2, 0, 0]} position={[0, -1, 0]} receiveShadow>
-      <planeGeometry args={[20, 20, 32, 32]} />
-      <meshStandardMaterial
-        color="#2d5016"
-        emissive="#1a3a08"
-        roughness={0.8}
-        metalness={0.1}
-      />
-    </mesh>
-  )
-}
-
-function FloatingTemples() {
-  const templesRef = useRef<THREE.Group>(null!)
-  const templeCount = 4
-
-  const temples = useMemo(() => {
-    const templeData = []
-    for (let i = 0; i < templeCount; i++) {
-      const angle = (i / templeCount) * Math.PI * 2
-      const radius = 8
-      templeData.push({
-        position: [
-          Math.cos(angle) * radius,
-          Math.random() * 2 + 1,
-          Math.sin(angle) * radius
-        ],
-        scale: 0.3 + Math.random() * 0.2
-      })
-    }
-    return templeData
-  }, [templeCount])
-
-  useFrame((state) => {
-    if (templesRef.current?.children) {
-      const time = state.clock.elapsedTime
-      
-      templesRef.current.children.forEach((temple, index) => {
-        // Gentle floating motion
-        temple.position.y = temples[index].position[1] + Math.sin(time * 0.5 + index) * 0.3
-        temple.rotation.y = time * 0.2 + index
-      })
-    }
-  })
-
-  return (
-    <group ref={templesRef}>
-      {temples.map((temple, i) => (
-        <group key={i} position={temple.position as [number, number, number]} scale={temple.scale}>
-          <mesh>
-            <boxGeometry args={[1, 2, 1]} />
-            <meshStandardMaterial color="#d4af37" emissive="#d4af37" emissiveIntensity={0.1} />
-          </mesh>
-          <mesh position={[0, 1.5, 0]}>
-            <coneGeometry args={[0.8, 1, 4]} />
-            <meshStandardMaterial color="#b8860b" />
-          </mesh>
-        </group>
-      ))}
-    </group>
-  )
-}
-
-function DivineLights() {
-  const lightsRef = useRef<THREE.Group>(null!)
-
-  useFrame((state) => {
-    if (lightsRef.current) {
-      const time = state.clock.elapsedTime
-      lightsRef.current.rotation.y = time * 0.1
-    }
-  })
-
-  return (
-    <group ref={lightsRef}>
-      <pointLight color="#ffd87a" intensity={2} distance={15} position={[5, 5, 5]} />
-      <pointLight color="#9fc7ff" intensity={1.5} distance={12} position={[-5, 3, -5]} />
-    </group>
-  )
-}
-
-function TransitionSparkles({ isReducedMotion }: { isReducedMotion: boolean }) {
-  return (
-    <Sparkles
-      count={isReducedMotion ? 30 : 80}
-      scale={20}
-      size={2}
-      speed={isReducedMotion ? 0.2 : 1}
-      color="#fef3c7"
-    />
-  )
-}
-
-// Updated ButterDrops with phase control
-function ButterDrops({ isAnimating }: { isAnimating: boolean }) {
-  const butterRef = useRef<THREE.Group>(null!)
-  const butterJarRef = useRef<THREE.Group>(null!)
-
-  useFrame((state) => {
-    if (butterRef.current && butterJarRef.current && isAnimating) {
-      const time = state.clock.elapsedTime
-      
-      // Gentle floating up and down for butter
-      butterRef.current.position.y = Math.sin(time * 1.5) * 0.2 + 1
-      
-      // Butter jar subtle floating
-      butterJarRef.current.position.y = Math.sin(time * 0.8) * 0.1 + 2
-    }
-  })
-
-  return (
-    <>
-      {/* Floating butter drop */}
-      <group ref={butterRef} position={[2, 1, 1]}>
-        <mesh>
-          <sphereGeometry args={[0.15, 16, 16]} />
-          <meshStandardMaterial 
-            color="#fef3c7"
-            emissive="#fef3c7"
-            emissiveIntensity={0.2}
-          />
-        </mesh>
-      </group>
-
-      {/* Butter jar */}
-      <group ref={butterJarRef} position={[-2, 2, 1]}>
-        <mesh>
-          <cylinderGeometry args={[0.25, 0.2, 0.5, 16]} />
-          <meshStandardMaterial color="#a16207" />
-        </mesh>
-        <mesh position={[0, 0.25, 0]}>
-          <sphereGeometry args={[0.2, 16, 16]} />
-          <meshStandardMaterial color="#fef3c7" />
-        </mesh>
-      </group>
-    </>
-  )
-}
-
-// Updated MusicDrops with phase control
-function MusicDrops({ isAnimating }: { isAnimating: boolean }) {
-  const dropsRef = useRef<THREE.Group>(null!)
-  const dropCount = 6
-
-  useFrame((state) => {
-    if (dropsRef.current && isAnimating) {
-      const time = state.clock.elapsedTime
-      
-      dropsRef.current.children.forEach((drop, index) => {
-        const angle = (index / dropCount) * Math.PI * 2
-        const radius = 2.5
-        
-        drop.position.x = Math.cos(angle) * radius
-        drop.position.z = Math.sin(angle) * radius
-        
-        // Gentle floating up and down
-        drop.position.y = Math.sin(time * 1.2 + index * 0.5) * 0.3 + 1
-        
-        // Subtle scale pulsing
-        const pulse = Math.sin(time * 2 + index) * 0.1 + 0.9
-        drop.scale.setScalar(pulse)
-      })
-    }
-  })
-
-  return (
-    <group ref={dropsRef}>
-      {Array.from({ length: dropCount }).map((_, i) => (
-        <mesh key={i}>
-          <sphereGeometry args={[0.08, 12, 12]} />
-          <meshStandardMaterial 
-            color="#fbbf24"
-            emissive="#f59e0b"
-            emissiveIntensity={0.3}
-          />
-        </mesh>
-      ))}
-    </group>
-  )
-}
-
-// Updated GopiDrops with phase control
-function GopiDrops({ isAnimating }: { isAnimating: boolean }) {
-  const dropsRef = useRef<THREE.Group>(null!)
-  const dropCount = 4
-
-  useFrame((state) => {
-    if (dropsRef.current && isAnimating) {
-      const time = state.clock.elapsedTime
-      
-      dropsRef.current.children.forEach((drop, index) => {
-        const angle = (index / dropCount) * Math.PI * 2 + time * 0.2
-        const radius = 3
-        
-        drop.position.x = Math.cos(angle) * radius
-        drop.position.z = Math.sin(angle) * radius
-        
-        // Gentle floating
-        drop.position.y = Math.sin(time * 1 + index * 0.7) * 0.2 + 0.5
-      })
-    }
-  })
-
-  return (
-    <group ref={dropsRef}>
-      {Array.from({ length: dropCount }).map((_, i) => (
-        <mesh key={i}>
-          <sphereGeometry args={[0.12, 12, 12]} />
-          <meshStandardMaterial color={`hsl(${i * 90}, 70%, 60%)`} />
-        </mesh>
-      ))}
-    </group>
-  )
-}
-
-// Updated DivineDrops with phase control
-function DivineDrops({ isAnimating }: { isAnimating: boolean }) {
-  const dropsRef = useRef<THREE.Points>(null!)
-  const dropCount = 30
-
-  const { positions, colors, sizes } = useMemo(() => {
-    const positions = new Float32Array(dropCount * 3)
-    const colors = new Float32Array(dropCount * 3)
-    const sizes = new Float32Array(dropCount)
-
-    for (let i = 0; i < dropCount; i++) {
-      const i3 = i * 3
-      
-      // Spread drops around the scene
-      positions[i3] = (Math.random() - 0.5) * 15
-      positions[i3 + 1] = Math.random() * 8
-      positions[i3 + 2] = (Math.random() - 0.5) * 10
-
-      // Golden divine colors
-      colors[i3] = 1.0
-      colors[i3 + 1] = 0.9
-      colors[i3 + 2] = 0.3
-
-      // Random sizes
-      sizes[i] = Math.random() * 0.08 + 0.03
-    }
-
-    return { positions, colors, sizes }
-  }, [dropCount])
-
-  useFrame((state) => {
-    if (dropsRef.current?.geometry && isAnimating) {
-      const time = state.clock.elapsedTime
-      const positions = dropsRef.current.geometry.attributes.position.array as Float32Array
-      
-      for (let i = 0; i < dropCount; i++) {
-        const i3 = i * 3
-        
-        // Gentle floating motion
-        positions[i3 + 1] += Math.sin(time * 0.5 + i) * 0.005
-        
-        // Reset drops that go too high
-        if (positions[i3 + 1] > 8) {
-          positions[i3 + 1] = 0
-          positions[i3] = (Math.random() - 0.5) * 15
-          positions[i3 + 2] = (Math.random() - 0.5) * 10
-        }
-      }
-      
-      dropsRef.current.geometry.attributes.position.needsUpdate = true
-    }
-  })
-
-  return (
-    <points ref={dropsRef}>
-      <bufferGeometry>
-        <bufferAttribute
-          attach="attributes-position"
-          count={dropCount}
-          array={positions}
-          itemSize={3}
-        />
-        <bufferAttribute
-          attach="attributes-color"
-          count={dropCount}
-          array={colors}
-          itemSize={3}
-        />
-        <bufferAttribute
-          attach="attributes-size"
-          count={dropCount}
-          array={sizes}
-          itemSize={1}
-        />
-      </bufferGeometry>
-      <pointsMaterial
-        size={0.1}
-        vertexColors
-        transparent
-        opacity={0.7}
-        sizeAttenuation
-        blending={THREE.AdditiveBlending}
-      />
-    </points>
-  )
-}
-
-// Updated FallingButterDrops with phase control
-function FallingButterDrops({ isAnimating }: { isAnimating: boolean }) {
-  const dropsRef = useRef<THREE.Points>(null!)
-  const dropCount = 20
-
-  const { positions, colors } = useMemo(() => {
-    const positions = new Float32Array(dropCount * 3)
-    const colors = new Float32Array(dropCount * 3)
-
-    for (let i = 0; i < dropCount; i++) {
-      const i3 = i * 3
-      
-      // Start positions for falling drops
-      positions[i3] = (Math.random() - 0.5) * 12
-      positions[i3 + 1] = Math.random() * 10 + 5
-      positions[i3 + 2] = (Math.random() - 0.5) * 8
-
-      // Butter yellow colors
-      colors[i3] = 1.0
-      colors[i3 + 1] = 0.95
-      colors[i3 + 2] = 0.6
-    }
-
-    return { positions, colors }
-  }, [dropCount])
-
-  useFrame((state) => {
-    if (dropsRef.current?.geometry && isAnimating) {
-      const time = state.clock.elapsedTime
-      const positions = dropsRef.current.geometry.attributes.position.array as Float32Array
-      
-      for (let i = 0; i < dropCount; i++) {
-        const i3 = i * 3
-        
-        // Falling motion
-        positions[i3 + 1] -= 0.05
-        
-        // Gentle side-to-side sway
-        positions[i3] += Math.sin(time * 2 + i) * 0.01
-        
-        // Reset drops that fall too low
-        if (positions[i3 + 1] < -2) {
-          positions[i3 + 1] = Math.random() * 5 + 8
-          positions[i3] = (Math.random() - 0.5) * 12
-          positions[i3 + 2] = (Math.random() - 0.5) * 8
-        }
-      }
-      
-      dropsRef.current.geometry.attributes.position.needsUpdate = true
-    }
-  })
-
-  return (
-    <points ref={dropsRef}>
-      <bufferGeometry>
-        <bufferAttribute
-          attach="attributes-position"
-          count={dropCount}
-          array={positions}
-          itemSize={3}
-        />
-        <bufferAttribute
-          attach="attributes-color"
-          count={dropCount}
-          array={colors}
-          itemSize={3}
-        />
-      </bufferGeometry>
-      <pointsMaterial
-        size={0.05}
-        vertexColors
-        transparent
-        opacity={0.8}
-        sizeAttenuation
-      />
-    </points>
-  )
-}
-
-// Camera Controller for 10-second transition
-function CameraController({ isReducedMotion, phase }: { isReducedMotion: boolean; phase: number }) {
-  const { camera } = useThree()
-  const animationStartTime = useRef(0)
-  
-  useFrame((state) => {
-    if (isReducedMotion) {
-      camera.position.set(0, 3, 10)
-      camera.lookAt(0, 1, 0)
-      return
-    }
-
-    if (animationStartTime.current === 0) {
-      animationStartTime.current = state.clock.elapsedTime
-    }
-
-    const elapsed = state.clock.elapsedTime - animationStartTime.current
-
-    if (phase === 0) {
-      // 10-second transition phase - dynamic camera movement
-      if (elapsed < 3) {
-        // First 3 seconds - wide overview
-        camera.position.lerp(new THREE.Vector3(0, 6, 12), 0.1)
-      } else if (elapsed < 7) {
-        // Middle 4 seconds - medium view
-        camera.position.lerp(new THREE.Vector3(0, 4, 8), 0.1)
-      } else {
-        // Last 3 seconds - close view
-        camera.position.lerp(new THREE.Vector3(0, 2, 6), 0.1)
-      }
-      camera.lookAt(0, 1, 0)
-    } else {
-      // Static phase - fixed position
-      camera.position.lerp(new THREE.Vector3(0, 3, 10), 0.05)
-      camera.lookAt(0, 1, 0)
-    }
-  })
+  }, [scene])
 
   return null
 }
 
+/* -------------------- Golden Boom Transition -------------------- */
+function GoldenBoomTransition({ onComplete }: { onComplete: () => void }) {
+  const lightRef = useRef<THREE.PointLight>(null!)
+  const sphereRef = useRef<THREE.Mesh>(null!)
+  const [intensity, setIntensity] = useState(0)
+  const startTime = useRef<number | null>(null)
+
+  useFrame(({ clock }) => {
+    if (startTime.current === null) startTime.current = clock.elapsedTime
+    const elapsed = clock.elapsedTime - startTime.current
+
+    // Boom animation: quick expansion then fade
+    if (elapsed < 0.5) {
+      // Expand quickly
+      const progress = elapsed / 0.5
+      setIntensity(progress)
+    } else if (elapsed < 1.5) {
+      // Hold and fade
+      const progress = (elapsed - 0.5) / 1.0
+      setIntensity(1 - progress)
+    } else {
+      // Complete
+      onComplete()
+    }
+
+    // Update light and sphere
+    if (lightRef.current) {
+      lightRef.current.intensity = intensity * 15
+    }
+    if (sphereRef.current) {
+      sphereRef.current.scale.setScalar(intensity * 10)
+      const mat = sphereRef.current.material as THREE.MeshBasicMaterial
+      if (mat) mat.opacity = (1 - intensity) * 0.8
+    }
+  })
+
+  return (
+    <group>
+      <pointLight ref={lightRef} color="#ffd700" intensity={0} distance={50} />
+      <mesh ref={sphereRef}>
+        <sphereGeometry args={[1, 16, 16]} />
+        <meshBasicMaterial color="#ffd700" transparent opacity={0.8} side={THREE.BackSide} />
+      </mesh>
+      <Sparkles count={150} scale={25} size={3} speed={0.2} color="#ffd700" opacity={intensity} />
+    </group>
+  )
+}
+
+/* -------------------- Scene Manager with 15-second Loop -------------------- */
+const SceneManager = memo(({ isReducedMotion }: { isReducedMotion: boolean }) => {
+  const { scene } = useThree()
+  const [currentPhase, setCurrentPhase] = useState(0)
+  const [showBoom, setShowBoom] = useState(false)
+  const [showBackground, setShowBackground] = useState(false)
+  const [loopCount, setLoopCount] = useState(0)
+  const [isTransitioning, setIsTransitioning] = useState(false)
+  const startTime = useRef(0)
+  const sceneDuration = 12 // Scene duration
+  const boomDuration = 2 // Boom transition duration
+  const backgroundDuration = 15 // 15 seconds for background display
+  const loopInterval = sceneDuration + boomDuration + backgroundDuration // Total loop time
+
+  useFrame((state) => {
+    if (!startTime.current) startTime.current = state.clock.elapsedTime
+    
+    const elapsed = state.clock.elapsedTime - startTime.current
+    const currentLoopTime = elapsed % loopInterval
+    
+    // Calculate which phase we're in during the current loop
+    if (currentLoopTime < sceneDuration) {
+      // Scene phase
+      if (currentPhase !== 0) {
+        setCurrentPhase(0)
+        // Clear background when starting new scenes
+        scene.background = null
+        setIsTransitioning(true)
+      }
+      setShowBackground(false)
+      setShowBoom(false)
+    } else if (currentLoopTime < sceneDuration + boomDuration) {
+      // Boom transition phase
+      if (!showBoom) {
+        setShowBoom(true)
+        setShowBackground(false)
+        setCurrentPhase(1)
+        // Clear background during boom transition
+        scene.background = null
+        setIsTransitioning(true)
+      }
+    } else {
+      // Background phase (15 seconds)
+      if (showBoom) {
+        setShowBoom(false)
+      }
+      if (!showBackground) {
+        setShowBackground(true)
+        setIsTransitioning(false)
+      }
+    }
+    
+    // Track loop count (for internal logic only, not displayed)
+    const newLoopCount = Math.floor(elapsed / loopInterval)
+    if (newLoopCount !== loopCount) {
+      setLoopCount(newLoopCount)
+      // When loop restarts, ensure background is cleared
+      scene.background = null
+      setIsTransitioning(true)
+    }
+  })
+
+  const handleBoomComplete = () => {
+    setShowBoom(false)
+    setShowBackground(true)
+    setIsTransitioning(false)
+  }
+
+  // Clear background when component unmounts or when transitioning
+  useEffect(() => {
+    return () => {
+      scene.background = null
+    }
+  }, [scene])
+
+  // Set black background during transitions
+  useEffect(() => {
+    if (isTransitioning && !showBackground) {
+      scene.background = new THREE.Color(0x000000)
+    }
+  }, [isTransitioning, showBackground, scene])
+
+  return (
+    <>
+      {/* 3D Glowing Sparkles - Always visible */}
+      <ThreeDGlowingSparkles phase={currentPhase} />
+      
+      {/* Golden Boom Transition */}
+      {showBoom && <GoldenBoomTransition onComplete={handleBoomComplete} />}
+      
+      {/* Background image only appears after golden boom transition and only during background phase */}
+      {showBackground && !isTransitioning && (
+        <BackgroundImage />
+      )}
+      
+      {/* Show scenes only when not in boom transition or background phase */}
+      {!showBoom && !showBackground && (
+        <TransitionScene isReducedMotion={isReducedMotion} />
+      )}
+      
+      {/* Enhanced sparkles only appear with background and not during transitions */}
+      {showBackground && !isTransitioning && (
+        <EnhancedBackgroundSparkles />
+      )}
+
+      <CameraController 
+        phase={currentPhase} 
+        isReducedMotion={isReducedMotion}
+        showBoom={showBoom}
+        showBackground={showBackground && !isTransitioning}
+      />
+    </>
+  )
+})
+
+/* -------------------- Enhanced Background Sparkles -------------------- */
+const EnhancedBackgroundSparkles = memo(() => {
+  const sparklesRef = useRef<any>(null!)
+  const frameRef = useRef(0)
+
+  useFrame(({ clock }) => {
+    frameRef.current = (frameRef.current + 1) % FRAME_SKIP
+    if (frameRef.current !== 0) return
+
+    if (sparklesRef.current) {
+      const time = clock.elapsedTime
+      sparklesRef.current.position.y = Math.sin(time * 0.1) * 0.5
+      sparklesRef.current.rotation.y = time * 0.05
+    }
+  })
+
+  return (
+    <>
+      <Sparkles
+        ref={sparklesRef}
+        count={80}
+        scale={[30, 20, 30]}
+        size={3}
+        speed={0.6}
+        color="#ffd700"
+        opacity={1}
+        position={[0, 0, 0]}
+      />
+      <Sparkles
+        count={40}
+        scale={[25, 15, 25]}
+        size={1.5}
+        speed={0.3}
+        color="#ffffff"
+        opacity={0.7}
+        position={[0, 5, 0]}
+      />
+    </>
+  )
+})
+
+/* -------------------- Enhanced Moving Sparkles Component -------------------- */
+const MovingSparkles = memo(({
+  phase,
+  count,
+  scale,
+  size,
+  speed,
+  color,
+  opacity,
+  position,
+  movementType = "circular",
+  speedMultiplier = 1
+}: any) => {
+  const sparklesRef = useRef<any>(null!)
+  const frameRef = useRef(0)
+
+  useFrame(({ clock }) => {
+    frameRef.current = (frameRef.current + 1) % FRAME_SKIP
+    if (frameRef.current !== 0) return
+
+    if (!sparklesRef.current) return
+
+    const time = clock.elapsedTime * speedMultiplier
+
+    switch (movementType) {
+      case "circular":
+        sparklesRef.current.position.x = Math.sin(time * 0.4) * 4
+        sparklesRef.current.position.z = Math.cos(time * 0.4) * 4
+        sparklesRef.current.rotation.y = time * 0.2
+        break
+
+      case "vertical":
+        sparklesRef.current.position.y = Math.sin(time * 0.25) * 3
+        sparklesRef.current.rotation.x = time * 0.15
+        break
+
+      case "diagonal":
+        sparklesRef.current.position.x = Math.sin(time * 0.3) * 3
+        sparklesRef.current.position.y = Math.cos(time * 0.3) * 2
+        sparklesRef.current.position.z = Math.sin(time * 0.25) * 3
+        break
+
+      case "wave":
+        sparklesRef.current.position.x = Math.sin(time * 0.5) * 3
+        sparklesRef.current.position.y = Math.sin(time * 0.4) * 2
+        sparklesRef.current.rotation.z = time * 0.18
+        break
+
+      case "spiral":
+        sparklesRef.current.position.x = Math.sin(time * 0.6) * 2
+        sparklesRef.current.position.y = time % 4 - 2
+        sparklesRef.current.position.z = Math.cos(time * 0.6) * 2
+        sparklesRef.current.rotation.y = time * 0.3
+        break
+
+      default:
+        sparklesRef.current.position.y = Math.sin(time * 0.2) * 2
+        break
+    }
+  })
+
+  return (
+    <Sparkles
+      ref={sparklesRef}
+      count={count}
+      scale={scale}
+      size={size}
+      speed={speed}
+      color={color}
+      opacity={opacity}
+      position={position}
+    />
+  )
+})
+
+/* -------------------- Enhanced Transition Sparkles -------------------- */
+const TransitionSparkles = ({ isReducedMotion }: any) => {
+  const transitionSparklesRef = useRef<any>(null!)
+  const giantTransitionSparklesRef = useRef<any>(null!)
+  const frameRef = useRef(0)
+
+  useFrame(({ clock }) => {
+    frameRef.current = (frameRef.current + 1) % FRAME_SKIP
+    if (frameRef.current !== 0) return
+
+    const time = clock.elapsedTime
+
+    if (transitionSparklesRef.current) {
+      transitionSparklesRef.current.position.y = Math.sin(time * 0.4) * 1.5
+      transitionSparklesRef.current.rotation.y = time * 0.25
+    }
+
+    if (giantTransitionSparklesRef.current) {
+      giantTransitionSparklesRef.current.position.x = Math.cos(time * 0.2) * 3
+      giantTransitionSparklesRef.current.position.z = Math.sin(time * 0.2) * 3
+    }
+  })
+
+  return (
+    <>
+      <Sparkles
+        ref={transitionSparklesRef}
+        count={isReducedMotion ? 25 : 50}
+        scale={15}
+        size={2.0}
+        speed={0.4}
+        color="#fef3c7"
+      />
+
+      <Sparkles
+        ref={giantTransitionSparklesRef}
+        count={isReducedMotion ? 8 : 15}
+        scale={20}
+        size={8}
+        speed={0.3}
+        color="#ffd700"
+        opacity={0.9}
+        position={[0, 4, 0]}
+      />
+
+      <MovingSparkles
+        phase={1}
+        count={isReducedMotion ? 20 : 35}
+        scale={12}
+        size={1.5}
+        speed={0.6}
+        color="#ffd700"
+        opacity={0.6}
+        position={[0, 2, 0]}
+        movementType="circular"
+        speedMultiplier={1.5}
+      />
+    </>
+  )
+}
+
+/* -------------------- Transition Scene -------------------- */
+const TransitionScene = memo(({ isReducedMotion }: { isReducedMotion: boolean }) => (
+  <>
+    <ThreeDEnvironment />
+    <ButterDrops isAnimating />
+    <MusicDrops isAnimating />
+    <FloatingFlowers />
+    <RotatingLotus />
+    <DivineOrbs />
+    <FlyingBirds />
+    <SkySparkles />
+    <TransitionSparkles isReducedMotion={isReducedMotion} />
+  </>
+))
+
+/* -------------------- Enhanced Sky Sparkles -------------------- */
+const SkySparkles = memo(() => {
+  const skySparklesRef = useRef<any>(null!)
+  const giantSkySparklesRef = useRef<any>(null!)
+  const frameRef = useRef(0)
+
+  useFrame(({ clock }) => {
+    frameRef.current = (frameRef.current + 1) % FRAME_SKIP
+    if (frameRef.current !== 0) return
+
+    const time = clock.elapsedTime
+
+    if (skySparklesRef.current) {
+      skySparklesRef.current.position.y = 6 + Math.sin(time * 0.15) * 1
+      skySparklesRef.current.rotation.y = time * 0.1
+    }
+
+    if (giantSkySparklesRef.current) {
+      giantSkySparklesRef.current.position.x = Math.sin(time * 0.08) * 4
+      giantSkySparklesRef.current.position.z = Math.cos(time * 0.08) * 4
+    }
+  })
+
+  return (
+    <>
+      <Sparkles
+        ref={skySparklesRef}
+        count={50}
+        scale={[22, 10, 22]}
+        size={2.0}
+        speed={0.3}
+        position={[0, 6, 0]}
+        color="#fffae0"
+        opacity={0.7}
+      />
+
+      <Sparkles
+        ref={giantSkySparklesRef}
+        count={12}
+        scale={[25, 12, 25]}
+        size={7}
+        speed={0.2}
+        color="#ffd700"
+        opacity={0.8}
+        position={[0, 8, 0]}
+      />
+
+      <MovingSparkles
+        phase={1}
+        count={30}
+        scale={[20, 8, 20]}
+        size={1.5}
+        speed={0.5}
+        color="#ffd700"
+        opacity={0.5}
+        position={[0, 8, 0]}
+        movementType="vertical"
+      />
+    </>
+  )
+})
+
+/* -------------------- 3D Environment -------------------- */
+const ThreeDEnvironment = memo(() => {
+  const ref = useRef<THREE.Group>(null!)
+  const frameRef = useRef(0)
+
+  useFrame(({ clock }) => {
+    // throttle a bit
+    frameRef.current = (frameRef.current + 1) % FRAME_SKIP
+    if (frameRef.current !== 0) return
+
+    if (!ref.current) return
+    const t = clock.elapsedTime
+    ref.current.rotation.y = Math.sin(t * 0.05) * 0.2
+    ref.current.position.y = Math.sin(t * 0.1) * 0.1
+  })
+  return (
+    <group ref={ref}>
+      <Terrain />
+      <FloatingTemples3D />
+      <ForestEnvironment />
+      <DivineLights3D />
+      <FlowingStream />
+    </group>
+  )
+})
+
+/* -------------------- Terrain -------------------- */
+const Terrain = memo(() => {
+  const ref = useRef<THREE.Mesh>(null!)
+  const geom = useMemo(() => {
+    const g = new THREE.PlaneGeometry(25, 25, 16, 16)
+    const pos = g.attributes.position.array as Float32Array
+    for (let i = 0; i < pos.length; i += 3) {
+      const x = pos[i], z = pos[i + 2]
+      pos[i + 1] =
+        Math.sin(x * 0.2) * Math.cos(z * 0.2) * 0.6 +
+        Math.sin(x * 0.5 + z * 0.3) * 0.2
+    }
+    g.computeVertexNormals()
+    return g
+  }, [])
+  const frameRef = useRef(0)
+  useFrame(({ clock }) => {
+    // throttle vertex updates to be less frequent for performance
+    frameRef.current = (frameRef.current + 1) % FRAME_SKIP
+    if (frameRef.current !== 0) return
+
+    if (!ref.current) return
+    const t = clock.elapsedTime,
+      p = geom.attributes.position.array as Float32Array
+    for (let i = 0; i < p.length; i += 3)
+      p[i + 1] += Math.sin(t * 0.3 + p[i] * 0.1 + p[i + 2] * 0.1) * 0.003
+    geom.attributes.position.needsUpdate = true
+  })
+  return (
+    <mesh ref={ref} geometry={geom} rotation={[-Math.PI / 2, 0, 0]} position={[0, -2, 0]}>
+      <meshStandardMaterial color="#2d5016" roughness={0.8} metalness={0.1} />
+    </mesh>
+  )
+})
+
+/* -------------------- Forest (optimized for mobile) -------------------- */
+const ForestEnvironment = memo(() => {
+  // small memoized geometry/material to avoid repeated allocations
+  const trunkGeom = useMemo(() => new THREE.CylinderGeometry(0.15, 0.2, 1.5, 6), [])
+  const foliageGeom = useMemo(() => new THREE.SphereGeometry(0.8, 6, 5), [])
+  const trunkMat = useMemo(() => new THREE.MeshStandardMaterial({ color: '#8B4513' }), [])
+  const foliageMat = useMemo(() => new THREE.MeshStandardMaterial({ color: '#228B22' }), [])
+
+  return (
+    <group>
+      {Array.from({ length: 5 }).map((_, i) => (
+        <group key={i} position={[Math.cos(i) * 6, 0, Math.sin(i) * 6]}>
+          <mesh position={[0, 1, 0]} geometry={trunkGeom} material={trunkMat} />
+          <mesh position={[0, 2, 0]} geometry={foliageGeom} material={foliageMat} />
+        </group>
+      ))}
+    </group>
+  )
+})
+
+/* -------------------- Flying Birds (mobile optimized) -------------------- */
+const FlyingBirds = memo(() => {
+  const ref = useRef<THREE.Group>(null!)
+  const birds = useMemo(
+    () =>
+      Array.from({ length: 4 }).map((_, i) => ({
+        angle: (i / 4) * Math.PI * 2,
+        height: 4 + Math.random() * 2,
+        speed: 0.2 + Math.random() * 0.15,
+        radius: 6 + Math.random() * 1,
+      })),
+    []
+  )
+  const frameRef = useRef(0)
+
+  useFrame(({ clock }) => {
+    frameRef.current = (frameRef.current + 1) % FRAME_SKIP
+    if (frameRef.current !== 0) return
+
+    if (!ref.current || !ref.current.children.length) return
+    const t = clock.elapsedTime
+    ref.current.children.forEach((bird, i) => {
+      const d = birds[i]
+      if (!d) return
+      const { radius, speed, angle, height } = d
+      bird.position.x = Math.cos(t * speed + angle) * radius
+      bird.position.z = Math.sin(t * speed + angle) * radius
+      bird.position.y = height + Math.sin(t * 1.5 + i) * 0.2
+    })
+  })
+
+  // reuse a simple cone geometry and material for all birds
+  const coneGeom = useMemo(() => new THREE.ConeGeometry(0.08, 0.2, 6), [])
+  const birdMat = useMemo(() => new THREE.MeshStandardMaterial({ color: '#ffffff' }), [])
+
+  return (
+    <group ref={ref}>
+      {birds.map((_, i) => (
+        <mesh key={i} geometry={coneGeom} material={birdMat} />
+      ))}
+    </group>
+  )
+})
+
+/* -------------------- Floating Temples (mobile optimized) -------------------- */
+const FloatingTemples3D = memo(() => {
+  const ref = useRef<THREE.Group>(null!)
+  const temples = useMemo(() => Array.from({ length: 4 }).map((_, i) => {
+    const a = (i / 4) * Math.PI * 2, r = 8 + Math.random() * 3
+    return { pos: [Math.cos(a) * r, 1.5 + Math.random() * 2, Math.sin(a) * r], s: 0.3 + Math.random() * 0.2 }
+  }), [])
+  const frameRef = useRef(0)
+
+  useFrame(({ clock }) => {
+    frameRef.current = (frameRef.current + 1) % FRAME_SKIP
+    if (frameRef.current !== 0) return
+
+    if (!ref.current) return
+    const t = clock.elapsedTime
+    ref.current.children.forEach((temple, i) => {
+      const d = temples[i]; if (!d) return
+      temple.position.y = d.pos[1] + Math.sin(t * 0.2 + i) * 0.3
+    })
+  })
+
+  // memoized small geometries/materials for temple parts
+  const baseGeom = useMemo(() => new THREE.BoxGeometry(1, 0.2, 1), [])
+  const midGeom = useMemo(() => new THREE.BoxGeometry(0.8, 1, 0.8), [])
+  const topGeom = useMemo(() => new THREE.ConeGeometry(0.6, 0.8, 6), [])
+  const brownMat = useMemo(() => new THREE.MeshStandardMaterial({ color: '#8B4513' }), [])
+  const goldMat = useMemo(() => new THREE.MeshStandardMaterial({ color: '#d4af37' }), [])
+  const topMat = useMemo(() => new THREE.MeshStandardMaterial({ color: '#b8860b' }), [])
+
+  return (
+    <group ref={ref}>
+      {temples.map((t, i) => (
+        <group key={i} position={t.pos as [number, number, number]} scale={t.s}>
+          <mesh geometry={baseGeom} material={brownMat} />
+          <mesh position={[0, 0.6, 0]} geometry={midGeom} material={goldMat} />
+          <mesh position={[0, 1.4, 0]} geometry={topGeom} material={topMat} />
+        </group>
+      ))}
+    </group>
+  )
+})
+
+/* -------------------- Lights, Stream, Camera -------------------- */
+const DivineLights3D = memo(() => (
+  <group>
+    <pointLight color="#ffd87a" intensity={2} distance={15} position={[6, 6, 6]} />
+    <pointLight color="#9fc7ff" intensity={1.5} distance={12} position={[-6, 4, -6]} />
+  </group>
+))
+
+const FlowingStream = memo(() => {
+  const ref = useRef<THREE.Mesh>(null!)
+  const geom = useMemo(() => new THREE.PlaneGeometry(6, 15, 12, 12), [])
+  const frameRef = useRef(0)
+
+  useFrame(({ clock }) => {
+    // throttle vertex updates to reduce cost
+    frameRef.current = (frameRef.current + 1) % FRAME_SKIP
+    if (frameRef.current !== 0) return
+
+    if (!ref.current) return
+    const t = clock.elapsedTime, p = geom.attributes.position.array as Float32Array
+    for (let i = 0; i < p.length; i += 3) p[i + 1] = Math.sin(p[i] * 0.5 + t * 1.5) * 0.08
+    geom.attributes.position.needsUpdate = true
+  })
+  return (
+    <mesh ref={ref} geometry={geom} rotation={[-Math.PI / 2, 0, 0]} position={[0, -1.8, 0]}>
+      <meshStandardMaterial color="#1e90ff" transparent opacity={0.6} roughness={0.1} metalness={0.8} />
+    </mesh>
+  )
+})
+
+const CameraController = ({ isReducedMotion, phase, showBoom, showBackground }: any) => {
+  const { camera } = useThree()
+  const start = useRef(0)
+  useFrame(({ clock }) => {
+    if (!camera) return
+    if (!start.current) start.current = clock.elapsedTime
+    const t = clock.elapsedTime - start.current
+    
+    let target
+    
+    if (showBoom) {
+      // During boom transition, pull back camera for dramatic effect
+      target = new THREE.Vector3(0, 5, 20)
+    } else if (showBackground) {
+      // Final position with background
+      target = new THREE.Vector3(0, 6, 12)
+    } else {
+      // Normal scene transitions
+      target =
+        t < 4
+          ? new THREE.Vector3(0, 8, 15)
+          : t < 8
+          ? new THREE.Vector3(0, 5, 10)
+          : new THREE.Vector3(0, 3, 6)
+    }
+    
+    camera.position.lerp(target, 0.05)
+    camera.lookAt(0, 0, 0)
+  })
+  return null
+}
+
+/* -------------------- Canvas -------------------- */
 export default function MeadowScene({ isReducedMotion }: MeadowSceneProps) {
   return (
     <Canvas
-      camera={{ position: [0, 6, 12], fov: 50 }}
+      camera={{ position: [0, 8, 15], fov: 45 }}
       style={{ background: 'transparent' }}
+      gl={{
+        antialias: false,
+        powerPreference: 'high-performance',
+        alpha: true
+      }}
+      dpr={[1, 1]}
     >
       <SceneManager isReducedMotion={isReducedMotion} />
-
       <Environment preset="sunset" />
-      
-      <OrbitControls
-        enableZoom={false}
-        enablePan={false}
-        maxPolarAngle={Math.PI / 2}
-        minPolarAngle={Math.PI / 6}
-        enabled={false}
-      />
-
-      <EffectComposer>
-        <Bloom intensity={0.6} luminanceThreshold={0.5} />
-        <Vignette eskil={false} offset={0.1} darkness={0.4} />
+      <EffectComposer multisampling={0}>
+        <Bloom intensity={0.5} luminanceThreshold={0.5} />
+        <Vignette eskil={false} offset={0.1} darkness={0.3} />
       </EffectComposer>
     </Canvas>
+  )
+}
+
+/* -------------------- Reusable Particles (mobile optimized) -------------------- */
+function ButterDrops({ isAnimating }: any) {
+  return useAnimatedSphere(isAnimating, [1.5, 0.8, 1], '#fef3c7', 0.12)
+}
+
+function MusicDrops({ isAnimating }: any) {
+  return useCircularSpheres(isAnimating, 4, 1.5, '#fbbf24')
+}
+
+const FloatingFlowers = memo(() => useFloatingMeshes(6, 'hsl(50, 70%, 60%)'))
+const RotatingLotus = memo(() => useFloatingMeshes(4, '#ff6b6b', 3))
+const DivineOrbs = memo(() => useFloatingMeshes(3, '#ffd700', 2))
+
+/* -------------------- Utility Hooks (mobile optimized) -------------------- */
+const useAnimatedSphere = (animate: boolean, pos: any, color: string, size: number) => {
+  const ref = useRef<THREE.Group>(null!)
+  const frameRef = useRef(0)
+  useFrame(({ clock }) => {
+    frameRef.current = (frameRef.current + 1) % FRAME_SKIP
+    if (frameRef.current !== 0) return
+    if (animate && ref.current) ref.current.position.y = Math.sin(clock.elapsedTime * 1.2) * 0.15 + 0.8
+  })
+  // reuse sphere geometry and material to avoid reallocation
+  const sphereGeom = useMemo(() => new THREE.SphereGeometry(size, 12, 12), [size])
+  const mat = useMemo(() => new THREE.MeshStandardMaterial({ color }), [color])
+  return (
+    <group ref={ref} position={pos}>
+      <mesh geometry={sphereGeom} material={mat} />
+    </group>
+  )
+}
+
+const useCircularSpheres = (animate: boolean, count: number, r: number, color: string) => {
+  const ref = useRef<THREE.Group>(null!)
+  const frameRef = useRef(0)
+  useFrame(({ clock }) => {
+    frameRef.current = (frameRef.current + 1) % FRAME_SKIP
+    if (frameRef.current !== 0) return
+    if (!ref.current || !animate) return
+    const t = clock.elapsedTime
+    ref.current.children.forEach((d, i) => {
+      const a = (i / count) * Math.PI * 2
+      d.position.set(Math.cos(a) * r, Math.sin(t + i) * 0.2 + 0.8, Math.sin(a) * r)
+    })
+  })
+  const geom = useMemo(() => new THREE.SphereGeometry(0.06, 8, 8), [])
+  const mat = useMemo(() => new THREE.MeshStandardMaterial({ color }), [color])
+  return (
+    <group ref={ref}>
+      {Array.from({ length: count }).map((_, i) => (
+        <mesh key={i} geometry={geom} material={mat} />
+      ))}
+    </group>
+  )
+}
+
+const useFloatingMeshes = (count: number, color: string, radius = 0) => {
+  const ref = useRef<THREE.Group>(null!)
+  const frameRef = useRef(0)
+  useFrame(({ clock }) => {
+    frameRef.current = (frameRef.current + 1) % FRAME_SKIP
+    if (frameRef.current !== 0) return
+    if (!ref.current) return
+    const t = clock.elapsedTime
+    ref.current.children.forEach((m, i) => {
+      m.position.y = 0.8 + Math.sin(t * 0.6 + i) * 0.2
+    })
+  })
+  const sphereGeom = useMemo(() => new THREE.SphereGeometry(0.2, 6, 6), [])
+  const mat = useMemo(() => new THREE.MeshStandardMaterial({ color }), [color])
+  return (
+    <group ref={ref}>
+      {Array.from({ length: count }).map((_, i) => (
+        <mesh key={i} position={radius ? [Math.cos(i) * radius, 0.8, Math.sin(i) * radius] : [(i - count / 2) * 1.5, 0.8, 0]}>
+          <primitive object={sphereGeom} />
+          {/* using primitive to keep mesh geometry stable while preserving your visuals */}
+          <meshStandardMaterial color={color} />
+        </mesh>
+      ))}
+    </group>
   )
 }

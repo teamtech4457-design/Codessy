@@ -1,5 +1,3 @@
-
-
 'use client'
 
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
@@ -21,36 +19,177 @@ interface HeroSceneProps {
  * - Canvas dpr limited and antialias disabled
  */
 
-/* -------------------- Scene Manager (central timeline) -------------------- */
-function SceneManager({ isReducedMotion }: { isReducedMotion: boolean }) {
+/* -------------------- Background Image Component -------------------- */
+function KrishnaBackground() {
   const { scene } = useThree()
-  const [currentPhase, setCurrentPhase] = useState(0) // 0: Prison (15s), 1: Krishna only
-  const animationStartTime = useRef(0)
+  
+  useEffect(() => {
+    const loader = new THREE.TextureLoader()
+    loader.load(
+      '/krishna-birth-bg.jpg.png',
+      (texture) => {
+        texture.colorSpace = THREE.SRGBColorSpace
+        // Only set background if we're still in the background phase
+        scene.background = texture
+      },
+      undefined,
+      (error) => {
+        console.error('Error loading texture:', error)
+        // Fallback to black instead of blue during transitions
+        scene.background = new THREE.Color(0x000000)
+      }
+    )
 
-  useFrame((state) => {
-    if (animationStartTime.current === 0) {
-      animationStartTime.current = state.clock.elapsedTime
+    // Cleanup function to clear background when component unmounts
+    return () => {
+      scene.background = null
+    }
+  }, [scene])
+
+  return null
+}
+
+/* -------------------- Golden Boom Transition -------------------- */
+function GoldenBoomTransition({ onComplete }: { onComplete: () => void }) {
+  const lightRef = useRef<THREE.PointLight>(null!)
+  const sphereRef = useRef<THREE.Mesh>(null!)
+  const [intensity, setIntensity] = useState(0)
+  const startTime = useRef<number | null>(null)
+
+  useFrame(({ clock }) => {
+    if (startTime.current === null) startTime.current = clock.elapsedTime
+    const elapsed = clock.elapsedTime - startTime.current
+
+    // Boom animation: quick expansion then fade
+    if (elapsed < 0.5) {
+      // Expand quickly
+      const progress = elapsed / 0.5
+      setIntensity(progress)
+    } else if (elapsed < 1.5) {
+      // Hold and fade
+      const progress = (elapsed - 0.5) / 1.0
+      setIntensity(1 - progress)
+    } else {
+      // Complete
+      onComplete()
     }
 
-    const elapsed = state.clock.elapsedTime - animationStartTime.current
-
-    // After 15 seconds, switch to Krishna background only (remove prison)
-    if (elapsed > 15 && currentPhase === 0) {
-      setCurrentPhase(1)
+    // Update light and sphere
+    if (lightRef.current) {
+      lightRef.current.intensity = intensity * 15
+    }
+    if (sphereRef.current) {
+      sphereRef.current.scale.setScalar(intensity * 10)
+      const mat = sphereRef.current.material as THREE.MeshBasicMaterial
+      if (mat) mat.opacity = (1 - intensity) * 0.8
     }
   })
 
+  return (
+    <group>
+      <pointLight ref={lightRef} color="#ffd700" intensity={0} distance={50} />
+      <mesh ref={sphereRef}>
+        <sphereGeometry args={[1, 16, 16]} />
+        <meshBasicMaterial color="#ffd700" transparent opacity={0.8} side={THREE.BackSide} />
+      </mesh>
+    </group>
+  )
+}
+
+/* -------------------- Scene Manager with 15-second Loop -------------------- */
+function SceneManager({ isReducedMotion }: { isReducedMotion: boolean }) {
+  const { scene } = useThree()
+  const [currentPhase, setCurrentPhase] = useState(0)
+  const [showBoom, setShowBoom] = useState(false)
+  const [showBackground, setShowBackground] = useState(false)
+  const [loopCount, setLoopCount] = useState(0)
+  const [isTransitioning, setIsTransitioning] = useState(false)
+  const startTime = useRef(0)
+  const prisonDuration = 7 // Prison scene duration
+  const boomDuration = 2 // Boom transition duration
+  const backgroundDuration = 15 // 15 seconds for background display
+  const loopInterval = prisonDuration + boomDuration + backgroundDuration // Total loop time
+
+  useFrame((state) => {
+    if (!startTime.current) startTime.current = state.clock.elapsedTime
+    
+    const elapsed = state.clock.elapsedTime - startTime.current
+    const currentLoopTime = elapsed % loopInterval
+    
+    // Calculate which phase we're in during the current loop
+    if (currentLoopTime < prisonDuration) {
+      // Prison phase
+      if (currentPhase !== 0) {
+        setCurrentPhase(0)
+        // Clear background when starting new scenes
+        scene.background = null
+        setIsTransitioning(true)
+      }
+      setShowBackground(false)
+      setShowBoom(false)
+    } else if (currentLoopTime < prisonDuration + boomDuration) {
+      // Boom transition phase
+      if (!showBoom) {
+        setShowBoom(true)
+        setShowBackground(false)
+        setCurrentPhase(1)
+        // Clear background during boom transition
+        scene.background = null
+        setIsTransitioning(true)
+      }
+    } else {
+      // Background phase (15 seconds)
+      if (showBoom) {
+        setShowBoom(false)
+      }
+      if (!showBackground) {
+        setShowBackground(true)
+        setIsTransitioning(false)
+      }
+    }
+    
+    // Track loop count (for internal logic only, not displayed)
+    const newLoopCount = Math.floor(elapsed / loopInterval)
+    if (newLoopCount !== loopCount) {
+      setLoopCount(newLoopCount)
+      // When loop restarts, ensure background is cleared
+      scene.background = null
+      setIsTransitioning(true)
+    }
+  })
+
+  const handleBoomComplete = () => {
+    setShowBoom(false)
+    setShowBackground(true)
+    setIsTransitioning(false)
+  }
+
+  // Clear background when component unmounts or when transitioning
   useEffect(() => {
-    // Clear background during prison phase (run once ideally)
-    if (currentPhase === 0) {
+    return () => {
       scene.background = null
     }
-  }, [currentPhase, scene])
+  }, [scene])
+
+  // Set black background during transitions
+  useEffect(() => {
+    if (isTransitioning && !showBackground) {
+      scene.background = new THREE.Color(0x000000)
+    }
+  }, [isTransitioning, showBackground, scene])
 
   return (
     <>
-      {/* Show prison elements ONLY in phase 0 (first 15 seconds) */}
-      {currentPhase === 0 && (
+      {/* Golden Boom Transition */}
+      {showBoom && <GoldenBoomTransition onComplete={handleBoomComplete} />}
+      
+      {/* Background image only appears after golden boom transition and only during background phase */}
+      {showBackground && !isTransitioning && (
+        <KrishnaBackground />
+      )}
+      
+      {/* Show prison scenes only when not in boom transition or background phase */}
+      {!showBoom && !showBackground && (
         <>
           <PrisonCell />
           <PrisonBars />
@@ -61,11 +200,10 @@ function SceneManager({ isReducedMotion }: { isReducedMotion: boolean }) {
           <DustParticles isReducedMotion={isReducedMotion} />
         </>
       )}
-
-      {/* Show Krishna background and weather effects ONLY in phase 1 (after 15 seconds) */}
-      {currentPhase === 1 && (
+      
+      {/* Show weather effects only during background phase */}
+      {showBackground && !isTransitioning && (
         <>
-          <KrishnaBackground />
           <CloudSystem />
           <RainSystem />
           <SeaWater />
@@ -75,54 +213,14 @@ function SceneManager({ isReducedMotion }: { isReducedMotion: boolean }) {
         </>
       )}
 
-      <CameraController isReducedMotion={isReducedMotion} phase={currentPhase} />
+      <CameraController 
+        isReducedMotion={isReducedMotion} 
+        phase={currentPhase}
+        showBoom={showBoom}
+        showBackground={showBackground && !isTransitioning}
+      />
     </>
   )
-}
-
-/* -------------------- Krishna Background (load texture once) -------------------- */
-function KrishnaBackground() {
-  const { scene } = useThree()
-
-  // load texture once
-  const texture = useMemo(() => {
-    const loader = new THREE.TextureLoader()
-    let tex: THREE.Texture | null = null
-    // We do not actually trigger load here (load is async). We'll call loader in effect to ensure it's client-only.
-    return { loader, url: '/krishna-birth-bg.jpg.png', texRef: () => tex }
-  }, [])
-
-  useEffect(() => {
-    if (!scene) return
-    const loader = new THREE.TextureLoader()
-
-    loader.load(
-      '/krishna-birth-bg.jpg.png',
-      (tex) => {
-        // Ensure correct color space and set background
-        try {
-          // @ts-ignore - colorSpace exists on newer three; fallback handled
-          tex.colorSpace = (THREE as any).SRGBColorSpace ?? tex.colorSpace
-        } catch (e) {
-          // ignore
-        }
-        scene.background = tex
-      },
-      undefined,
-      (error) => {
-        console.error('Error loading texture:', error)
-        scene.background = new THREE.Color(0x1a237e)
-      }
-    )
-
-    return () => {
-      if (scene) {
-        scene.background = null
-      }
-    }
-  }, [scene])
-
-  return null
 }
 
 /* -------------------- CloudSystem (throttled update) -------------------- */
@@ -429,18 +527,18 @@ function DivineLight({ isReducedMotion, phase }: { isReducedMotion: boolean; pha
     const elapsed = state.clock.elapsedTime - animationStartTime.current
 
     if (phase === 0) {
-      // Prison phase - faster divine light animation (15 seconds total)
-      if (elapsed < 3) {
+      // Prison phase - faster divine light animation (7 seconds total)
+      if (elapsed < 1.5) {
         coreRef.current.scale.setScalar(0.01)
         ;(coreRef.current.material as THREE.MeshBasicMaterial).opacity = 0
         pointLightRef.current.intensity = 0
-      } else if (elapsed < 6) {
-        const progress = (elapsed - 3) / 3
+      } else if (elapsed < 3) {
+        const progress = (elapsed - 1.5) / 1.5
         coreRef.current.scale.setScalar(0.01 + progress * 0.3)
         ;(coreRef.current.material as THREE.MeshBasicMaterial).opacity = progress * 0.7
         pointLightRef.current.intensity = progress * 0.8
-      } else if (elapsed < 12) {
-        const progress = (elapsed - 6) / 6
+      } else if (elapsed < 6) {
+        const progress = (elapsed - 3) / 3
         coreRef.current.scale.setScalar(0.31 + progress * 0.7)
         ;(coreRef.current.material as THREE.MeshBasicMaterial).opacity = 0.7 + progress * 0.2
         pointLightRef.current.intensity = 0.8 + progress * 1.2
@@ -485,7 +583,7 @@ function DivineLight({ isReducedMotion, phase }: { isReducedMotion: boolean; pha
 }
 
 /* -------------------- CameraController -------------------- */
-function CameraController({ isReducedMotion, phase }: { isReducedMotion: boolean; phase: number }) {
+function CameraController({ isReducedMotion, phase, showBoom, showBackground }: { isReducedMotion: boolean; phase: number; showBoom: boolean; showBackground: boolean }) {
   const { camera } = useThree()
   const animationStartTime = useRef(0)
 
@@ -501,18 +599,29 @@ function CameraController({ isReducedMotion, phase }: { isReducedMotion: boolean
 
     const elapsed = state.clock.elapsedTime - animationStartTime.current
 
-    if (phase === 0) {
-      // Prison phase camera - faster dolly (15 seconds total)
-      if (elapsed > 6) {
-        camera.position.lerp(new THREE.Vector3(0, 1.5, 4), 0.1)
-      } else {
-        camera.position.lerp(new THREE.Vector3(0, 2, 8), 0.1)
-      }
-      camera.lookAt(0, 1, -1)
-    } else {
+    let target
+    
+    if (showBoom) {
+      // During boom transition, pull back camera for dramatic effect
+      target = new THREE.Vector3(0, 5, 20)
+    } else if (showBackground) {
       // Krishna phase camera - show the full scene with sky
-      camera.position.lerp(new THREE.Vector3(0, 5, 15), 0.05)
+      target = new THREE.Vector3(0, 5, 15)
+    } else {
+      // Prison phase camera - faster dolly (7 seconds total)
+      if (elapsed > 3) {
+        target = new THREE.Vector3(0, 1.5, 4)
+      } else {
+        target = new THREE.Vector3(0, 2, 8)
+      }
+    }
+    
+    camera.position.lerp(target, 0.05)
+    
+    if (showBackground) {
       camera.lookAt(0, 2, 0)
+    } else {
+      camera.lookAt(0, 1, -1)
     }
   })
 

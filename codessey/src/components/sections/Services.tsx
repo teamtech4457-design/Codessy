@@ -1,5 +1,3 @@
-
-
 'use client'
 
 import { useEffect, useRef } from 'react'
@@ -126,7 +124,17 @@ export default function Services({ onVisible }: ServicesProps) {
               Let's collaborate to create something extraordinary that drives results and exceeds expectations.
             </p>
             <div className="cta-actions">
-              <button className="cta-primary">
+              <button
+                className="cta-primary"
+                onClick={() => {
+                  const contactSection = document.getElementById('contact');
+                  if (contactSection) {
+                    contactSection.scrollIntoView({ behavior: 'smooth' });
+                  } else {
+                    window.location.href = '/contact';
+                  }
+                }}
+              >
                 Start Your Project
               </button>
               <button className="cta-secondary">

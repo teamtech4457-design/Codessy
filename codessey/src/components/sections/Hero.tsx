@@ -63,12 +63,35 @@ export default function Hero({ onVisible }: HeroProps) {
         </div>
         
         <div className="hero-actions">
-          <button className="hero-btn primary">
-            Start Your Project
-          </button>
-          <button className="hero-btn secondary">
-            View Our Work
-          </button>
+          <button
+  className="hero-btn primary"
+  onClick={() => {
+    const contactSection = document.getElementById('contact');
+    if (contactSection) {
+      contactSection.scrollIntoView({ behavior: 'smooth' });
+    } else {
+      window.location.href = '/contact';
+    }
+  }}
+>
+  Start Your Project
+</button>
+
+          <button
+  className="hero-btn secondary"
+  onClick={() => {
+    const portfolioSection = document.getElementById('portfolio');
+    if (portfolioSection) {
+      portfolioSection.scrollIntoView({ behavior: 'smooth' });
+    } else {
+      window.location.href = '/portfolio';
+    }
+  }}
+>
+  View Our Work
+</button>
+
+  
         </div>
         
         <div className="hero-scroll-indicator">

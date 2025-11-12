@@ -8,10 +8,11 @@
   "static/chunks/node_modules_three_examples_jsm_postprocessing_Pass_c600a609.js",
   "static/chunks/node_modules_@react-three_fiber_dist_bc7ce1ba._.js",
   "static/chunks/node_modules_three-stdlib_46f73c35._.js",
+  "static/chunks/node_modules_troika-three-text_dist_troika-three-text_esm_94005891.js",
   "static/chunks/b6290_postprocessing_build_index_efa7cb11.js",
   "static/chunks/b6290_maath_dist_717ba500._.js",
   "static/chunks/b6290_n8ao_dist_N8AO_8f63c5ff.js",
-  "static/chunks/node_modules_bcdb022f._.js",
+  "static/chunks/node_modules_b87c6637._.js",
   "static/chunks/src_components_canvas_AboutScene_tsx_50e516d1._.js"
 ],
     source: "dynamic"

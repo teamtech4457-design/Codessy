@@ -58,3 +58,15 @@ Codessy-backend/build/
 # =========================
 Thumbs.db
 Desktop.ini
+
+# Dependencies
+node_modules
+
+# Next.js build output
+.next
+
+# Logs
+*.log
+
+# Environment files
+.env
