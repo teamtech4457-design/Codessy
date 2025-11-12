@@ -2520,15 +2520,6 @@ function CanvasImpl({ ref, children, fallback, resize, style, gl, events = __TUR
 }
 ;
 }),
-"[project]/codessey/node_modules/@react-three/fiber/dist/events-f8cd670d.esm.js [app-client] (ecmascript) <export D as useFrame>", ((__turbopack_context__) => {
-"use strict";
-
-__turbopack_context__.s([
-    "useFrame",
-    ()=>__TURBOPACK__imported__module__$5b$project$5d2f$codessey$2f$node_modules$2f40$react$2d$three$2f$fiber$2f$dist$2f$events$2d$f8cd670d$2e$esm$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["D"]
-]);
-var __TURBOPACK__imported__module__$5b$project$5d2f$codessey$2f$node_modules$2f40$react$2d$three$2f$fiber$2f$dist$2f$events$2d$f8cd670d$2e$esm$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/codessey/node_modules/@react-three/fiber/dist/events-f8cd670d.esm.js [app-client] (ecmascript)");
-}),
 "[project]/codessey/node_modules/@react-three/fiber/dist/events-f8cd670d.esm.js [app-client] (ecmascript) <export C as useThree>", ((__turbopack_context__) => {
 "use strict";
 
@@ -2538,12 +2529,12 @@ __turbopack_context__.s([
 ]);
 var __TURBOPACK__imported__module__$5b$project$5d2f$codessey$2f$node_modules$2f40$react$2d$three$2f$fiber$2f$dist$2f$events$2d$f8cd670d$2e$esm$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/codessey/node_modules/@react-three/fiber/dist/events-f8cd670d.esm.js [app-client] (ecmascript)");
 }),
-"[project]/codessey/node_modules/@react-three/fiber/dist/events-f8cd670d.esm.js [app-client] (ecmascript) <export e as extend>", ((__turbopack_context__) => {
+"[project]/codessey/node_modules/@react-three/fiber/dist/events-f8cd670d.esm.js [app-client] (ecmascript) <export D as useFrame>", ((__turbopack_context__) => {
 "use strict";
 
 __turbopack_context__.s([
-    "extend",
-    ()=>__TURBOPACK__imported__module__$5b$project$5d2f$codessey$2f$node_modules$2f40$react$2d$three$2f$fiber$2f$dist$2f$events$2d$f8cd670d$2e$esm$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["e"]
+    "useFrame",
+    ()=>__TURBOPACK__imported__module__$5b$project$5d2f$codessey$2f$node_modules$2f40$react$2d$three$2f$fiber$2f$dist$2f$events$2d$f8cd670d$2e$esm$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["D"]
 ]);
 var __TURBOPACK__imported__module__$5b$project$5d2f$codessey$2f$node_modules$2f40$react$2d$three$2f$fiber$2f$dist$2f$events$2d$f8cd670d$2e$esm$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/codessey/node_modules/@react-three/fiber/dist/events-f8cd670d.esm.js [app-client] (ecmascript)");
 }),
@@ -2556,15 +2547,6 @@ __turbopack_context__.s([
 ]);
 var __TURBOPACK__imported__module__$5b$project$5d2f$codessey$2f$node_modules$2f40$react$2d$three$2f$fiber$2f$dist$2f$events$2d$f8cd670d$2e$esm$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/codessey/node_modules/@react-three/fiber/dist/events-f8cd670d.esm.js [app-client] (ecmascript)");
 }),
-"[project]/codessey/node_modules/@react-three/fiber/dist/events-f8cd670d.esm.js [app-client] (ecmascript) <export G as useLoader>", ((__turbopack_context__) => {
-"use strict";
-
-__turbopack_context__.s([
-    "useLoader",
-    ()=>__TURBOPACK__imported__module__$5b$project$5d2f$codessey$2f$node_modules$2f40$react$2d$three$2f$fiber$2f$dist$2f$events$2d$f8cd670d$2e$esm$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["G"]
-]);
-var __TURBOPACK__imported__module__$5b$project$5d2f$codessey$2f$node_modules$2f40$react$2d$three$2f$fiber$2f$dist$2f$events$2d$f8cd670d$2e$esm$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/codessey/node_modules/@react-three/fiber/dist/events-f8cd670d.esm.js [app-client] (ecmascript)");
-}),
 "[project]/codessey/node_modules/@react-three/fiber/dist/events-f8cd670d.esm.js [app-client] (ecmascript) <export s as applyProps>", ((__turbopack_context__) => {
 "use strict";
 
@@ -2574,6 +2556,24 @@ __turbopack_context__.s([
 ]);
 var __TURBOPACK__imported__module__$5b$project$5d2f$codessey$2f$node_modules$2f40$react$2d$three$2f$fiber$2f$dist$2f$events$2d$f8cd670d$2e$esm$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/codessey/node_modules/@react-three/fiber/dist/events-f8cd670d.esm.js [app-client] (ecmascript)");
 }),
+"[project]/codessey/node_modules/@react-three/fiber/dist/events-f8cd670d.esm.js [app-client] (ecmascript) <export e as extend>", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "extend",
+    ()=>__TURBOPACK__imported__module__$5b$project$5d2f$codessey$2f$node_modules$2f40$react$2d$three$2f$fiber$2f$dist$2f$events$2d$f8cd670d$2e$esm$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["e"]
+]);
+var __TURBOPACK__imported__module__$5b$project$5d2f$codessey$2f$node_modules$2f40$react$2d$three$2f$fiber$2f$dist$2f$events$2d$f8cd670d$2e$esm$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/codessey/node_modules/@react-three/fiber/dist/events-f8cd670d.esm.js [app-client] (ecmascript)");
+}),
+"[project]/codessey/node_modules/@react-three/fiber/dist/events-f8cd670d.esm.js [app-client] (ecmascript) <export G as useLoader>", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "useLoader",
+    ()=>__TURBOPACK__imported__module__$5b$project$5d2f$codessey$2f$node_modules$2f40$react$2d$three$2f$fiber$2f$dist$2f$events$2d$f8cd670d$2e$esm$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["G"]
+]);
+var __TURBOPACK__imported__module__$5b$project$5d2f$codessey$2f$node_modules$2f40$react$2d$three$2f$fiber$2f$dist$2f$events$2d$f8cd670d$2e$esm$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/codessey/node_modules/@react-three/fiber/dist/events-f8cd670d.esm.js [app-client] (ecmascript)");
+}),
 ]);
 
-//# sourceMappingURL=0a20e_%40react-three_fiber_dist_9ed933d3._.js.map
+//# sourceMappingURL=0a20e_%40react-three_fiber_dist_e15041bc._.js.map
